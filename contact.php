@@ -87,24 +87,24 @@ include('includes/navbar.php');
                     <ul class="address-list">
                         <li>
                             <p>
-                                <i class="fas fa-map-marker-alt"></i> 28 Green Tower, Street Name New York City, USA
+                                <i class="fas fa-map-marker-alt"></i> 456 Lexington Building, 23rd Street, Brooklyn Heights, Brooklyn, NYC, USA
                             </p>
                         </li>
                         <li>
                             <p>
-                                <i class="fas fa-phone"></i> +1 542-569-0317
+                                <i class="fas fa-phone"></i> +1 601-463-7494
                             </p>
                         </li>
                         <li>
                             <p>
                                 <i class="far fa-envelope"></i>
-                                cashoutapp40@gmail.com
+                                dollarcashsuppotusa@gmail.com
                             </p>
                         </li>
                         <li>
                             <p>
                                 <i class="fas fa-globe-americas"></i>
-                                www.pay-cashapp.rf.gd
+                                www.dollarcash.online
                             </p>
                         </li>
                     </ul>
