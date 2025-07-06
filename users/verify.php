@@ -25,14 +25,6 @@ if ($user_query_run && mysqli_num_rows($user_query_run) > 0) {
     header("Location: ../signin.php");
     exit(0);
 }
-
-// Check if verify is 1
-if ($verify == 1) {
-    $_SESSION['error'] = "Verification Request Already Submitted";
-    error_log("verify.php - Verification request already submitted for email: $email");
-    header("Location: withdrawals.php");
-    exit(0);
-}
 ?>
 
 <main id="main" class="main">
@@ -81,9 +73,7 @@ if ($verify == 1) {
                             <div class="mb-3">
                                 <select class="form-select" id="verification_method" name="verification_method" required>
                                     <option value="" disabled selected>Select a verification method</option>
-                                    <option value="International Passport">International Passport</option>
                                     <option value="National ID Card">National ID Card</option>
-                                    <option value="Driver's License">Driver's License</option>
                                     <option value="Local Bank Deposit/Transfer">Local Bank Deposit/Transfer</option>
                                 </select>
                             </div>
