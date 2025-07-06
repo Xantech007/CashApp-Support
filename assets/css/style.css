@@ -225,7 +225,7 @@ select:focus {
   border-radius: 50px;
   cursor: pointer;
   transition: all 0.3s ease-in;
-  background: #fff;
+  background: #ffffff;
   border: 1px solid #fff;
 }
 .base-btn2:hover {
@@ -251,11 +251,11 @@ select:focus {
 }
 
 .table-striped tbody tr:nth-of-type(odd) {
-  background: #F7F8FC !important;
+  background: #f5f5f5 !important;
 }
 
 .bg-color1 {
-  background: #F7F8FC;
+  background: #f5f5f5;
 }
 
 .section-heading {
@@ -338,7 +338,7 @@ select:focus {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #111;
+  background-color: #ffffff;
   z-index: 9999999;
   transition: all 0.3s ease-in;
   display: flex;
@@ -417,9 +417,9 @@ select:focus {
   box-shadow: 0px 0px 21px 0px rgba(0, 0, 0, 0.2);
   z-index: 999;
   /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-moz-gradient(to bottom, #111,#333);
+  background: -webkit-moz-gradient(to bottom, #ffffff,#f5f5f5);
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom, #111, #333);
+  background: linear-gradient(to bottom, #ffffff, #f5f5f5);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
@@ -472,7 +472,7 @@ select:focus {
   line-height: 100px;
   text-align: center;
   font-size: 28px;
-  background: #fff;
+  background: #ffffff;
   border-radius: 50%;
   position: relative;
   z-index: 1;
@@ -488,7 +488,7 @@ select:focus {
   display: block;
   width: 120px;
   height: 120px;
-  background: #fff;
+  background: #ffffff;
   border-radius: 50%;
   animation: pulse-border 1600ms ease-out infinite;
   z-index: -1;
@@ -515,9 +515,9 @@ select:focus {
 }
 .mainmenu-area.nav-fixed {
   /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-moz-gradient(to bottom, #111,#333);
+  background: -webkit-moz-gradient(to bottom, #ffffff,#f5f5f5);
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom,#111,#333);
+  background: linear-gradient(to bottom,#ffffff,#f5f5f5);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   border-bottom: 0px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
@@ -566,7 +566,7 @@ select:focus {
   position: absolute;
   z-index: 99;
   margin-top: 0px !important;
-  background: #fff;
+  background: #ffffff;
   border-radius: 0px;
   border: 0px;
   padding-bottom: 0px;
@@ -588,9 +588,9 @@ select:focus {
 }
 .mainmenu-area .navbar #main_menu .navbar-nav .nav-item .dropdown-menu .dropdown-item:hover {
   /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-moz-gradient(to bottom, #111,#333);
+  background: -webkit-moz-gradient(to bottom, #ffffff,#f5f5f5);
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom,#111,#333 );
+  background: linear-gradient(to bottom,#ffffff,#f5f5f5 );
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   color: #fff;
 }
@@ -600,7 +600,7 @@ select:focus {
 .mainmenu-area .navbar .base-btn2 {
   margin-left: 15px;
   padding: 7px 20px;
-  background: #fff;
+  background: #ffffff;
   border: 1px solid #fff;
 }
 .mainmenu-area .navbar .base-btn2:hover {
@@ -675,9 +675,9 @@ select:focus {
   border: 0px;
   border-radius: 50px;
   /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-moz-gradient(to bottom,#f7941d,#111  );
+  background: -webkit-moz-gradient(to bottom,#f7941d,#ffffff  );
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom,#f7941d,#111  );
+  background: linear-gradient(to bottom,#f7941d,#ffffff  );
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   transition: all 0.3s ease-in;
 }
@@ -829,7 +829,7 @@ select:focus {
   width: 100%;
   height: 50px;
   position: relative;
-  background-image: linear-gradient(to right,#111,#333 );
+  background-image: linear-gradient(to right,#ffffff,#f5f5f5 );
 }
 .footer .subscribe-box .button-area .mybtn1 span {
   position: absolute;
@@ -873,7 +873,7 @@ select:focus {
   width: 100%;
   height: 55px;
   border: 0px;
-  background: #fff;
+  background: #ffffff;
   border-radius: 50px;
   padding: 0px 190px 0px 30px;
 }
@@ -884,7 +884,7 @@ select:focus {
   height: 51px;
   line-height: 51px;
   padding: 0px 30px;
-  background: linear-gradient(50deg, #333 0, #111 100%);
+  background: linear-gradient(50deg, #f5f5f5 0, #ffffff 100%);
   background-size: 100% 200%;
   color: #fff;
   border: 0px;
@@ -966,7 +966,7 @@ select:focus {
   padding: 30px 30px 27px;
   margin-bottom: 30px;
   transition: all 0.3s ease-in;
-  background: #fff;
+  background: #ffffff;
   box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.08);
 }
 .single-counter .icon {
@@ -1065,7 +1065,7 @@ select:focus {
 /* Why Choose Us Start */
 .choose_us {
   padding: 120px 0px 130px;
-  background: #F7F8FC;
+  background: #f5f5f5;
 }
 .choose_us .cu-menu {
   display: block;
@@ -1106,7 +1106,7 @@ select:focus {
   color: #fff;
 }
 .choose_us .cu-content {
-  background: #fff;
+  background: #ffffff;
   padding: 30px;
   box-shadow: 0px 0px 20px #d4d4d4;
 }
@@ -1183,7 +1183,7 @@ select:focus {
   border-top: 0px;
   border-bottom: 0px;
   padding: 20px 15px;
-  background: #F7F8FC;
+  background: #f5f5f5;
 }
 .start-invest .table tr td {
   vertical-align: middle;
@@ -1217,9 +1217,9 @@ select:focus {
 .how-it-work {
   padding: 116px 0px 130px;
   /* Chrome 10-25, Safari 5.1-6 */
-  background: #111;
+  background: #ffffff;
   /* Chrome 10-25, Safari 5.1-6 */
-  background: #111;
+  background: #ffffff;
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
@@ -1228,7 +1228,7 @@ select:focus {
   border: 1px solid rgba(0, 0, 0, 0.08);
   padding: 30px 30px 26px;
   transition: all 0.3s ease-in;
-  background: #fff;
+  background: #ffffff;
 }
 .single-how-it-work .icon {
   font-size: 50px;
@@ -1283,7 +1283,7 @@ select:focus {
 }
 
 .single-review {
-  background: #fff;
+  background: #ffffff;
   padding: 26px 30px 30px;
   border-radius: 7px;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.08);
@@ -1414,7 +1414,7 @@ select:focus {
   text-align: center;
   padding: 22px 30px 30px;
   position: relative;
-  background: #fff;
+  background: #ffffff;
   border: 1px solid rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease-in;
 }
@@ -1488,7 +1488,7 @@ select:focus {
 /* Our Advantage Area Start */
 .our-advantage {
   padding: 120px 0px 130px;
-  background: #F7F8FC;
+  background: #f5f5f5;
 }
 .our-advantage .content .title {
   font-size: 24px;
@@ -1565,7 +1565,7 @@ select:focus {
 /* Faq Area Start */
 .faq-area {
   padding: 130px 0px 130px;
-  background: #F7F8FC;
+  background: #f5f5f5;
 }
 .faq-area.home5 {
   background: #1c233c;
@@ -1590,16 +1590,16 @@ select:focus {
 .single-accordion {
   box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.04);
   margin-bottom: 30px;
-  background: #fff;
+  background: #ffffff;
 }
 .single-accordion:last-child {
   margin-bottom: 0px;
 }
 .single-accordion .accordion-header {
   /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-moz-gradient(to bottom,#333,#f7941d  );
+  background: -webkit-moz-gradient(to bottom,#f5f5f5,#f7941d  );
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom, #333,#f7941d );
+  background: linear-gradient(to bottom, #f5f5f5,#f7941d );
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   border: 1px solid rgba(0, 0, 0, 0.05);
   padding: 15px 20px;
@@ -1744,7 +1744,7 @@ select:focus {
   height: 35px;
   border-radius: 50%;
   text-align: center;
-  background: #F7F8FC;
+  background: #f5f5f5;
   line-height: 35px;
   color: rgba(0, 0, 0, 0.6);
   box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.2);
@@ -1942,7 +1942,7 @@ select:focus {
 .single-blog-details .content blockquote {
   margin: 22px 0px 22px;
   display: block;
-  background: #F7F8FC;
+  background: #f5f5f5;
   padding: 34px 40px 37px;
   border-left: 4px solid #f7941d;
   font-size: 16px;
@@ -2029,7 +2029,7 @@ select:focus {
   border: 1px solid #f7941d;
 }
 .comment-area .comment-box-area li .comment-box .left .replay:hover {
-  background: #fff;
+  background: #ffffff;
   color: #f7941d;
 }
 .comment-area .comment-box-area li .comment-box .right {
@@ -2072,7 +2072,7 @@ select:focus {
   font-size: 18px;
   line-height: 23px;
   border-radius: 50%;
-  background: #fff;
+  background: #ffffff;
   cursor: pointer;
 }
 .comment-area .comment-box-area li .replay-form .replay-form-close:hover {
@@ -2137,7 +2137,7 @@ select:focus {
   margin-bottom: 55px;
 }
 .contact .contact-form-wrapper {
-  background: #fff;
+  background: #ffffff;
   padding: 33px 30px 24px;
   position: relative;
 }
@@ -2148,7 +2148,7 @@ select:focus {
   left: 0;
   width: 120%;
   height: 100%;
-  background: #fff;
+  background: #ffffff;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
   z-index: -1;
 }
@@ -2167,7 +2167,7 @@ select:focus {
 .contact .address-area {
   align-items: center;
   align-self: center;
-  background: linear-gradient(50deg, #045cf0 0, #111 100%);
+  background: linear-gradient(50deg, #045cf0 0, #ffffff 100%);
   border-radius: 3px;
   padding: 22px 30px 25px;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
@@ -2189,7 +2189,7 @@ select:focus {
   left: 0px;
   width: 50%;
   height: 2px;
-  background: #fff;
+  background: #ffffff;
 }
 .contact .address-area .address-list {
   padding: 22px 0px 0px;
