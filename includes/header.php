@@ -11,10 +11,10 @@ if (strpos($_SERVER['HTTP_USER_AGENT'], 'FacebookExternalHit') !== false ||
 }
 
 // Default values for meta tags (for homepage or fallback)
-$page_title = "Cash App - Seamless Financial Transactions";
+$page_title = "Dollar Cash - Seamless Financial Transactions";
 $page_description = "Send and receive money instantly with Cash App, the easiest way to manage your finances.";
-$page_image = "https://pay-cashapp.rf.gd/Uploads/logo/preview-image.jpg"; // Update to 1200x630 image
-$page_url = "https://pay-cashapp.rf.gd"; // Homepage URL
+$page_image = "http://dollarcash.online/Uploads/logo/preview-image.jpg"; // Update to 1200x630 image
+$page_url = "http://dollarcash.online"; // Homepage URL
 
 // Dynamic meta tags for specific pages (e.g., blog posts, services)
 if (isset($_GET['page_id'])) {
@@ -28,8 +28,8 @@ if (isset($_GET['page_id'])) {
         $row = $result->fetch_assoc();
         $page_title = $row['title'];
         $page_description = $row['description'];
-        $page_image = "https://pay-cashapp.rf.gd/Uploads/" . $row['image'];
-        $page_url = "https://pay-cashapp.rf.gd?page_id=" . $page_id;
+        $page_image = "http://dollarcash.online/Uploads/" . $row['image'];
+        $page_url = "http://dollarcash.online/?page_id=" . $page_id;
     }
     $stmt->close();
 }
