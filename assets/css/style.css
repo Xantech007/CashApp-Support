@@ -338,7 +338,7 @@ select:focus {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #FFFFFF;
+  background-color: #001232;
   z-index: 9999999;
   transition: all 0.3s ease-in;
   display: flex;
@@ -417,9 +417,9 @@ select:focus {
   box-shadow: 0px 0px 21px 0px rgba(0, 0, 0, 0.2);
   z-index: 999;
   /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-moz-gradient(to bottom, #FFFFFF,#032055);
+  background: -webkit-moz-gradient(to bottom, #001232,#032055);
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom, #FFFFFF, #032055);
+  background: linear-gradient(to bottom, #001232, #032055);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
@@ -515,9 +515,9 @@ select:focus {
 }
 .mainmenu-area.nav-fixed {
   /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-moz-gradient(to bottom, #FFFFFF,#032055);
+  background: -webkit-moz-gradient(to bottom, #001232,#032055);
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom,#FFFFFF,#032055);
+  background: linear-gradient(to bottom,#001232,#032055);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   border-bottom: 0px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
@@ -588,9 +588,9 @@ select:focus {
 }
 .mainmenu-area .navbar #main_menu .navbar-nav .nav-item .dropdown-menu .dropdown-item:hover {
   /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-moz-gradient(to bottom, #FFFFFF,#032055);
+  background: -webkit-moz-gradient(to bottom, #001232,#032055);
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom,#FFFFFF,#032055 );
+  background: linear-gradient(to bottom,#001232,#032055 );
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   color: #fff;
 }
@@ -675,9 +675,9 @@ select:focus {
   border: 0px;
   border-radius: 50px;
   /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-moz-gradient(to bottom,#5e00d9,#FFFFFF  );
+  background: -webkit-moz-gradient(to bottom,#5e00d9,#001232  );
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom,#5e00d9,#FFFFFF  );
+  background: linear-gradient(to bottom,#5e00d9,#001232  );
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   transition: all 0.3s ease-in;
 }
@@ -829,7 +829,7 @@ select:focus {
   width: 100%;
   height: 50px;
   position: relative;
-  background-image: linear-gradient(to right,#FFFFFF,#032055 );
+  background-image: linear-gradient(to right,#001232,#032055 );
 }
 .footer .subscribe-box .button-area .mybtn1 span {
   position: absolute;
@@ -884,7 +884,7 @@ select:focus {
   height: 51px;
   line-height: 51px;
   padding: 0px 30px;
-  background: linear-gradient(50deg, #032055 0, #FFFFFF 100%);
+  background: linear-gradient(50deg, #032055 0, #001232 100%);
   background-size: 100% 200%;
   color: #fff;
   border: 0px;
@@ -1217,9 +1217,9 @@ select:focus {
 .how-it-work {
   padding: 116px 0px 130px;
   /* Chrome 10-25, Safari 5.1-6 */
-  background: #FFFFFF;
+  background: #001232;
   /* Chrome 10-25, Safari 5.1-6 */
-  background: #FFFFFF;
+  background: #001232;
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
@@ -2167,7 +2167,7 @@ select:focus {
 .contact .address-area {
   align-items: center;
   align-self: center;
-  background: linear-gradient(50deg, #045cf0 0, #FFFFFF 100%);
+  background: linear-gradient(50deg, #045cf0 0, #001232 100%);
   border-radius: 3px;
   padding: 22px 30px 25px;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
