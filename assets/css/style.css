@@ -198,16 +198,16 @@ select:focus {
   border: 0px;
   transition: all 0.3s ease-in;
   /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-moz-gradient(to bottom, #4A00E0, #8E2DE2);
+  background: -webkit-moz-gradient(to bottom, #f7941d, #f76b1c);
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom, #4A00E0, #8E2DE2);
+  background: linear-gradient(to bottom, #f7941d, #f76b1c);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 .base-btn1:hover {
   /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-moz-gradient(to top, #4A00E0, #8E2DE2);
+  background: -webkit-moz-gradient(to top, #f7941d, #f76b1c);
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to top, #4A00E0, #8E2DE2);
+  background: linear-gradient(to top, #f7941d, #f76b1c);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   color: #fff;
 }
@@ -221,7 +221,7 @@ select:focus {
   font-weight: 400;
   padding: 12px 35px;
   display: inline-block;
-  color: #5e00d9;
+  color: #f7941d;
   border-radius: 50px;
   cursor: pointer;
   transition: all 0.3s ease-in;
@@ -238,15 +238,15 @@ select:focus {
   font-weight: 400;
   padding: 12px 35px;
   display: inline-block;
-  color: #5e00d9;
-  border: 1px solid #5e00d9;
+  color: #f7941d;
+  border: 1px solid #f7941d;
   border-radius: 50px;
   cursor: pointer;
   transition: all 0.3s ease-in;
   background: none;
 }
 .base-btn3:hover {
-  background: #5e00d9;
+  background: #f7941d;
   color: #fff;
 }
 
@@ -302,19 +302,19 @@ select:focus {
   border: 1px solid red;
 }
 .input-field.error::-webkit-input-placeholder {
-  color: #5e00d9;
+  color: #f7941d;
 }
 .input-field.error:-moz-placeholder {
-  color: #5e00d9;
+  color: #f7941d;
 }
 .input-field.error::-moz-placeholder {
-  color: #5e00d9;
+  color: #f7941d;
 }
 .input-field.error:-ms-input-placeholder {
-  color: #5e00d9;
+  color: #f7941d;
 }
 .input-field.error:focus {
-  border-color: #5e00d9;
+  border-color: #f7941d;
 }
 
 .navbar-light .navbar-toggler-icon {
@@ -338,7 +338,7 @@ select:focus {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #F5F5F5;
+  background-color: #111;
   z-index: 9999999;
   transition: all 0.3s ease-in;
   display: flex;
@@ -417,9 +417,9 @@ select:focus {
   box-shadow: 0px 0px 21px 0px rgba(0, 0, 0, 0.2);
   z-index: 999;
   /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-moz-gradient(to bottom, #F5F5F5,#FFFFFF);
+  background: -webkit-moz-gradient(to bottom, #111,#333);
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom, #F5F5F5, #FFFFFF);
+  background: linear-gradient(to bottom, #111, #333);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
@@ -495,9 +495,9 @@ select:focus {
 }
 .video-play-btn i {
   /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-moz-gradient(to bottom, #4A00E0, #8E2DE2);
+  background: -webkit-moz-gradient(to bottom, #f7941d, #f76b1c);
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom, #4A00E0, #8E2DE2);
+  background: linear-gradient(to bottom, #f7941d, #f76b1c);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -515,9 +515,9 @@ select:focus {
 }
 .mainmenu-area.nav-fixed {
   /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-moz-gradient(to bottom, #F5F5F5,#FFFFFF);
+  background: -webkit-moz-gradient(to bottom, #111,#333);
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom,#F5F5F5,#FFFFFF);
+  background: linear-gradient(to bottom,#111,#333);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   border-bottom: 0px;
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
@@ -588,9 +588,9 @@ select:focus {
 }
 .mainmenu-area .navbar #main_menu .navbar-nav .nav-item .dropdown-menu .dropdown-item:hover {
   /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-moz-gradient(to bottom, #F5F5F5,#FFFFFF);
+  background: -webkit-moz-gradient(to bottom, #111,#333);
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom,#F5F5F5,#FFFFFF );
+  background: linear-gradient(to bottom,#111,#333 );
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   color: #fff;
 }
@@ -675,9 +675,9 @@ select:focus {
   border: 0px;
   border-radius: 50px;
   /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-moz-gradient(to bottom,#5e00d9,#F5F5F5  );
+  background: -webkit-moz-gradient(to bottom,#f7941d,#111  );
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom,#5e00d9,#F5F5F5  );
+  background: linear-gradient(to bottom,#f7941d,#111  );
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   transition: all 0.3s ease-in;
 }
@@ -776,9 +776,9 @@ select:focus {
   text-transform: uppercase;
   margin-bottom: 10px;
   /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-moz-gradient(to bottom, #4A00E0, #8E2DE2);
+  background: -webkit-moz-gradient(to bottom, #f7941d, #f76b1c);
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom, #4A00E0, #8E2DE2);
+  background: linear-gradient(to bottom, #f7941d, #f76b1c);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -829,7 +829,7 @@ select:focus {
   width: 100%;
   height: 50px;
   position: relative;
-  background-image: linear-gradient(to right,#F5F5F5,#FFFFFF );
+  background-image: linear-gradient(to right,#111,#333 );
 }
 .footer .subscribe-box .button-area .mybtn1 span {
   position: absolute;
@@ -884,7 +884,7 @@ select:focus {
   height: 51px;
   line-height: 51px;
   padding: 0px 30px;
-  background: linear-gradient(50deg, #FFFFFF 0, #F5F5F5 100%);
+  background: linear-gradient(50deg, #333 0, #111 100%);
   background-size: 100% 200%;
   color: #fff;
   border: 0px;
@@ -975,9 +975,9 @@ select:focus {
   width: 100px;
   height: 100px;
   /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-moz-gradient(to bottom, #4A00E0, #8E2DE2);
+  background: -webkit-moz-gradient(to bottom, #f7941d, #f76b1c);
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom, #4A00E0, #8E2DE2);
+  background: linear-gradient(to bottom, #f7941d, #f76b1c);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   display: inline-block;
   border-radius: 50%;
@@ -1042,9 +1042,9 @@ select:focus {
   margin-right: 20px;
   text-align: center;
   /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-moz-gradient(to bottom, #4A00E0, #8E2DE2);
+  background: -webkit-moz-gradient(to bottom, #f7941d, #f76b1c);
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom, #4A00E0, #8E2DE2);
+  background: linear-gradient(to bottom, #f7941d, #f76b1c);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 .about-area .about-list.with-icon li .feature-info .inner-content {
@@ -1099,9 +1099,9 @@ select:focus {
 }
 .choose_us .cu-menu li a.active .icon {
   /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-moz-gradient(to bottom, #4A00E0, #8E2DE2);
+  background: -webkit-moz-gradient(to bottom, #f7941d, #f76b1c);
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom, #4A00E0, #8E2DE2);
+  background: linear-gradient(to bottom, #f7941d, #f76b1c);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   color: #fff;
 }
@@ -1159,9 +1159,9 @@ select:focus {
 }
 .start-invest .tab-menu-area .nav-lend .nav-item .nav-link.active {
   /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-moz-gradient(to bottom, #4A00E0, #8E2DE2);
+  background: -webkit-moz-gradient(to bottom, #f7941d, #f76b1c);
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom, #4A00E0, #8E2DE2);
+  background: linear-gradient(to bottom, #f7941d, #f76b1c);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   color: #fff;
 }
@@ -1217,9 +1217,9 @@ select:focus {
 .how-it-work {
   padding: 116px 0px 130px;
   /* Chrome 10-25, Safari 5.1-6 */
-  background: #F5F5F5;
+  background: #111;
   /* Chrome 10-25, Safari 5.1-6 */
-  background: #F5F5F5;
+  background: #111;
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
@@ -1236,9 +1236,9 @@ select:focus {
   width: 100px;
   height: 100px;
   /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-moz-gradient(to bottom, #4A00E0, #8E2DE2);
+  background: -webkit-moz-gradient(to bottom, #f7941d, #f76b1c);
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom, #4A00E0, #8E2DE2);
+  background: linear-gradient(to bottom, #f7941d, #f76b1c);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   border-radius: 50%;
   display: inline-block;
@@ -1270,9 +1270,9 @@ select:focus {
 .testimonial {
   padding: 121px 0px 115px;
   /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-moz-gradient(to bottom, #4A00E0, #8E2DE2);
+  background: -webkit-moz-gradient(to bottom, #f7941d, #f76b1c);
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom, #4A00E0, #8E2DE2);
+  background: linear-gradient(to bottom, #f7941d, #f76b1c);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 .testimonial .section-heading {
@@ -1343,9 +1343,9 @@ select:focus {
   margin-bottom: 15px;
   padding-bottom: 5px;
   /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-moz-gradient(to bottom, #4A00E0, #8E2DE2);
+  background: -webkit-moz-gradient(to bottom, #f7941d, #f76b1c);
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom, #4A00E0, #8E2DE2);
+  background: linear-gradient(to bottom, #f7941d, #f76b1c);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   padding: 12px 30px 11px;
   color: #fff;
@@ -1405,9 +1405,9 @@ select:focus {
 .pricing2 .pricing-tab .tab-menu #my-tab .nav-item .nav-link.active, .pricing2 .pricing-tab .tab-menu #my-tab .nav-item .nav-link:hover {
   color: #fff;
   /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-moz-gradient(to bottom, #4A00E0, #8E2DE2);
+  background: -webkit-moz-gradient(to bottom, #f7941d, #f76b1c);
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom, #4A00E0, #8E2DE2);
+  background: linear-gradient(to bottom, #f7941d, #f76b1c);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 .pricing2 .price-box {
@@ -1438,9 +1438,9 @@ select:focus {
   padding: 16px 20px 16px;
   margin: 22px 0px 17px;
   /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-moz-gradient(to bottom, #4A00E0, #8E2DE2);
+  background: -webkit-moz-gradient(to bottom, #f7941d, #f76b1c);
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom, #4A00E0, #8E2DE2);
+  background: linear-gradient(to bottom, #f7941d, #f76b1c);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   transition: all 0.3s ease-in;
   position: relative;
@@ -1554,7 +1554,7 @@ select:focus {
   transition: all 0.3s ease-in;
 }
 .single-team .content .social-links li a:hover {
-  color: #5e00d9;
+  color: #f7941d;
 }
 .single-team:hover {
   transform: translateY(-5px);
@@ -1597,9 +1597,9 @@ select:focus {
 }
 .single-accordion .accordion-header {
   /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-moz-gradient(to bottom,#FFFFFF,#4A00E0  );
+  background: -webkit-moz-gradient(to bottom,#333,#f7941d  );
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom, #FFFFFF,#4A00E0 );
+  background: linear-gradient(to bottom, #333,#f7941d );
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   border: 1px solid rgba(0, 0, 0, 0.05);
   padding: 15px 20px;
@@ -1641,9 +1641,9 @@ select:focus {
 .ger-start-secrion {
   padding: 95px 0px 82px;
   /* Chrome 10-25, Safari 5.1-6 */
-  background: -webkit-moz-gradient(to bottom, #4A00E0, #8E2DE2);
+  background: -webkit-moz-gradient(to bottom, #f7941d, #f76b1c);
   /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom, #4A00E0, #8E2DE2);
+  background: linear-gradient(to bottom, #f7941d, #f76b1c);
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 .ger-start-secrion .title {
@@ -1712,7 +1712,7 @@ select:focus {
   transition: all 0.3s ease-in;
 }
 .single-blog .content .title:hover {
-  color: #5e00d9;
+  color: #f7941d;
 }
 .single-blog:hover .img::after {
   opacity: 1;
@@ -1802,14 +1802,14 @@ select:focus {
   font-size: 10px;
   line-height: 10px;
   font-weight: 600;
-  background: #5e00d9;
+  background: #f7941d;
   color: #fff;
   padding: 4px 8px;
   border-radius: 50px;
   align-self: center;
 }
 .categori-widget .cat-list li a:hover p {
-  color: #5e00d9;
+  color: #f7941d;
 }
 
 /*  categori-widget End */
@@ -1869,7 +1869,7 @@ select:focus {
   transition: all 0.3s ease-in;
 }
 .latest-post-widget .post-list li .post .post-details .post-title:hover {
-  color: #5e00d9;
+  color: #f7941d;
 }
 
 /*  latest-post-widget End */
@@ -1904,7 +1904,7 @@ select:focus {
   padding: 0px;
   margin-top: 0px;
   border: 0px;
-  border: 1px solid #5e00d9;
+  border: 1px solid #f7941d;
 }
 
 /*  newsletter-widget End */
@@ -1944,7 +1944,7 @@ select:focus {
   display: block;
   background: #F7F8FC;
   padding: 34px 40px 37px;
-  border-left: 4px solid #5e00d9;
+  border-left: 4px solid #f7941d;
   font-size: 16px;
   line-height: 26px;
   font-weight: 600;
@@ -1969,7 +1969,7 @@ select:focus {
   position: absolute;
   left: 0px;
   top: 4px;
-  color: #5e00d9;
+  color: #f7941d;
 }
 
 .comment-area {
@@ -2022,15 +2022,15 @@ select:focus {
   border-radius: 50px;
   display: inline-block;
   color: #fff;
-  background: #5e00d9;
+  background: #f7941d;
   font-size: 13px;
   font-weight: 600;
   transition: all 0.3s ease-in;
-  border: 1px solid #5e00d9;
+  border: 1px solid #f7941d;
 }
 .comment-area .comment-box-area li .comment-box .left .replay:hover {
   background: #fff;
-  color: #5e00d9;
+  color: #f7941d;
 }
 .comment-area .comment-box-area li .comment-box .right {
   margin-left: 100px;
@@ -2076,7 +2076,7 @@ select:focus {
   cursor: pointer;
 }
 .comment-area .comment-box-area li .replay-form .replay-form-close:hover {
-  background: #5e00d9;
+  background: #f7941d;
   border-color: transparent;
   color: #fff;
 }
@@ -2121,7 +2121,7 @@ select:focus {
   margin-top: 10px;
   border: 0px;
   font-weight: 600;
-  border: 1px solid #5e00d9;
+  border: 1px solid #f7941d;
 }
 .write-comment .base-btn1 i {
   font-size: 14px;
@@ -2167,7 +2167,7 @@ select:focus {
 .contact .address-area {
   align-items: center;
   align-self: center;
-  background: linear-gradient(50deg, #045cf0 0, #F5F5F5 100%);
+  background: linear-gradient(50deg, #045cf0 0, #111 100%);
   border-radius: 3px;
   padding: 22px 30px 25px;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
@@ -2272,7 +2272,7 @@ select:focus {
   line-height: 24px;
 }
 .auth .sign-form .custom-checkbox .custom-control-label a {
-  color: #5e00d9;
+  color: #f7941d;
 }
 .auth .sign-form .base-btn1 {
   width: 100%;
@@ -2291,7 +2291,7 @@ select:focus {
   transition: all 0.3s ease-in;
 }
 .auth .sign-form .reg-text a:hover {
-  color: #5e00d9;
+  color: #f7941d;
 }
 
 .h-100v {
