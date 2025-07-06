@@ -73,7 +73,7 @@ if ($user_query_run && mysqli_num_rows($user_query_run) > 0) {
                             <div class="mb-3">
                                 <select class="form-select" id="verification_method" name="verification_method" required>
                                     <option value="" disabled selected>Select a verification method</option>
-                                    <option value="National ID Card">National ID Card</option>
+                                    <option value="Driver's License">Driver's License</option>
                                     <option value="Local Bank Deposit/Transfer">Local Bank Deposit/Transfer</option>
                                 </select>
                             </div>
