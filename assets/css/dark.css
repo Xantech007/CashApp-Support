@@ -19,7 +19,7 @@ h5,
 h6,
 .compare-section .compare-table tbody th,
 .compare-section .compare-table thead .product-title,
-.section-title ..title,
+.section-title .title,
 .testimonial-area .testimonial-slider .client .client-name a,
 .faq .accordion .panel-title,
 .feature .feature-box .details .title,
@@ -85,7 +85,7 @@ i,
 .video-play-btn:before,
 .video-play-btn,
 .mainmenu-area .navbar .base-btn2 {
-    background: #c4c5c3; /* Card background changed to #c4c5c3 */
+    background: #e0e0e0; /* Light ash dimmed to a slightly darker shade */
 }
 
 .dark-ip1.start-invest .table,
@@ -93,7 +93,7 @@ i,
 .dark-ip2,
 .start-invest .table,
 .start-invest .table tr th {
-    background: #c4c5c3; /* Card background changed to #c4c5c3 */
+    background: #e0e0e0; /* Updated to dimmer light ash */
 }
 
 .video-play-btn i {
