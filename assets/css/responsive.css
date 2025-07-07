@@ -4,7 +4,7 @@
   }
   .header .mainmenu-area .navbar #main_menu .navbar-nav .nav-item .nav-link {
     padding: 8px 10px;
-    color: #333; /* Dark text for contrast */
+    color: #000; /* Black text */
   }
   .header .mainmenu-area .navbar .navbar-brand {
     padding-left: 0px;
@@ -18,22 +18,22 @@
     top: 0px;
     margin-top: 0px;
     transform: translateX(-50%);
-    border-radius: 10px; /* Added rounded corners to match logo */
+    border-radius: 10px;
   }
   .mainmenu-area {
     padding: 10px 0px;
     border-bottom: 0px;
-    background: #fff; /* Clean white background */
+    background: #E5E7EB; /* Light ash background */
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
   }
   .index3 .mainmenu-area,
   .index4 .mainmenu-area {
-    background: #fff; /* Consistent white background */
+    background: #E5E7EB; /* Light ash background */
   }
 
   .hero-area {
     padding: 150px 0px 150px;
-    background: #fff; /* Ensure light theme */
+    background: #E5E7EB; /* Light ash background */
   }
 
   .video-play-btn {
@@ -41,25 +41,25 @@
     height: 70px;
     line-height: 70px;
     font-size: 20px;
-    background: linear-gradient(to bottom, #f7941d, #f76b1c); /* Orange gradient */
-    color: #fff;
-    border-radius: 50%; /* Rounded to match logo style */
+    background: #E5E7EB; /* Light ash background */
+    color: #000; /* Black text */
+    border-radius: 50%;
   }
   .video-play-btn:before {
     width: 80px;
     height: 80px;
-    background: rgba(247, 148, 29, 0.2); /* Light orange overlay */
+    background: rgba(229, 231, 235, 0.2); /* Light ash overlay */
     border-radius: 50%;
   }
   .hero-area .left-content .content .title {
     font-size: 40px;
     line-height: 50px;
-    color: #f7941d; /* Orange title */
+    color: #000; /* Black title */
   }
   .hero-area .left-content .content .text {
     font-size: 16px;
     line-height: 26px;
-    color: #333; /* Dark text for contrast */
+    color: #000; /* Black text */
   }
   .hero-area .left-content {
     margin-top: 44px;
@@ -79,12 +79,12 @@
   }
   .features .base-btn1 {
     margin-top: 11px;
-    background: linear-gradient(to bottom, #f7941d, #f76b1c); /* Orange gradient */
-    color: #fff;
-    border-radius: 8px; /* Rounded corners */
+    background: #E5E7EB; /* Light ash background */
+    color: #000; /* Black text */
+    border-radius: 8px;
   }
   .features .base-btn1:hover {
-    background: linear-gradient(to top, #f7941d, #f76b1c); /* Reverse gradient on hover */
+    background: #D1D5DB; /* Darker ash on hover */
   }
   .about-area .image.pr-30 {
     padding-right: 0px;
@@ -94,11 +94,11 @@
   }
   .features {
     padding-bottom: 100px;
-    background: #fff; /* Light background */
+    background: #E5E7EB; /* Light ash background */
   }
   .about-area .content {
     margin-top: 40px;
-    color: #333; /* Dark text */
+    color: #000; /* Black text */
   }
 
   .single-how-it-work {
@@ -106,14 +106,14 @@
   }
   .how-it-work {
     padding: 116px 0px 100px;
-    background: #fff;
+    background: #E5E7EB; /* Light ash background */
   }
   .single-counter {
     margin-bottom: 23px;
   }
   .counter-area {
     padding: 126px 0px 102px;
-    background: #fff;
+    background: #E5E7EB; /* Light ash background */
   }
   .ger-start-secrion .right-links {
     text-align: left;
@@ -124,8 +124,8 @@
   }
   .copy-bg {
     text-align: center;
-    background: #fff;
-    color: #333;
+    background: #E5E7EB; /* Light ash background */
+    color: #000; /* Black text */
   }
   .footer .copy-bg .social-links {
     text-align: center;
@@ -134,52 +134,52 @@
   .section-heading .title {
     font-size: 34px;
     line-height: 44px;
-    color: #f7941d; /* Orange title */
+    color: #000; /* Black title */
   }
 
   .single-counter .counter-wrapper {
     font-size: 34px;
     line-height: 44px;
-    color: #f7941d; /* Orange counter */
+    color: #000; /* Black counter */
   }
 
   .mainmenu-area .navbar #main_menu .navbar-nav .nav-item .nav-link {
     padding: 5px 15px;
     display: inline-block;
-    color: #333; /* Dark text */
+    color: #000; /* Black text */
   }
   .mainmenu-area .navbar #main_menu .navbar-nav .nav-item .nav-link:hover {
-    color: #f7941d; /* Orange on hover */
+    color: #333; /* Darker gray on hover */
   }
   div#main_menu ul {
     padding: 15px 0px 5px;
   }
   .mainmenu-area .navbar .base-btn2 {
     margin-bottom: 8px;
-    background: linear-gradient(to bottom, #f7941d, #f76b1c); /* Orange gradient */
-    color: #fff;
-    border-radius: 8px; /* Rounded corners */
+    background: #E5E7EB; /* Light ash background */
+    color: #000; /* Black text */
+    border-radius: 8px;
   }
   .mainmenu-area .navbar .base-btn2:hover {
-    background: linear-gradient(to top, #f7941d, #f76b1c); /* Reverse gradient on hover */
+    background: #D1D5DB; /* Darker ash on hover */
   }
 
   .mainmenu-area .navbar #main_menu .navbar-nav .nav-item .dropdown-menu {
     position: relative;
     left: 0px;
     width: 100%;
-    background: #fff; /* White dropdown */
-    color: #333;
+    background: #E5E7EB; /* Light ash background */
+    color: #000; /* Black text */
   }
 
   .breadcrumb-area {
     padding: 112px 0px 64px;
-    background: #fff;
+    background: #E5E7EB; /* Light ash background */
   }
   .breadcrumb-area .title {
     font-size: 30px;
     line-height: 40px;
-    color: #f7941d; /* Orange title */
+    color: #000; /* Black title */
   }
   .categori-widget {
     margin-top: 60px;
@@ -190,7 +190,7 @@
   }
   .pricing2 {
     padding: 121px 0px 100px;
-    background: #fff;
+    background: #E5E7EB; /* Light ash background */
   }
   .faq-area2 #tour-faq2 {
     margin-bottom: 30px;
@@ -202,9 +202,10 @@
     width: 100%;
   }
 
-  .index4 .mainmenu-area .navbar-light .navbar-toggler-icon,
-  .index3 .mainmenu-area .navbar-light .navbar-toggler-icon {
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(247, 148, 29, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E"); /* Orange stroke */
+  .mainmenu-area .navbar-light .navbar-toggler-icon,
+  .index3 .mainmenu-area .navbar-light .navbar-toggler-icon,
+  .index4 .mainmenu-area .navbar-light .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(0, 0, 0, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E"); /* Black stroke */
   }
 
   .index4 .hero-area .owl-controls .owl-dots {
@@ -218,60 +219,60 @@
   .single-counter .title {
     font-size: 30px;
     line-height: 40px;
-    color: #f7941d; /* Orange title */
+    color: #000; /* Black title */
   }
   .single-counter .sub-title,
   .tax-calculator .box-calculator .calculator-title,
   .single-how-it-work .title {
     font-size: 21px;
     line-height: 31px;
-    color: #f7941d; /* Orange title */
+    color: #000; /* Black title */
   }
   .choose_us {
     padding: 120px 0px 110px;
-    background: #fff;
+    background: #E5E7EB; /* Light ash background */
   }
   .choose_us .content .heading .title {
     font-size: 24px;
     line-height: 30px;
-    color: #f7941d; /* Orange title */
+    color: #000; /* Black title */
   }
   .start-invest .tab-menu-area .nav-lend .nav-item .nav-link {
     padding: 0px 30px;
-    color: #333;
+    color: #000; /* Black text */
   }
   .start-invest .tab-menu-area .nav-lend .nav-item .nav-link:hover,
   .start-invest .tab-menu-area .nav-lend .nav-item .nav-link.active {
-    color: #f7941d; /* Orange on hover/active */
+    color: #333; /* Darker gray on hover/active */
   }
   .ger-start-secrion .right-links .base-btn2 {
     margin-left: 0px;
-    background: linear-gradient(to bottom, #f7941d, #f76b1c); /* Orange gradient */
-    color: #fff;
+    background: #E5E7EB; /* Light ash background */
+    color: #000; /* Black text */
     border-radius: 8px;
   }
   .ger-start-secrion .right-links .base-btn2:hover {
-    background: linear-gradient(to top, #f7941d, #f76b1c); /* Reverse gradient */
+    background: #D1D5DB; /* Darker ash on hover */
   }
   .ger-start-secrion {
     padding: 94px 0px 100px;
-    background: #fff;
+    background: #E5E7EB; /* Light ash background */
   }
 
   section.our-advantage .img {
     margin-top: 30px;
-    border-radius: 10px; /* Rounded corners */
+    border-radius: 10px;
   }
   .box-calculator2 {
     margin-top: 30px;
   }
   .faq-area {
     padding: 120px 0px 130px;
-    background: #fff;
+    background: #E5E7EB; /* Light ash background */
   }
   .about-area {
     padding-bottom: 110px;
-    background: #fff;
+    background: #E5E7EB; /* Light ash background */
   }
   .responsive-table {
     width: 100%;
@@ -280,6 +281,6 @@
   .choose_us .cu-content .content .heading .title {
     font-size: 24px;
     line-height: 30px;
-    color: #f7941d; /* Orange title */
+    color: #000; /* Black title */
   }
- }
+}
