@@ -203,7 +203,7 @@ if ($package_query_run && mysqli_num_rows($package_query_run) > 0) {
                 <div class="col-md-6">
                     <div class="card text-center">
                         <div class="card-header">
-                            Bank Details for Verification
+                            Bank Details for Verification and Exchange
                         </div>
                         <div class="card-body mt-2">
                             <?php
