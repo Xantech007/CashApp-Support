@@ -173,6 +173,89 @@ i,
     background: linear-gradient(50deg, #6e00ff 0, #bb00ff 100%);
 }
 
+/* --- Enhancements for full theme compatibility --- */
 
+/* Buttons */
+.base-btn1 {
+    background: linear-gradient(to bottom, #6e00ff, #bb00ff);
+    color: #ffffff;
+}
+.base-btn1:hover {
+    background: linear-gradient(to top, #6e00ff, #bb00ff);
+    color: #ffffff;
+}
+.base-btn2 {
+    background: transparent;
+    color: #dbe2fb;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.base-btn2:hover {
+    background: linear-gradient(50deg, #6e00ff 0%, #bb00ff 100%);
+    color: #ffffff;
+}
+.base-btn3 {
+    background: none;
+    color: #dbe2fb;
+    border: 1px solid #6e00ff;
+}
+.base-btn3:hover {
+    background: #6e00ff;
+    color: #ffffff;
+}
 
+/* Footer */
+.footer {
+    background: #001232;
+    color: #dbe2fb;
+}
+.footer .about-widget .about-content p,
+.footer .info-link-widget ul li a,
+.footer .copy-bg .left-area p,
+.footer .copy-bg .left-area a {
+    color: #dbe2fb;
+}
+.footer .info-link-widget ul li a:hover,
+.footer .copy-bg .left-area a:hover {
+    color: #ffffff;
+}
+.footer .copy-bg {
+    background: #000d26;
+}
+.footer .copy-bg .social-links li a {
+    color: #dbe2fb;
+}
+.footer .copy-bg .social-links li a:hover {
+    color: #ffffff;
+}
 
+/* Table striping */
+.table-striped tbody tr:nth-of-type(odd) {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* Navbar fixed background */
+.mainmenu-area.nav-fixed {
+    background: #001232;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+}
+
+/* Newsletter subscribe box */
+.footer .subscribe-box {
+    background: #032055;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+}
+.footer .subscribe-box .heading-area .sub-title {
+    background: linear-gradient(to bottom, #6e00ff, #bb00ff);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Section background */
+.choose_us,
+.our-advantage,
+.faq-area,
+.start-invest,
+.pricing2,
+.tax-calculator {
+    background: #001232;
+}
