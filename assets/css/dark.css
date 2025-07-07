@@ -1,6 +1,6 @@
 body {
-    color: #000000; /* Text color changed to black */
-    background: #ffffff; /* Background changed to white */
+    color: #000000;
+    background: #ffffff;
 }
 
 .section-heading .title,
@@ -8,7 +8,7 @@ body {
 .pagination .page-item .page-link,
 .categori-widget .cat-list li a p,
 .comment-area .comment-box-area li .comment-box .right .name {
-    color: #000000; /* Text color changed to black */
+    color: #000000;
 }
 
 h1,
@@ -19,7 +19,7 @@ h5,
 h6,
 .compare-section .compare-table tbody th,
 .compare-section .compare-table thead .product-title,
-.section-title .title,
+.section-title ..title,
 .testimonial-area .testimonial-slider .client .client-name a,
 .faq .accordion .panel-title,
 .feature .feature-box .details .title,
@@ -35,7 +35,7 @@ h6,
 .tax-calculator .box-calculator .form-group label,
 .hero-area .left-content .content .subscribe-area .subscribe-form input,
 .mainmenu-area .navbar .base-btn2 {
-    color: #000000; /* Text color changed to black */
+    color: #000000;
 }
 
 p,
@@ -47,7 +47,7 @@ i,
 .testimonial-area .testimonial-slider .client .designation,
 .dealofweek .deal-slider-area .content .right-area .price del,
 .comment-area .comment-box-area li .comment-box .right .date {
-    color: #000000; /* Text color changed to black */
+    color: #000000;
 }
 
 .single-counter,
@@ -85,7 +85,7 @@ i,
 .video-play-btn:before,
 .video-play-btn,
 .mainmenu-area .navbar .base-btn2 {
-    background: #f5f5f5; /* Card background changed to light ash */
+    background: #c4c5c3; /* Card background changed to #c4c5c3 */
 }
 
 .dark-ip1.start-invest .table,
@@ -93,11 +93,11 @@ i,
 .dark-ip2,
 .start-invest .table,
 .start-invest .table tr th {
-    background: #f5f5f5; /* Card background changed to light ash */
+    background: #c4c5c3; /* Card background changed to #c4c5c3 */
 }
 
 .video-play-btn i {
-    background: -webkit-linear-gradient(to bottom, #000000, #000000); /* Gradient updated to black for text */
+    background: -webkit-linear-gradient(to bottom, #000000, #000000);
     background: linear-gradient(to bottom, #000000, #000000);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -105,7 +105,7 @@ i,
 
 .categori-widget .title,
 .latest-post-widget .title {
-    border-bottom: 1px solid rgba(0, 0, 0, 0.2); /* Border color adjusted for visibility on light background */
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .comment-area .comment-box-area li {
@@ -116,21 +116,21 @@ i,
 .contact .contact-form-wrapper .form-group .input-field,
 .auth .sign-form .form-control,
 .tax-calculator .box-calculator .form-group .input-field {
-    border: 1px solid rgba(0, 0, 0, 0.2); /* Border color adjusted for visibility */
+    border: 1px solid rgba(0, 0, 0, 0.2);
 }
 
 .choose_us .cu-menu li a .icon {
-    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15); /* Shadow adjusted for light background */
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
 }
 
 .choose_us .cu-content {
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Shadow adjusted for light background */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
     border-radius: 10px;
 }
 
 .pricing2 .pricing-tab .tab-menu #my-tab .nav-item .nav-link,
 .start-invest .tab-menu-area .nav-lend .nav-item .nav-link {
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2); /* Shadow adjusted for light background */
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 
 .hero-area .left-content .content .subscribe-area .subscribe-form input::placeholder,
@@ -139,7 +139,7 @@ i,
 .input-field::placeholder,
 .input-field::-webkit-placeholder,
 .input-field::-moz-placeholder {
-    color: #666666 !important; /* Placeholder color changed to a darker gray for visibility */
+    color: #666666 !important;
 }
 
 .mainmenu-area .navbar .base-btn2 {
@@ -148,5 +148,5 @@ i,
 
 .mainmenu-area .navbar .base-btn2:hover {
     border: 0px;
-    background: linear-gradient(50deg, #6e00ff 0, #bb00ff 100%); /* Hover effect unchanged */
+    background: linear-gradient(50deg, #6e00ff 0, #bb00ff 100%);
 }
