@@ -1,4 +1,4 @@
-<div class="mainmenu-area"style="background:linear-gradient(to bottom,#F5F5F5,#FFFFFF);border-bottom:none">
+<div class="mainmenu-area"style="background:linear-gradient(to bottom,#ECECEC,#FFFFFF);border-bottom:none">
 		<div class="container">
 			<div class="row">
 				
@@ -46,16 +46,16 @@
 							<?php
 							if(isset($_SESSION['admin']))
 							{ ?>
-								<a href="admin/signin" class="base-btn2"style="background: linear-gradient(to bottom, #4A00E0, #8E2DE2);"> Admin</a>							
+								<a href="admin/signin" class="base-btn2"style="background: linear-gradient(to bottom, #f7941d, #f76b1c);"> Admin</a>							
 						  <?php	}						
 						
 							else if(isset($_SESSION['auth']))
 							{ ?>
-								<a href="signin" class="base-btn2"style="background: linear-gradient(to bottom, #4A00E0, #8E2DE2);"> Dashboard</a>							
+								<a href="signin" class="base-btn2"style="background: linear-gradient(to bottom, #f7941d, #f76b1c);"> Dashboard</a>							
 						  <?php	}
 						  else
 						  { ?>
-						  <a href="signin" class="base-btn2"style="background: linear-gradient(to bottom, #4A00E0, #8E2DE2);"> Login</a>
+						  <a href="signin" class="base-btn2"style="background: linear-gradient(to bottom, #f7941d, #f76b1c);"> Login</a>
 						 <?php }
 							?>
 							
