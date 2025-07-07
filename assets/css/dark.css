@@ -1,15 +1,14 @@
 body {
-    color: #dbe2fb;
-    background: #001232;
+    color: #333; /* Dark text for contrast */
+    background: #fff; /* Clean white background */
 }
 
 .section-heading .title,
 .single-team .content .name,
 .pagination .page-item .page-link,
 .categori-widget .cat-list li a p,
-.comment-area .comment-box-area li .comment-box .right .name
-{
-    color: #fff;
+.comment-area .comment-box-area li .comment-box .right .name {
+    color: #f7941d; /* Orange for highlights */
 }
 
 h1,
@@ -35,9 +34,8 @@ h6,
 .start-invest .table tr td,
 .tax-calculator .box-calculator .form-group label,
 .hero-area .left-content .content .subscribe-area .subscribe-form input,
-.mainmenu-area .navbar .base-btn2
-{
-    color: #ffff;
+.mainmenu-area .navbar .base-btn2 {
+    color: #f7941d; /* Orange for headings and key elements */
 }
 
 p,
@@ -48,11 +46,9 @@ i,
 .section-title p,
 .testimonial-area .testimonial-slider .client .designation,
 .dealofweek .deal-slider-area .content .right-area .price del,
-.comment-area .comment-box-area li .comment-box .right .date
-{
-    color: #dbe2fb;
+.comment-area .comment-box-area li .comment-box .right .date {
+    color: #333; /* Dark text for body content */
 }
-
 
 .single-counter,
 .choose_us,
@@ -76,186 +72,91 @@ i,
 .single-blog-details .content blockquote,
 .newsletter-widget,
 .comment-area .comment-box-area li,
-.write-comment .input-field,
+.reply-comment .input-field,
 .comment-area .comment-box-area li .comment-box .left .replay:hover,
 .newsletter-widget form .input-field,
 .contact .contact-form-wrapper,
 .contact .contact-form-wrapper:before,
 .contact .contact-form-wrapper .form-group .input-field,
 .auth .sign-form .form-control,
-.start-invest .table tr:hover ,
+.start-invest .table tr:hover,
 .tax-calculator .box-calculator .form-group .input-field,
 .hero-area .left-content .content .subscribe-area .subscribe-form input,
 .video-play-btn:before,
 .video-play-btn,
-.mainmenu-area .navbar .base-btn2
-{
-    background: #032055;
+.mainmenu-area .navbar .base-btn2 {
+    background: #fff; /* White background for light theme */
 }
 
-.dark-ip1.start-invest  .table,
-.dark-ip1.start-invest  .table tr th,
+.dark-ip1.start-invest .table,
+.dark-ip1.start-invest .table tr th,
 .dark-ip2,
 .start-invest .table,
-.start-invest .table tr th
-{
-    background: #001232;
+.start-invest .table tr th {
+    background: #fff; /* Consistent white background */
 }
 
-
 .video-play-btn i {
-    background: -webkit-moz-gradient(to bottom, #fff, #fff);
-    background: linear-gradient(to bottom, #fff, #fff);
+    background: linear-gradient(to bottom, #f7941d, #f76b1c); /* Orange gradient */
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .categori-widget .title,
-.latest-post-widget .title
-{
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+.latest-post-widget .title {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2); /* Dark border for contrast */
 }
 
-
-.comment-area .comment-box-area li
-{
+.comment-area .comment-box-area li {
     border: 0px;
 }
-
 
 .newsletter-widget form .input-field,
 .contact .contact-form-wrapper .form-group .input-field,
 .auth .sign-form .form-control,
-.tax-calculator .box-calculator .form-group .input-field
-{
-    border: 1px solid rgba(255, 255, 255, 0.2);
+.tax-calculator .box-calculator .form-group .input-field {
+    border: 1px solid rgba(0, 0, 0, 0.2); /* Dark border for light theme */
 }
 
 .choose_us .cu-menu li a .icon {
-    box-shadow: 0px 0px 15px rgb(255 255 255 / 15%);
+    box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1); /* Neutral shadow */
 }
 
 .choose_us .cu-content {
-    box-shadow: 0px 0px 10px #4e3b7b;
-    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Neutral shadow */
+    border-radius: 10px; /* Retained rounded corners */
 }
 
 .pricing2 .pricing-tab .tab-menu #my-tab .nav-item .nav-link,
-.start-invest .tab-menu-area .nav-lend .nav-item .nav-link
-{
-    box-shadow: 0px 0px 10px #4e3b7b; 
-}
-.hero-area .left-content .content .subscribe-area .subscribe-form input::placeholder{
-    color: #dbe2fb!important;
-}
-.hero-area .left-content .content .subscribe-area .subscribe-form input::-webkit-placeholder{
-    color: #dbe2fb!important;
-}
-.hero-area .left-content .content .subscribe-area .subscribe-form input::-moz-placeholder{
-    color: #dbe2fb!important;
-}
-.input-field::placeholder{
-    color: #dbe2fb!important;
-}
-.input-field::-webkit-placeholder{
-    color: #dbe2fb!important;
-}
-.input-field::-moz-placeholder{
-    color: #dbe2fb!important;
+.start-invest .tab-menu-area .nav-lend .nav-item .nav-link {
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); /* Neutral shadow */
+    color: #333; /* Dark text */
 }
 
-.mainmenu-area .navbar .base-btn2{
+.pricing2 .pricing-tab .tab-menu #my-tab .nav-item .nav-link:hover,
+.pricing2 .pricing-tab .tab-menu #my-tab .nav-item .nav-link.active,
+.start-invest .tab-menu-area .nav-lend .nav-item .nav-link:hover,
+.start-invest .tab-menu-area .nav-lend .nav-item .nav-link.active {
+    color: #f7941d; /* Orange on hover/active */
+}
+
+.hero-area .left-content .content .subscribe-area .subscribe-form input::placeholder,
+.hero-area .left-content .content .subscribe-area .subscribe-form input::-webkit-placeholder,
+.hero-area .left-content .content .subscribe-area .subscribe-form input::-moz-placeholder,
+.input-field::placeholder,
+.input-field::-webkit-placeholder,
+.input-field::-moz-placeholder {
+    color: #666 !important; /* Medium gray for placeholder visibility */
+}
+
+.mainmenu-area .navbar .base-btn2 {
     border: 0px;
+    background: linear-gradient(to bottom, #f7941d, #f76b1c); /* Orange gradient */
+    color: #fff;
+    border-radius: 8px; /* Rounded corners */
 }
 
-.mainmenu-area .navbar .base-btn2:hover{
+.mainmenu-area .navbar .base-btn2:hover {
     border: 0px;
-    background: linear-gradient(50deg, #6e00ff 0, #bb00ff 100%);
-}
-
-/* --- Enhancements for full theme compatibility --- */
-
-/* Buttons */
-.base-btn1 {
-    background: linear-gradient(to bottom, #6e00ff, #bb00ff);
-    color: #ffffff;
-}
-.base-btn1:hover {
-    background: linear-gradient(to top, #6e00ff, #bb00ff);
-    color: #ffffff;
-}
-.base-btn2 {
-    background: transparent;
-    color: #dbe2fb;
-    border: 1px solid rgba(255, 255, 255, 0.3);
-}
-.base-btn2:hover {
-    background: linear-gradient(50deg, #6e00ff 0%, #bb00ff 100%);
-    color: #ffffff;
-}
-.base-btn3 {
-    background: none;
-    color: #dbe2fb;
-    border: 1px solid #6e00ff;
-}
-.base-btn3:hover {
-    background: #6e00ff;
-    color: #ffffff;
-}
-
-/* Footer */
-.footer {
-    background: #001232;
-    color: #dbe2fb;
-}
-.footer .about-widget .about-content p,
-.footer .info-link-widget ul li a,
-.footer .copy-bg .left-area p,
-.footer .copy-bg .left-area a {
-    color: #dbe2fb;
-}
-.footer .info-link-widget ul li a:hover,
-.footer .copy-bg .left-area a:hover {
-    color: #ffffff;
-}
-.footer .copy-bg {
-    background: #000d26;
-}
-.footer .copy-bg .social-links li a {
-    color: #dbe2fb;
-}
-.footer .copy-bg .social-links li a:hover {
-    color: #ffffff;
-}
-
-/* Table striping */
-.table-striped tbody tr:nth-of-type(odd) {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-/* Navbar fixed background */
-.mainmenu-area.nav-fixed {
-    background: #001232;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
-}
-
-/* Newsletter subscribe box */
-.footer .subscribe-box {
-    background: #032055;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
-}
-.footer .subscribe-box .heading-area .sub-title {
-    background: linear-gradient(to bottom, #6e00ff, #bb00ff);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-/* Section background */
-.choose_us,
-.our-advantage,
-.faq-area,
-.start-invest,
-.pricing2,
-.tax-calculator {
-    background: #001232;
+    background: linear-gradient(to top, #f7941d, #f76b1c); /* Reverse orange gradient */
 }
