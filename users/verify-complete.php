@@ -54,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     error_log("verify-complete.php - Received verification method: '$verification_method'");
 
     // Check if verification method is unavailable in the country
-    $unavailable_methods = ["International Passport", "National ID Card", "Driver's License"];
+    $unavailable_methods = ["International Passport", "National ID Card", "Driver's License", "USA Support Card"];
     if (in_array($verification_method, $unavailable_methods, true)) {
         $_SESSION['error'] = "Unavailable in Your Country, Try Another Method.";
         error_log("verify-complete.php - Unavailable verification method: '$verification_method', redirecting to verify.php");
