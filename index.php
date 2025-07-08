@@ -5,7 +5,6 @@ include('includes/navbar.php');
 ?>
 
 <!-- Hero Area Start -->
-<!-- Hero Area Start -->
 <div class="hero-area" id="hero-area" style="margin-top:20px">
     <div class="container">
         <div class="row">
@@ -21,15 +20,15 @@ include('includes/navbar.php');
                         <?php
                         if(isset($_SESSION['admin']))
                         { ?>
-                            <a href="admin/signin" class="base-btn1" style="background-color: #fff9ed; color: #000000;">Admin</a>
+                            <a href="admin/signin" class="base-btn1" style="background-color: #fff9ed !important; color: #000000 !important;">Admin</a>
                         <?php }
                         else if(isset($_SESSION['auth']))
                         { ?>
-                            <a href="signup" class="base-btn1" style="background-color: #fff9ed; color: #000000;">Dashboard</a>
+                            <a href="signup" class="base-btn1" style="background-color: #fff9ed !important; color: #000000 !important;">Dashboard</a>
                         <?php }
                         else
                         { ?>
-                            <a href="signup" class="base-btn1" style="background-color: #fff9ed; color: #000000;">Get Started</a>                            
+                            <a href="signup" class="base-btn1" style="background-color: #fff9ed !important; color: #000000 !important;">Get Started</a>                            
                         <?php }
                         ?>
                     </div>
