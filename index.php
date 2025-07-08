@@ -407,7 +407,7 @@ include('includes/navbar.php');
 <!-- Why Choose Us End -->
 
 <!-- Get Start Area Start -->
-<section class="ger-start-secrion" style="background:#ffffff">
+<section class="ger-start-secrion" style="background:#fff9ed">
     <div class="container">
         <div class="row">
             <div class="col-lg-5">
@@ -606,7 +606,7 @@ include('includes/navbar.php');
 <!-- Start invest Area End -->
 
 <!-- Testimonial Start -->
-<section class="testimonial" style="background:#ffffff">
+<section class="testimonial" style="background:##fff9ed">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8 col-md-10">
@@ -744,7 +744,7 @@ include('includes/navbar.php');
 <!-- Testimonial End -->
 
 <!-- Faq Area Start -->
-<section class="faq-area" style="background:#001232">
+<section class="faq-area" style="background:#fff9ed">
     <div class="container">
         <div class="row">
             <div class="col-lg-6 d-flex align-self-center">
