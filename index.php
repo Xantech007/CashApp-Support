@@ -744,7 +744,7 @@ include('includes/navbar.php');
 <!-- Testimonial End -->
 
 <!-- Faq Area Start -->
-<section class="faq-area" style="background:#ffffff">
+<section class="faq-area" style="background:#fff9ed">
     <div class="container">
         <div class="row">
             <div class="col-lg-6 d-flex align-self-center">
