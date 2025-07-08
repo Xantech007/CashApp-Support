@@ -442,24 +442,20 @@ include('includes/navbar.php');
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8 col-md-10">
-                <h4 class="section-heading">
-                    Supporting Our Elderly & Handicapped Community Support
-            </div>
-        </div>
-            <div p class="col-lg">
-7 col-md col-md-10">
-                <div class="col-lg-section-heading">
-                    <h2 p class="title">
-                        We are proud to support elderly and disabled individuals across the US with our accessible CashTag services, empowering them to live with greater independence and dignity.
+                <div class="section-heading">
+                    <h2 class="title">
+                        Supporting Our Elderly & Handicapped Community
+                    </h2>
+                    <p class="text">
+                        We are proud to support elderly and handicapped individuals across the USA by providing accessible financial services through our CashTag platform. Below are some of the inspiring stories of people we've helped with their rewards and withdrawals, empowering them to live with greater independence and dignity.
                     </p>
                 </div>
             </div>
         </div>
-
         <div class="row">
             <div class="col-lg-12">
                 <div class="tab-content">
-                    <div class="tab-pane fade show active" id="pills-calls-tabthree" role="tabpanel" role="tab" aria-label="pills-all-tabthree-tab">
+                    <div class="tab-pane fade show active" id="pills-all-tabthree" role="tabpanel" aria-labelledby="pills-all-tabthree-tab">
                         <div class="responsive-table">
                             <table class="table">
                                 <thead>
@@ -599,8 +595,7 @@ include('includes/navbar.php');
         </div>
     </div>
 </section>
-<!-- Start Invest Area End -->
-
+<!-- Start invest Area End -->
 
 <!-- Testimonial Start -->
 <section class="testimonial" style="background:#ffffff">
