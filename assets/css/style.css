@@ -655,8 +655,10 @@ select:focus {
   padding-top: 100px;
   overflow: hidden;
   position: relative;
-  background: linear-gradient(to bottom, #C4C4C3, #F5F5F5);
-  border-bottom: none;
+  background-image:linear-gradient(rgba(247, 148, 29, 0.7), rgba(247, 107, 28, 0.7)),url(../images/bitcoin3.jpg);
+  background-size:cover;
+  background-repeat: no-repeat;
+  background-position:center;
 }
 
 .footer.home5 {
