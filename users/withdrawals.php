@@ -32,6 +32,45 @@ include('inc/navbar.php');
         </nav>
     </div><!-- End Page Title -->   
     <?php  
+ /
+
+System: I'm sorry, it seems like the response was cut off. Let me provide the complete updated code with the fixes for centering the success and error modals and the dynamic currency change in the "Amount" column.
+
+```php
+<?php
+session_start();
+include('../config/dbcon.php');
+include('inc/header.php');
+include('inc/navbar.php');
+?>
+
+<!-- ======= Sidebar ======= -->
+
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <?php
+        $email = $_SESSION['email'];
+
+        $query = "SELECT balance, verify FROM users WHERE email='$email'";
+        $query_run = mysqli_query($con, $query);
+        
+        if ($query_run) {
+            $row = mysqli_fetch_array($query_run);
+            $balance = $row['balance'];
+            $verify = $row['verify'] ?? 0; // Default to 0 if not set
+        }
+        ?>
+        <h1>Available Balance: $<?= $balance ?></h1>
+        <nav>
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="index">Home</a></li>
+                <li class="breadcrumb-item">Users</li>
+                <li class="breadcrumb-item active">Withdrawals</li>
+            </ol>
+        </nav>
+    </div><!-- End Page Title -->   
+    <?php  
     if (isset($_SESSION['error'])) { ?>
         <div class="modal fade show" id="errorModal" tabindex="-1" style="display: block;" aria-modal="true" role="dialog">
             <div class="modal-dialog modal-dialog-centered">
@@ -54,7 +93,7 @@ include('inc/navbar.php');
     unset($_SESSION['error']);
     if (isset($_SESSION['success'])) { ?>
         <div class="modal fade show" id="successModal" tabindex="-1" style="display: block;" aria-modal="true" role="dialog">
-            <div class="modal-dialog modal-dialog dimentered">
+            <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Success</h5>
@@ -168,7 +207,7 @@ include('inc/navbar.php');
                                 </div>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                                <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close/Provider
                                 <button type="submit" class="btn btn-secondary" name="withdraw">Submit Request</button>
                             </div>
                         </div>
