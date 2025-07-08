@@ -1,8 +1,9 @@
-/*========
+/*========	
 
 Template Name:  Biniog - HYIP & Financial Investment Template
 Author: GeniusDevs.
 Version: 1.0
+
 
 ======================
 Table of Css Content 
@@ -27,10 +28,10 @@ Table of Css Content
 /* Faq Area Start */
 /* Get Start Area Start */
 /* Blog Area Start */
-/* Pagination Area Css Start */
-/* categori-widget Start */
-/* newsletter-widget Start */
-/* Blog Details Area Start */
+/*  Pagination Area Css Start */
+/*  categori-widget Start */
+/*  newsletter-widget Start */
+/*  Blog Details Area Start */
 /* Contact Area Start */
 /* About Page Start */
 /* Team Page Start */
@@ -42,7 +43,7 @@ Table of Css Content
 =============================
  */
 /* Typography */
-@import url("https://fonts.googleapis.com/css?family=Poppins:300,400,600,700|Open+Sans:400,600,700&display=swap");
+@import url("https://fonts.googleapis.com/css?family=Poppins:300,400,600,700|Open+Sans:400,600,700&amp;display=swap");
 /* Normalize  */
 html {
   font-family: "Open Sans", sans-serif;
@@ -57,7 +58,6 @@ body {
   margin: 0;
   color: #000000;
   overflow-x: hidden;
-  background: #ffffff;
 }
 
 body.modal-open {
@@ -192,16 +192,24 @@ select:focus {
   font-weight: 400;
   padding: 12px 30px;
   display: inline-block;
-  color: #ffffff;
+  color: #000000;
   border-radius: 50px;
   cursor: pointer;
   border: 0px;
   transition: all 0.3s ease-in;
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-moz-gradient(to bottom, #f7941d, #f76b1c);
+  /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to bottom, #f7941d, #f76b1c);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 .base-btn1:hover {
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-moz-gradient(to top, #f7941d, #f76b1c);
+  /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to top, #f7941d, #f76b1c);
-  color: #ffffff;
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  color: #000000;
 }
 .base-btn1 i {
   margin-left: 5px;
@@ -213,16 +221,16 @@ select:focus {
   font-weight: 400;
   padding: 12px 35px;
   display: inline-block;
-  color: #f7941d;
+  color: #5e00d9;
   border-radius: 50px;
   cursor: pointer;
   transition: all 0.3s ease-in;
-  background: #ffffff;
-  border: 1px solid #ffffff;
+  background: #fff;
+  border: 1px solid #fff;
 }
 .base-btn2:hover {
   background: none;
-  color: #ffffff;
+  color: #000000;
 }
 
 .base-btn3 {
@@ -230,16 +238,16 @@ select:focus {
   font-weight: 400;
   padding: 12px 35px;
   display: inline-block;
-  color: #f7941d;
-  border: 1px solid #f7941d;
+  color: #5e00d9;
+  border: 1px solid #5e00d9;
   border-radius: 50px;
   cursor: pointer;
   transition: all 0.3s ease-in;
   background: none;
 }
 .base-btn3:hover {
-  background: #f7941d;
-  color: #ffffff;
+  background: #5e00d9;
+  color: #000000;
 }
 
 .table-striped tbody tr:nth-of-type(odd) {
@@ -247,7 +255,7 @@ select:focus {
 }
 
 .bg-color1 {
-  background: #ffffff;
+  background: #F7F8FC;
 }
 
 .section-heading {
@@ -255,10 +263,10 @@ select:focus {
   margin-bottom: 57px;
 }
 .section-heading.text-white .title {
-  color: #ffffff;
+  color: #000000;
 }
 .section-heading.text-white .text {
-  color: #ffffff;
+  color: #000000;
 }
 .section-heading .title {
   font-size: 40px;
@@ -273,7 +281,6 @@ select:focus {
 .section-heading .text {
   font-size: 16px;
   line-height: 26px;
-  color: #000000;
 }
 
 .input-field {
@@ -295,23 +302,978 @@ select:focus {
   border: 1px solid red;
 }
 .input-field.error::-webkit-input-placeholder {
-  color: #f7941d;
+  color: #5e00d9;
 }
 .input-field.error:-moz-placeholder {
-  color: #f7941d;
+  color: #5e00d9;
 }
 .input-field.error::-moz-placeholder {
-  color: #f7941d;
+  color: #5e00d9;
 }
 .input-field.error:-ms-input-placeholder {
-  color: #f7941d;
+  color: #5e00d9;
 }
 .input-field.error:focus {
-  border-colorIt Work End */
+  border-color: #5e00d9;
+}
+
+.navbar-light .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255, 255, 255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+
+.navbar-toggler {
+  border: none !important;
+  margin: 0px;
+  padding: 0px;
+}
+
+.navbar-toggler:focus {
+  outline: 0px;
+}
+
+/* Preloader Css */
+.preloader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #001232;
+  z-index: 9999999;
+  transition: all 0.3s ease-in;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.preloader.hide {
+  opacity: 0;
+  display: none;
+}
+
+.loader {
+  position: relative;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  margin: 75px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.loader-1 .loader-outter {
+  position: absolute;
+  border: 4px solid transparent;
+  border-left-color: transparent;
+  border-bottom: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  animation: loader-1-outter 1s cubic-bezier(0.42, 0.61, 0.58, 0.41) infinite;
+}
+
+.loader-1 .loader-inner {
+  position: absolute;
+  border: 4px solid #fff;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  left: calc(50% - 20px);
+  top: calc(50% - 20px);
+  border-right: 0;
+  border-top-color: transparent;
+  animation: loader-1-inner 1s cubic-bezier(0.42, 0.61, 0.58, 0.41) infinite;
+}
+@keyframes loader-1-outter {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+@keyframes loader-1-inner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(-360deg);
+  }
+}
+/* bottomtotop Css */
+.bottomtotop i {
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  position: fixed;
+  font-size: 14px;
+  text-align: center;
+  border-radius: 50%;
+  color: #000000;
+  cursor: pointer;
+  transform: rotate(-90deg);
+  bottom: 15px;
+  right: 15px;
+  box-shadow: 0px 0px 21px 0px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-moz-gradient(to bottom, #001232,#032055);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #001232, #032055);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+/* Breadcrumb Area Start */
+.breadcrumb-area {
+  height: 400px;
+  padding: 185px 0px 185px;
+  position: relative;
+  overflow: hidden;
+  background-image:linear-gradient(rgba(247,105,28,0.5),rgba(247,105,28,0.5)),url(../images/bitcoin1.jpg);
+  background-size:cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.breadcrumb-area .title {
+  font-size: 40px;
+  line-height: 50px;
+  font-weight: 600;
+  margin-bottom: 11px;
+  color: #000000;
+}
+.breadcrumb-area .title.extra-padding {
+  margin-bottom: 24px;
+}
+.breadcrumb-area .breadcrumb-list li {
+  display: inline-block;
+}
+.breadcrumb-area .breadcrumb-list li span {
+  margin: 0px 7px;
+  color: #000000;
+}
+.breadcrumb-area .breadcrumb-list li a {
+  font-size: 16px;
+  transition: all 0.3s ease-in;
+  color: #000000;
+}
+.breadcrumb-area .breadcrumb-list li a:hover {
+  color: #f1f1f1;
+}
+.breadcrumb-area .breadcrumb-list li a.active {
+  color: #f1f1f1;
+}
+
+/* Popup Video CSS */
+.video-play-btn {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  line-height: 100px;
+  text-align: center;
+  font-size: 28px;
+  background: #fff;
+  border-radius: 50%;
+  position: relative;
+  z-index: 1;
+  color: #000000;
+}
+.video-play-btn:before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: block;
+  width: 120px;
+  height: 120px;
+  background: #fff;
+  border-radius: 50%;
+  animation: pulse-border 1600ms ease-out infinite;
+  z-index: -1;
+}
+.video-play-btn i {
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-moz-gradient(to bottom, #f7941d, #f76b1c);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #f7941d, #f76b1c);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Popup Video CSS */
+/* Main Menu Area Start */
+.mainmenu-area {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+}
+.mainmenu-area.nav-fixed {
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-moz-gradient(to bottom, #001232,#032055);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom,#001232,#032055);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  border-bottom: 0px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+.mainmenu-area .navbar {
+  padding: 0px 0px;
+}
+.mainmenu-area .navbar .navbar-brand {
+  padding: 0px;
+  margin: 0px;
+}
+.mainmenu-area .navbar .navbar-brand img {
+  max-height: 40px;
+}
+.mainmenu-area .navbar .mybtn2 {
+  margin-left: 20px;
+}
+.mainmenu-area .navbar #main_menu .navbar-nav .nav-item .nav-link {
+  color: #000000;
+  line-height: 26px;
+  font-size: 16px;
+  font-weight: 600;
+  position: relative;
+  padding: 20px 15px;
+  transition: all linear 0.3s;
+}
+.mainmenu-area .navbar #main_menu .navbar-nav .nav-item .nav-link .mr-hover-effect {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0;
+  width: 100%;
+  height: 50%;
+  opacity: 0;
+  background: rgba(255, 255, 255, 0.1);  
+  transition: all 0.3s ease-in;
+}
+.mainmenu-area .navbar #main_menu .navbar-nav .nav-item .nav-link.active, .mainmenu-area .navbar #main_menu .navbar-nav .nav-item .nav-link:hover .mainmenu-area .navbar #main_menu .navbar-nav .nav-item .nav-link:focus {
+  color: #000000;
+}
+.mainmenu-area .navbar #main_menu .navbar-nav .nav-item .nav-link.active .mr-hover-effect, .mainmenu-area .navbar #main_menu .navbar-nav .nav-item .nav-link:hover .mainmenu-area .navbar #main_menu .navbar-nav .nav-item .nav-link:focus .mr-hover-effect {
+  opacity: 1;
+  height: 100%;
+}
+.mainmenu-area .navbar #main_menu .navbar-nav .nav-item .dropdown-menu {
+  position: absolute;
+  z-index: 99;
+  margin-top: 0px !important;
+  background: #fff;
+  border-radius: 0px;
+  border: 0px;
+  padding-bottom: 0px;
+  padding-top: 0px;
+  box-shadow: 0px 8px 14px 0px rgba(0, 0, 0, 0.15);
+  transition: all linear 0.3s;
+}
+.mainmenu-area .navbar #main_menu .navbar-nav .nav-item .dropdown-menu .dropdown-item {
+  line-height: 26px;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 8px 15px 8px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  color: #000000;
+}
+.mainmenu-area .navbar #main_menu .navbar-nav .nav-item .dropdown-menu .dropdown-item i {
+  margin-right: 5px;
+  font-size: 12px;
+}
+.mainmenu-area .navbar #main_menu .navbar-nav .nav-item .dropdown-menu .dropdown-item:hover {
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-moz-gradient(to bottom, #001232,#032055);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom,#001232,#032055 );
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  color: #000000;
+}
+.mainmenu-area .navbar #main_menu .navbar-nav .nav-item.dropdown:hover .dropdown-menu {
+  display: block;
+}
+.mainmenu-area .navbar .base-btn2 {
+  margin-left: 15px;
+  padding: 7px 20px;
+  background: #fff;
+  border: 1px solid #fff;
+}
+.mainmenu-area .navbar .base-btn2:hover {
+  background: none;
+  color: #000000;
+}
+
+/* Main Menu Area End */
+/* Footer Area Start */
+.footer {
+  padding-top: 100px;
+  overflow: hidden;
+  position: relative;
+  background-image:linear-gradient(rgba(4,9,30,0.96),rgba(4,9,30,0.96)),url(../images/bitcoin3.jpg);
+  background-size:cover;
+  background-repeat: no-repeat;
+  background-position:center;
+
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.footer.home5 {
+  background: #C4C4C3;
+}
+.footer.home5 .copy-bg {
+  background: #C4C4C3;
+}
+.footer .footer-logo {
+  margin-top: -10px;
+  margin-bottom: 25px;
+}
+.footer .footer-widget .title {
+  font-size: 20px;
+  line-height: 30px;
+  font-weight: 600;
+  color: #000000;
+}
+.footer .about-widget .fotter-logo {
+  display: inline-block;
+}
+.footer .about-widget .about-content {
+  margin-top: 23px;
+}
+.footer .about-widget .about-content p {
+  color: rgba(255, 255, 255, 0.8);
+}
+.footer .about-widget .subscribe-form {
+  position: relative;
+  margin-top: 25px;
+}
+.footer .about-widget .subscribe-form input {
+  width: 100%;
+  height: 50px;
+  font-size: 15px;
+  border: 0px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 50px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.07);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  padding: 0px 60px 0px 20px;
+  color: #000000;
+}
+.footer .about-widget .subscribe-form input::placeholder {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+.footer .about-widget .subscribe-form .submit-btn {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  height: 40px;
+  width: 40px;
+  color: #000000;
+  border: 0px;
+  border-radius: 50px;
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-moz-gradient(to bottom,#5e00d9,#001232  );
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom,#5e00d9,#001232  );
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  transition: all 0.3s ease-in;
+}
+.footer .about-widget .subscribe-form .submit-btn:focus {
+  outline: 0px;
+  box-shadow: unset;
+}
+.footer .about-widget .subscribe-form .submit-btn:hover {
+  background-size: 200% 100%;
+}
+.footer .info-link-widget ul {
+  padding-left: 0px;
+  margin-bottom: 0px;
+}
+.footer .info-link-widget ul li {
+  list-style: none;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.25);
+}
+.footer .info-link-widget ul li:last-child {
+  border-bottom: 0px;
+}
+.footer .info-link-widget ul li a {
+  transition: all 0.3s ease-in;
+  font-size: 16px;
+  line-height: 35px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.8);
+}
+.footer .info-link-widget ul li a:hover {
+  color: black;
+  padding-left: 7px;
+}
+.footer .info-link-widget ul li a i {
+  font-size: 14px;
+  padding-right: 4px;
+}
+.footer .copy-bg {
+  margin-top: 87px;
+  padding: 24px 0px 25px;
+  /* Chrome 10-25, Safari 5.1-6 */
+  background:rgba(4,9,30,0.9);
+ 
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.footer .copy-bg .left-area p {
+  font-size: 16px;
+  line-height: 26px;
+  margin-bottom: 0px;
+  color: rgba(255, 255, 255, 0.8);
+}
+.footer .copy-bg .left-area a {
+  font-size: 16px;
+  line-height: 26px;
+  margin-bottom: 0px;
+  transition: all 0.3s ease-in;
+}
+.footer .copy-bg .left-area a:hover {
+  color: black;
+}
+.footer .copy-bg .social-links {
+  text-align: right;
+}
+.footer .copy-bg .social-links li {
+  display: inline-block;
+  margin-right: 10px;
+}
+.footer .copy-bg .social-links li:last-child {
+  margin-right: 0px;
+}
+.footer .copy-bg .social-links li a {
+  font-size: 14px;
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease-in;
+}
+.footer .copy-bg .social-links li a:hover {
+  color: black;
+}
+.footer .subscribe-box {
+  margin-bottom: 110px;
+  z-index: 99;
+  background: url(../images/newsletter.html);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: cover;
+  padding: 50px 60px 55px;
+  box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+}
+.footer .subscribe-box .heading-area {
+  text-align: center;
+}
+.footer .subscribe-box .heading-area .sub-title {
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 34px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-moz-gradient(to bottom, #f7941d, #f76b1c);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #f7941d, #f76b1c);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.footer .subscribe-box .heading-area .title {
+  font-size: 40px;
+  line-height: 50px;
+  font-weight: 700;
+  margin-bottom: 50px;
+  text-transform: uppercase;
+}
+.footer .subscribe-box .icon {
+  width: 100%;
+  text-align: right;
+}
+.footer .subscribe-box .icon img {
+  display: inline-block;
+}
+.footer .subscribe-box .form-area {
+  width: 100%;
+}
+.footer .subscribe-box .form-area input {
+  width: 100%;
+  height: 50px;
+  background: none;
+  border: 0px;
+  border-bottom: 1px solid #b4b8d1;
+  border-radius: 0px;
+  color: #000000;
+}
+.footer .subscribe-box .form-area input::-webkit-input-placeholder {
+  color: #000000;
+}
+.footer .subscribe-box .form-area input:-moz-placeholder {
+  color: #000000;
+}
+.footer .subscribe-box .form-area input::-moz-placeholder {
+  color: #000000;
+}
+.footer .subscribe-box .form-area input:-ms-input-placeholder {
+  color: #000000;
+}
+.footer .subscribe-box .button-area {
+  width: 100%;
+}
+.footer .subscribe-box .button-area .mybtn1 {
+  display: block;
+  width: 100%;
+  height: 50px;
+  position: relative;
+  background-image: linear-gradient(to right,#001232,#032055 );
+}
+.footer .subscribe-box .button-area .mybtn1 span {
+  position: absolute;
+  top: 0;
+  right: 0px;
+  width: 50px;
+  height: 50px;
+  text-align: center;
+  line-height: 50px;
+  background: #db5263;
+  border-radius: 50%;
+}
+.footer .subscribe-box .button-area .mybtn1:hover {
+  background-image: linear-gradient(to left, #ff344d, #d2273c);
+}
+
+/* Hero Area Start */
+.hero-area {
+  position: relative;
+  overflow: hidden;
+}
+.hero-area .left-content {
+  z-index: 9;
+}
+.hero-area .left-content .content .title {
+  font-size: 50px;
+  font-weight: 600;
+  line-height: 60px;
+  margin-bottom: 19px;
+}
+.hero-area .left-content .content .text {
+  font-size: 18px;
+  line-height: 28px;
+  margin-bottom: 40px;
+  margin-bottom: 47px;
+}
+.hero-area .left-content .content .subscribe-area .subscribe-form {
+  position: relative;
+}
+.hero-area .left-content .content .subscribe-area .subscribe-form input {
+  width: 100%;
+  height: 55px;
+  border: 0px;
+  background: #fff;
+  border-radius: 50px;
+  padding: 0px 190px 0px 30px;
+}
+.hero-area .left-content .content .subscribe-area .subscribe-form .submit-btn {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  height: 51px;
+  line-height: 51px;
+  padding: 0px 30px;
+  background: linear-gradient(50deg, #032055 0, #001232 100%);
+  background-size: 100% 200%;
+  color: #000000;
+  border: 0px;
+  border-radius: 50px;
+  transition: all 0.3s ease-in;
+}
+.hero-area .left-content .content .subscribe-area .subscribe-form .submit-btn:focus {
+  outline: 0px;
+  box-shadow: unset;
+}
+.hero-area .left-content .content .subscribe-area .subscribe-form .submit-btn:hover {
+  background-size: 200% 100%;
+}
+
+.hero-area {
+  /* Chrome 10-25, Safari 5.1-6 */ 
+  /* Chrome 10-25, Safari 5.1-6 */
+ background-image:linear-gradient(rgba(4,9,30,0.7),rgba(4,9,30,0.7)),url(../images/banner.jpg);
+ background-size:cover;
+ background-repeat: no-repeat;
+ background-position:center;
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  padding: 165px 0px 249px;
+}
+.hero-area .left-content {
+  z-index: 9;
+}
+.hero-area .left-content .content .title {
+  color: #000000;
+}
+.hero-area .left-content .content .text {
+  color: #000000;
+}
+.hero-area .left-content .content .subscribe-area {
+  display: flex;
+}
+.hero-area .left-content .content .subscribe-area .subscribe-form {
+  align-self: center;
+  position: relative;
+  box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 50px;
+  flex: 1;
+}
+.hero-area .left-content .content .subscribe-area .video-play-btn {
+  margin-left: 20px;
+  display: inline-block;
+  width: 55px;
+  height: 55px;
+  line-height: 55px;
+  font-size: 18px;
+}
+.hero-area .left-content .content .subscribe-area .video-play-btn::before {
+  width: 60px;
+  height: 60px;
+}
+.hero-area .right-content {
+  text-align: center;
+  padding: 0px 30px;
+}
+.hero-area .right-content img {
+  display: inline-block;
+}
+
+/* Hero Area End */
+/* Our Features Start */
+.top-counter {
+  padding: 0px 0px 92px;
+  margin-top: -150px;
+}
+.top-counter .section-heading {
+  margin-bottom: 53px;
+}
+.top-counter .base-btn1 {
+  margin-top: 30px;
+}
+
+.single-counter {
+  text-align: center;
+  padding: 30px 30px 27px;
+  margin-bottom: 30px;
+  transition: all 0.3s ease-in;
+  background: #fff;
+  box-shadow: 0px 8px 30px rgba(0, 0, 0, 0.08);
+}
+.single-counter .icon {
+  font-size: 50px;
+  line-height: 100px;
+  width: 100px;
+  height: 100px;
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-moz-gradient(to bottom, #f7941d, #f76b1c);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #f7941d, #f76b1c);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  display: inline-block;
+  border-radius: 50%;
+  margin-bottom: 19px;
+  font-weight: normal;
+  color: #000000;
+  transition: all 0.3s ease-in;
+}
+.single-counter .icon-img {
+  margin-bottom: 25px;
+}
+.single-counter .title {
+  font-size: 40px;
+  line-height: 50px;
+  font-weight: 5600;
+  margin-bottom: 15px;
+}
+.single-counter .sub-title {
+  font-size: 24px;
+  font-weight: 6;
+  font-weight: 600;
+}
+.single-counter p {
+  margin-bottom: 0px;
+}
+.single-counter:hover {
+  box-shadow: 0px 10px 35px rgba(0, 0, 0, 0.1);
+  transform: translateY(-5px);
+}
+.single-counter:hover .icon {
+  color: #000000;
+}
+
+/* Our Features End */
+/* About Area Start */
+.about-area {
+  padding-bottom: 130px;
+}
+.about-area .section-heading {
+  margin-bottom: 55px;
+}
+.about-area .content .top-heading .title {
+  font-size: 24px;
+  line-height: 34px;
+  margin-bottom: 22px;
+}
+.about-area .content .top-heading .text {
+  margin-bottom: 26px;
+}
+.about-area .about-list.with-icon li .feature-info {
+  display: flex;
+  margin-bottom: 9px;
+}
+.about-area .about-list.with-icon li .feature-info .icon {
+  font-size: 38px;
+  line-height: 80px;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  display: inline-block;
+  color: #000000;
+  margin-right: 20px;
+  text-align: center;
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-moz-gradient(to bottom, #f7941d, #f76b1c);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #f7941d, #f76b1c);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+.about-area .about-list.with-icon li .feature-info .inner-content {
+  flex: 1;
+}
+.about-area .about-list.with-icon li .feature-info .inner-content .title {
+  font-size: 18px;
+  line-height: 28px;
+}
+.about-area .about-list.with-icon li .feature-info .inner-content p {
+  padding-left: 0px;
+}
+.about-area .about-list.with-icon li:last-child .feature-info {
+  margin-bottom: 0px;
+}
+
+/* About Area End */
+/* Why Choose Us Start */
+.choose_us {
+  padding: 120px 0px 130px;
+  background: #F7F8FC;
+}
+.choose_us .cu-menu {
+  display: block;
+  text-align: center;
+  margin-bottom: 14px;
+}
+.choose_us .cu-menu li {
+  display: inline-block;
+}
+.choose_us .cu-menu li a {
+  display: block;
+  text-align: center;
+}
+.choose_us .cu-menu li a .icon {
+  font-size: 40px;
+  line-height: 90px;
+  width: 90px;
+  height: 90px;
+  display: inline-block;
+  border-radius: 50%;
+  margin-bottom: 15px;
+  font-weight: normal;
+  color: #000000;
+  text-align: center;
+  transition: all 0.3s ease-in;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
+}
+.choose_us .cu-menu li a .title {
+  font-size: 18px;
+  line-height: 28px;
+}
+.choose_us .cu-menu li a.active .icon {
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-moz-gradient(to bottom, #f7941d, #f76b1c);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #f7941d, #f76b1c);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  color: #000000;
+}
+.choose_us .cu-content {
+  background: #fff;
+  padding: 30px;
+  box-shadow: 0px 0px 20px #d4d4d4;
+}
+.choose_us .cu-content .content .heading {
+  text-align: left;
+}
+.choose_us .cu-content .content .heading .title {
+  margin-bottom: 20px;
+  font-size: 30px;
+  line-height: 30px;
+  margin-top: 10px;
+}
+.choose_us .cu-content .image {
+  text-align: center;
+  display: block;
+}
+.choose_us .cu-content .image img {
+  display: inline-block;
+}
+
+/* Why Choose Us Emd */
+/* Start invest Area Start */
+.start-invest {
+  padding: 120px 0px 115px;
+  position: relative;
+}
+.start-invest .section-heading {
+  margin-bottom: 58px;
+}
+.start-invest .tab-menu-area {
+  display: block;
+  text-align: center;
+  margin-bottom: 25px;
+}
+.start-invest .tab-menu-area .nav-lend {
+  display: inline-block;
+}
+.start-invest .tab-menu-area .nav-lend .nav-item {
+  display: inline-block;
+}
+.start-invest .tab-menu-area .nav-lend .nav-item .nav-link {
+  line-height: 50px;
+  padding: 0px 50px;
+  border-radius: 50px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #000000;
+  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
+  margin: 0px 5px;
+}
+.start-invest .tab-menu-area .nav-lend .nav-item .nav-link.active {
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-moz-gradient(to bottom, #f7941d, #f76b1c);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #f7941d, #f76b1c);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  color: #000000;
+}
+.start-invest .table {
+  box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.15);
+  position: relative;
+}
+.start-invest .table tr {
+  transition: all 0.3s ease-in;
+}
+.start-invest .table tr td,
+.start-invest .table tr th {
+  border-top: 1px solid rgba(255, 255, 255, 0.09);
+}
+.start-invest .table tr th {
+  font-size: 18px;
+  font-weight: 600;
+  text-transform: uppercase;
+  border-top: 0px;
+  border-bottom: 0px;
+  padding: 20px 15px;
+  background: #F7F8FC;
+}
+.start-invest .table tr td {
+  vertical-align: middle;
+  padding: 20px 15px;
+  font-weight: 600;
+  font-size: 16px;
+  font-weight: 700;
+  color: #000000;
+}
+.start-invest .table tr td:nth-child(1) img {
+  margin-right: 5px;
+}
+.start-invest .table tr td:nth-child(3) {
+  color: #045cf0;
+}
+.start-invest .table tr td:nth-child(4) {
+  color: #f0ad4e;
+}
+.start-invest .table tr td a {
+  font-size: 600;
+}
+.start-invest .table tr td a.base-btn1 {
+  padding: 4px 15px;
+}
+.start-invest .table tr:hover {
+  background: #f8f8f8;
+}
+
+/* Start invest Area End */
+/* How It Work Start */
+.how-it-work {
+  padding: 116px 0px 130px;
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: #ffffff;
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: #ffffff;
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.single-how-it-work {
+  text-align: center;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  padding: 30px 30px 26px;
+  transition: all 0.3s ease-in;
+  background: #fff;
+}
+.single-how-it-work .icon {
+  font-size: 50px;
+  line-height: 100px;
+  width: 100px;
+  height: 100px;
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-moz-gradient(to bottom, #f7941d, #f76b1c);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #f7941d, #f76b1c);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  border-radius: 50%;
+  display: inline-block;
+  margin-bottom: 19px;
+  font-weight: normal;
+  color: #000000;
+  transition: all 0.3s ease-in;
+}
+.single-how-it-work .icon-img {
+  margin-bottom: 25px;
+}
+.single-how-it-work .title {
+  font-size: 24px;
+  line-height: 34px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  margin-top: 3px;
+}
+.single-how-it-work p {
+  margin-bottom: 0px;
+}
+.single-how-it-work:hover {
+  box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.1);
+  transform: translateY(-5px);
+}
+
+/* How It Work End */
 /* Testimonial Start */
 .testimonial {
   padding: 121px 0px 115px;
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-moz-gradient(to bottom, #f7941d, #f76b1c);
+  /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to bottom, #f7941d, #f76b1c);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 .testimonial .section-heading {
   margin-bottom: 41px;
@@ -321,7 +1283,7 @@ select:focus {
 }
 
 .single-review {
-  background: #ffffff;
+  background: #fff;
   padding: 26px 30px 30px;
   border-radius: 7px;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.08);
@@ -337,7 +1299,6 @@ select:focus {
 }
 .single-review .content p {
   margin-bottom: 0px;
-  color: #000000;
 }
 .single-review .reviewr {
   display: flex;
@@ -357,13 +1318,11 @@ select:focus {
   line-height: 28px;
   font-weight: 600;
   margin-bottom: 0px;
-  color: #000000;
 }
 .single-review .reviewr .content p {
   font-size: 14px;
   line-height: 24px;
   margin-bottom: 0px;
-  color: #000000;
 }
 .single-review:hover {
   transform: translateY(-5px);
@@ -374,7 +1333,6 @@ select:focus {
 /* Tax Calculator Area Start */
 .tax-calculator {
   padding: 120px 0px 130px;
-  background: #ffffff;
 }
 .tax-calculator .box-calculator {
   box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
@@ -384,9 +1342,13 @@ select:focus {
   line-height: 34px;
   margin-bottom: 15px;
   padding-bottom: 5px;
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-moz-gradient(to bottom, #f7941d, #f76b1c);
+  /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to bottom, #f7941d, #f76b1c);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   padding: 12px 30px 11px;
-  color: #ffffff;
+  color: #000000;
 }
 .tax-calculator .box-calculator .calculate-wrappwr {
   padding: 10px 30px 16px;
@@ -408,7 +1370,6 @@ select:focus {
 .pricing2 {
   padding: 121px 0px 130px;
   position: relative;
-  background: #ffffff;
 }
 .pricing2 .section-heading {
   margin-bottom: 55px;
@@ -442,14 +1403,18 @@ select:focus {
   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);
 }
 .pricing2 .pricing-tab .tab-menu #my-tab .nav-item .nav-link.active, .pricing2 .pricing-tab .tab-menu #my-tab .nav-item .nav-link:hover {
-  color: #ffffff;
+  color: #000000;
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-moz-gradient(to bottom, #f7941d, #f76b1c);
+  /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to bottom, #f7941d, #f76b1c);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 .pricing2 .price-box {
   text-align: center;
   padding: 22px 30px 30px;
   position: relative;
-  background: #ffffff;
+  background: #fff;
   border: 1px solid rgba(0, 0, 0, 0.08);
   transition: all 0.3s ease-in;
 }
@@ -458,23 +1423,25 @@ select:focus {
   font-weight: 600;
   line-height: 30px;
   margin-bottom: 0px;
-  color: #000000;
 }
 .pricing2 .price-box .price-title .heading-sub-title {
   margin-bottom: 0px;
   font-size: 14px;
   line-height: 24px;
   font-weight: 600;
-  color: #000000;
 }
 .pricing2 .price-box .price-rate {
   width: 100%;
   text-align: center;
   border-radius: 4px;
-  color: #ffffff;
+  color: #000000;
   padding: 16px 20px 16px;
   margin: 22px 0px 17px;
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-moz-gradient(to bottom, #f7941d, #f76b1c);
+  /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to bottom, #f7941d, #f76b1c);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   transition: all 0.3s ease-in;
   position: relative;
 }
@@ -491,10 +1458,10 @@ select:focus {
   line-height: 40px;
   margin-bottom: 0px;
   font-weight: 700;
-  color: #ffffff;
+  color: #000000;
 }
 .pricing2 .price-box .price-rate .duration {
-  color: #ffffff;
+  color: #000000;
   font-size: 14px;
   margin-bottom: 0px;
 }
@@ -507,7 +1474,6 @@ select:focus {
   margin-bottom: 0px;
   font-size: 16px;
   line-height: 38px;
-  color: #000000;
 }
 .pricing2 .price-box .buy-btn-wrapper {
   margin-top: 20px;
@@ -522,20 +1488,18 @@ select:focus {
 /* Our Advantage Area Start */
 .our-advantage {
   padding: 120px 0px 130px;
-  background: #ffffff;
+  background: #F7F8FC;
 }
 .our-advantage .content .title {
   font-size: 24px;
   line-height: 34px;
   margin-bottom: 20px;
-  color: #000000;
 }
 
 /* Our Advantage Area End */
 /* Team Area Start */
 .team {
   padding: 121px 0px 115px;
-  background: #ffffff;
 }
 .team .section-heading {
   margin-bottom: 36px;
@@ -590,7 +1554,7 @@ select:focus {
   transition: all 0.3s ease-in;
 }
 .single-team .content .social-links li a:hover {
-  color: #f7941d;
+  color: #5e00d9;
 }
 .single-team:hover {
   transform: translateY(-5px);
@@ -601,10 +1565,10 @@ select:focus {
 /* Faq Area Start */
 .faq-area {
   padding: 130px 0px 130px;
-  background: #ffffff;
+  background: #F7F8FC;
 }
 .faq-area.home5 {
-  background: #c4c4c3;
+  background: #C4C4C3;
 }
 .faq-area .section-heading {
   text-align: left;
@@ -626,13 +1590,17 @@ select:focus {
 .single-accordion {
   box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.04);
   margin-bottom: 30px;
-  background: #ffffff;
+  background: #fff;
 }
 .single-accordion:last-child {
   margin-bottom: 0px;
 }
 .single-accordion .accordion-header {
-  background: linear-gradient(to bottom, #f7941d, #f76b1c);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-moz-gradient(to bottom,#032055,#f7941d  );
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to bottom, #032055,#f7941d );
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   border: 1px solid rgba(0, 0, 0, 0.05);
   padding: 15px 20px;
 }
@@ -647,7 +1615,7 @@ select:focus {
   cursor: pointer;
   position: relative;
   padding-left: 34px;
-  color: #ffffff;
+  color: #000000;
 }
 .single-accordion .accordion-header .title i {
   position: absolute;
@@ -662,25 +1630,27 @@ select:focus {
   border-bottom: 1px solid rgba(0, 0, 0, 0.05);
   border-left: 1px solid rgba(0, 0, 0, 0.05);
   border-right: 1px solid rgba(0, 0, 0, 0.05);
-  color: #000000;
 }
 
 .faq-area2 {
   padding: 130px 0px 140px;
-  background: #ffffff;
 }
 
 /* Faq Area End */
 /* Get Start Area Start */
 .ger-start-secrion {
   padding: 95px 0px 82px;
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: -webkit-moz-gradient(to bottom, #f7941d, #f76b1c);
+  /* Chrome 10-25, Safari 5.1-6 */
   background: linear-gradient(to bottom, #f7941d, #f76b1c);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 .ger-start-secrion .title {
   font-size: 30px;
   line-height: 40px;
   font-weight: 600;
-  color: #ffffff;
+  color: #000000;
 }
 .ger-start-secrion .right-links {
   text-align: right;
@@ -698,7 +1668,6 @@ select:focus {
 /* Blog Area Start */
 .blog-section {
   padding: 120px 0px 119px;
-  background: #ffffff;
 }
 .blog-section .section-heading {
   margin-bottom: 56px;
@@ -713,7 +1682,10 @@ select:focus {
   position: absolute;
   content: "";
   top: 0;
-  left:0, 0, 0, 0.2);
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.2);
   opacity: 0;
   transition: all 0.3s ease-in;
 }
@@ -732,17 +1704,15 @@ select:focus {
 }
 .single-blog .content .top-meta li p {
   margin-bottom: 11px;
-  color: #000000;
 }
 .single-blog .content .title {
   font-size: 20px;
   line-height: 30px;
   font-weight: 600;
   transition: all 0.3s ease-in;
-  color: #000000;
 }
 .single-blog .content .title:hover {
-  color: #f7941d;
+  color: #5e00d9;
 }
 .single-blog:hover .img::after {
   opacity: 1;
@@ -752,7 +1722,6 @@ select:focus {
 /* Blog Page Grid Area Start */
 .blog-page {
   padding: 130px 0px 130px;
-  background: #ffffff;
 }
 .blog-page .single-blog {
   margin-bottom: 26px;
@@ -762,7 +1731,7 @@ select:focus {
 }
 
 /* Blog Page Grid Area End */
-/* Pagination Area Css Start */
+/*  Pagination Area Css Start */
 .pagination {
   margin-top: 30px;
   display: block;
@@ -777,7 +1746,7 @@ select:focus {
   text-align: center;
   background: #F7F8FC;
   line-height: 35px;
-  color: #000000;
+  color: rgba(0, 0, 0, 0.6);
   box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.2);
   font-size: 14px;
   margin: 0px 3px 0px;
@@ -786,18 +1755,17 @@ select:focus {
   border: 0px;
   transition: all 0.3s ease-in;
 }
-.pagination .page-item .page-link.active, .pagination .page-item .ナpage-link:hover {
-  color: #ffffff;
-  background: #f7941d;
+.pagination .page-item .page-link.active, .pagination .page-item .page-link:hover {
+  color: #000000;
+  background: #2364d2;
 }
 
-/* Pagination Area Css End */
-/* categori-widget Start */
+/*  Pagination Area Css End */
+/*  categori-widget Start */
 .categori-widget {
   padding: 22px 30px 25px;
   border-radius: 10px;
   box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.15);
-  background: #ffffff;
 }
 .categori-widget .title {
   font-size: 24px;
@@ -807,7 +1775,6 @@ select:focus {
   padding-bottom: 17px;
   margin-bottom: 13px;
   text-align: center;
-  color: #000000;
 }
 .categori-widget .cat-list {
   padding-top: 2px;
@@ -835,24 +1802,23 @@ select:focus {
   font-size: 10px;
   line-height: 10px;
   font-weight: 600;
-  background: #f7941d;
-  color: #ffffff;
+  background: #5e00d9;
+  color: #000000;
   padding: 4px 8px;
   border-radius: 50px;
   align-self: center;
 }
 .categori-widget .cat-list li a:hover p {
-  color: #f7941d;
+  color: #5e00d9;
 }
 
-/* categori-widget End */
-/* latest-post-widget Start */
+/*  categori-widget End */
+/*  latest-post-widget Start */
 .latest-post-widget {
   margin-top: 30px;
   padding: 22px 30px 28px;
   border-radius: 10px;
   box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.15);
-  background: #ffffff;
 }
 .latest-post-widget .title {
   font-size: 24px;
@@ -862,7 +1828,6 @@ select:focus {
   padding-bottom: 11px;
   margin-bottom: 12px;
   text-align: center;
-  color: #000000;
 }
 .latest-post-widget .post-list {
   padding-left: 0px;
@@ -902,20 +1867,18 @@ select:focus {
   font-weight: 600;
   margin-bottom: 0px;
   transition: all 0.3s ease-in;
-  color: #000000;
 }
 .latest-post-widget .post-list li .post .post-details .post-title:hover {
-  color: #f7941d;
+  color: #5e00d9;
 }
 
-/* latest-post-widget End */
-/* newsletter-widget Start */
+/*  latest-post-widget End */
+/*  newsletter-widget Start */
 .newsletter-widget {
   margin-top: 30px;
   padding: 22px 30px 30px;
   border-radius: 10px;
   box-shadow: 2px 2px 7px rgba(0, 0, 0, 0.15);
-  background: #ffffff;
 }
 .newsletter-widget .title {
   font-size: 24px;
@@ -925,7 +1888,6 @@ select:focus {
   padding-bottom: 12px;
   margin-bottom: 20px;
   text-align: center;
-  color: #000000;
 }
 .newsletter-widget form .input-field {
   width: 100%;
@@ -942,11 +1904,11 @@ select:focus {
   padding: 0px;
   margin-top: 0px;
   border: 0px;
-  border: 1px solid #f7941d;
+  border: 1px solid #5e00d9;
 }
 
-/* newsletter-widget End */
-/* Blog Details Area Start */
+/*  newsletter-widget End */
+/*  Blog Details Area Start */
 .single-blog-details .img {
   position: relative;
   border-radius: 13px;
@@ -969,7 +1931,6 @@ select:focus {
 .single-blog-details .content .top-meta li p {
   padding-left: 0px;
   margin-bottom: 0px;
-  color: #000000;
 }
 .single-blog-details .content .title {
   font-size: 30px;
@@ -977,14 +1938,13 @@ select:focus {
   font-weight: 600;
   margin-bottom: 20px;
   transition: all 0.3s ease-in;
-  color: #000000;
 }
 .single-blog-details .content blockquote {
   margin: 22px 0px 22px;
   display: block;
   background: #F7F8FC;
   padding: 34px 40px 37px;
-  border-left: 4px solid #f7941d;
+  border-left: 4px solid #5e00d9;
   font-size: 16px;
   line-height: 26px;
   font-weight: 600;
@@ -994,7 +1954,6 @@ select:focus {
   line-height: 26px;
   font-weight: 600;
   margin-bottom: 0px;
-  color: #000000;
 }
 .single-blog-details .content ul {
   margin-bottom: 15px;
@@ -1005,13 +1964,12 @@ select:focus {
   line-height: 26px;
   padding-left: 30px;
   position: relative;
-  color: #000000;
 }
 .single-blog-details .content ul li p i {
   position: absolute;
   left: 0px;
   top: 4px;
-  color: #f7941d;
+  color: #5e00d9;
 }
 
 .comment-area {
@@ -1026,7 +1984,6 @@ select:focus {
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   padding-bottom: 10px;
   margin-bottom: 30px;
-  color: #000000;
 }
 .comment-area .comment-box-area {
   padding-left: 0px;
@@ -1064,16 +2021,16 @@ select:focus {
   text-align: center;
   border-radius: 50px;
   display: inline-block;
-  color: #ffffff;
-  background: #f7941d;
+  color: #000000;
+  background: #5e00d9;
   font-size: 13px;
   font-weight: 600;
   transition: all 0.3s ease-in;
-  border: 1px solid #f7941d;
+  border: 1px solid #5e00d9;
 }
 .comment-area .comment-box-area li .comment-box .left .replay:hover {
-  background: #ffffff;
-  color: #f7941d;
+  background: #fff;
+  color: #5e00d9;
 }
 .comment-area .comment-box-area li .comment-box .right {
   margin-left: 100px;
@@ -1087,13 +2044,12 @@ select:focus {
 .comment-area .comment-box-area li .comment-box .right .date {
   font-size: 14px;
   font-weight: 24px;
-  color: #000000;
+  color: #888;
 }
 .comment-area .comment-box-area li .comment-box .right .text p {
   font-size: 16px;
   line-height: 26px;
   margin-bottom: 0px;
-  color: #000000;
 }
 .comment-area .comment-box-area li .comment-box.replay-comment {
   margin-left: 100px;
@@ -1116,33 +2072,72 @@ select:focus {
   font-size: 18px;
   line-height: 23px;
   border-radius: 50%;
-  background: #ffffff;
-  cursor Penalized
-System: Apologies, it seems the CSS content was cut off in your prompt. I've provided the complete modified CSS file based on the changes you requested. Below, I'll address any potential missing sections and ensure all requirements are met. Since the provided CSS was incomplete at the end, I'll complete the remaining sections (`Contact Area`, `About Page`, `Team Page`, `Signin Area`, and `404 Area`) with the same logic applied to the rest of the file.
+  background: #fff;
+  cursor: pointer;
+}
+.comment-area .comment-box-area li .replay-form .replay-form-close:hover {
+  background: #5e00d9;
+  border-color: transparent;
+  color: #000000;
+}
+.comment-area .comment-box-area li .replay-form .input-field {
+  background: none;
+  border: 1px solid #e5e9f4;
+  height: 60px;
+  font-size: 14px;
+  height: 100px;
+  padding: 10px 20px;
+  resize: none;
+}
+.comment-area .comment-box-area li .replay-form .replay-comment-btn {
+  border: 0px;
+  cursor: pointer;
+}
+.comment-area .comment-box-area li:last-child {
+  margin-bottom: 0px;
+}
+.comment-area .comment-box-area li:last-child .comment-box .right {
+  border-bottom: 0px;
+}
 
-### Completing the CSS File
+.write-comment {
+  display: block;
+  margin-top: 53px;
+}
+.write-comment .title {
+  font-size: 24px;
+  line-height: 34px;
+  font-weight: 600;
+  display: block;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding-bottom: 10px;
+  margin-bottom: 30px;
+}
+.write-comment .input-field {
+  display: block;
+}
+.write-comment .base-btn1 {
+  cursor: pointer;
+  margin-top: 10px;
+  border: 0px;
+  font-weight: 600;
+  border: 1px solid #5e00d9;
+}
+.write-comment .base-btn1 i {
+  font-size: 14px;
+  margin-left: 10px;
+}
 
-Below is the continuation of the CSS file, covering the remaining sections with the requested changes applied consistently:
-
-1. **Background color**: Changed to white (`#ffffff`) for relevant sections.
-2. **Text color**: Changed to black (`#000000`) for all text elements, retaining white text on gradient backgrounds for readability.
-3. **Gradients**: Replaced `#4A00E0` and `#8E2DE2` with `#f7941d` and `#f76b1c`.
-4. **Footer color**: Set to `#c4c4c3` with a dark orange tint (`rgba(247, 107, 28, 0.7)`) applied to `bitcoin3.jpg`.
-5. **Images**: Applied dark orange tint to `bitcoin1.jpg`, `banner.jpg`, and `bitcoin3.jpg`.
-
-### Complete CSS File (Continued)
-
-```css
+/*  Blog Details Area End */
 /* Contact Area Start */
 .contact {
   padding: 120px 0px 130px;
-  background: #ffffff; /* Background changed to white */
 }
 .contact .section-heading {
   margin-bottom: 55px;
 }
 .contact .contact-form-wrapper {
-  background: #ffffff; /* Background changed to white */
+  background: #fff;
   padding: 33px 30px 24px;
   position: relative;
 }
@@ -1153,7 +2148,7 @@ Below is the continuation of the CSS file, covering the remaining sections with 
   left: 0;
   width: 120%;
   height: 100%;
-  background: #ffffff; /* Background changed to white */
+  background: #fff;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
   z-index: -1;
 }
@@ -1162,7 +2157,6 @@ Below is the continuation of the CSS file, covering the remaining sections with 
   line-height: 26px;
   font-weight: 600;
   margin-bottom: 5px;
-  color: #000000; /* Text color changed to black */
 }
 .contact .contact-form-wrapper .form-group .input-field {
   margin-bottom: 10px;
@@ -1173,7 +2167,7 @@ Below is the continuation of the CSS file, covering the remaining sections with 
 .contact .address-area {
   align-items: center;
   align-self: center;
-  background: linear-gradient(50deg, #f7941d, #f76b1c); /* Gradient changed */
+  background: linear-gradient(50deg, #045cf0 0, #001232 100%);
   border-radius: 3px;
   padding: 22px 30px 25px;
   box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
@@ -1182,7 +2176,7 @@ Below is the continuation of the CSS file, covering the remaining sections with 
   font-size: 24px;
   font-weight: 600;
   line-height: 34px;
-  color: #ffffff; /* Retain white text for contrast */
+  color: #000000;
   margin-bottom: 23px;
   padding-bottom: 12px;
   position: relative;
@@ -1195,7 +2189,7 @@ Below is the continuation of the CSS file, covering the remaining sections with 
   left: 0px;
   width: 50%;
   height: 2px;
-  background: #ffffff; /* Retain white for contrast */
+  background: #fff;
 }
 .contact .address-area .address-list {
   padding: 22px 0px 0px;
@@ -1207,7 +2201,7 @@ Below is the continuation of the CSS file, covering the remaining sections with 
   margin-bottom: 0px;
 }
 .contact .address-area .address-list li p {
-  color: #ffffff; /* Retain white text for contrast */
+  color: #ffffff;
   padding-left: 30px;
   position: relative;
 }
@@ -1221,21 +2215,18 @@ Below is the continuation of the CSS file, covering the remaining sections with 
 /* About Page Start */
 .about-area.about-page {
   padding: 120px 0px 125px;
-  background: #ffffff; /* Background changed to white */
 }
 
 /* About Page End */
 /* Feature Page Start */
 .features.features-page {
   padding: 130px 0px 100px;
-  background: #ffffff; /* Background changed to white */
 }
 
 /* Feature Page End */
 /* Team Page Start */
 .team.team-page {
   padding: 170px 0px 60px;
-  background: #ffffff; /* Background changed to white */
 }
 .team.team-page .single-team {
   margin-bottom: 70px;
@@ -1250,12 +2241,10 @@ Below is the continuation of the CSS file, covering the remaining sections with 
 /* Signin Area Start */
 .auth {
   padding: 130px 0px 130px;
-  background: #ffffff; /* Background changed to white */
 }
 .auth .sign-form {
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
   padding: 33px 30px 40px;
-  background: #ffffff; /* Background changed to white */
 }
 .auth .sign-form .heading {
   text-align: center;
@@ -1266,12 +2255,10 @@ Below is the continuation of the CSS file, covering the remaining sections with 
   font-weight: 600;
   line-height: 34px;
   margin-bottom: 0px;
-  color: #000000; /* Text color changed to black */
 }
 .auth .sign-form .heading .subtitle {
   font-size: 16px;
   line-height: 26px;
-  color: #000000; /* Text color changed to black */
 }
 .auth .sign-form .form-control {
   margin-bottom: 15px;
@@ -1283,10 +2270,9 @@ Below is the continuation of the CSS file, covering the remaining sections with 
   margin-top: 25px;
   font-size: 14px;
   line-height: 24px;
-  color: #000000; /* Text color changed to black */
 }
 .auth .sign-form .custom-checkbox .custom-control-label a {
-  color: #f7941d; /* Updated to match new gradient color */
+  color: #5e00d9;
 }
 .auth .sign-form .base-btn1 {
   width: 100%;
@@ -1299,14 +2285,13 @@ Below is the continuation of the CSS file, covering the remaining sections with 
 }
 .auth .sign-form .reg-text {
   font-size: 14px;
-  color: #000000; /* Text color changed to black */
 }
 .auth .sign-form .reg-text a {
   font-weight: 600;
   transition: all 0.3s ease-in;
 }
 .auth .sign-form .reg-text a:hover {
-  color: #f7941d; /* Updated to match new gradient color */
+  color: #5e00d9;
 }
 
 .h-100v {
@@ -1315,9 +2300,6 @@ Below is the continuation of the CSS file, covering the remaining sections with 
 
 /* Signin Area End */
 /* 404 Area Start */
-.error-404 {
-  background: #ffffff; /* Background changed to white */
-}
 .error-404 .base-btn1 {
   margin-top: 30px;
 }
