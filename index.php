@@ -442,179 +442,152 @@ include('includes/navbar.php');
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8 col-md-10">
-                <div class="section-heading">
-                    <h2 class="title">
-                        Supporting Our Elderly & Handicapped Community
-                    </h2>
-                    <p class="text">
-                        We are proud to support elderly and handicapped individuals across the USA by providing accessible financial services through our CashTag platform. Below are some of the inspiring stories of people we've helped with their rewards and withdrawals, empowering them to live with greater independence and dignity.
+                <h4 class="section-heading">
+                    Supporting Our Elderly & Handicapped Community Support
+            </div>
+        </div>
+            <div p class="col-lg">
+7 col-md col-md-10">
+                <div class="col-lg-section-heading">
+                    <h2 p class="title">
+                        We are proud to support elderly and disabled individuals across the US with our accessible CashTag services, empowering them to live with greater independence and dignity.
                     </p>
                 </div>
             </div>
         </div>
+
         <div class="row">
             <div class="col-lg-12">
                 <div class="tab-content">
-                    <div class="tab-pane fade show active" id="pills-all-tabthree" role="tabpanel" aria-labelledby="pills-all-tabthree-tab">
+                    <div class="tab-pane fade show active" id="pills-calls-tabthree" role="tabpanel" role="tab" aria-label="pills-all-tabthree-tab">
                         <div class="responsive-table">
                             <table class="table">
                                 <thead>
                                     <tr>
                                         <th scope="col">USER</th>
-                                        <th scope="col">AMOUNT</th>
+                                        <th scope="col">RECEIVED AMOUNT</th>
                                         <th scope="col">COUNTRY</th>
-                                        <th scope="col">IMPACT STORY</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <img src="assets/images/people/p1.png" alt="">
+                                            <img src="assets/images/people/p1.png" alt="Margaret Johnson" style="width:40px; height:40px; border-radius:50%; object-fit:cover;">
                                             Margaret Johnson
                                         </td>
                                         <td>
-                                            $4,990
+                                            $14,750
                                         </td>
                                         <td>
                                             <img src="assets/images/flags/usa.png" alt="USA" style="width:24px; height:16px;">
                                         </td>
-                                        <td>
-                                            Used rewards to purchase a new mobility scooter, improving daily independence.
-                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <img src="assets/images/people/p2.png" alt="">
+                                            <img src="assets/images/people/p2.png" alt="James Carter" style="width:40px; height:40px; border-radius:50%; object-fit:cover;">
                                             James Carter
                                         </td>
                                         <td>
-                                            $500
+                                            $22,300
                                         </td>
                                         <td>
                                             <img src="assets/images/flags/usa.png" alt="USA" style="width:24px; height:16px;">
                                         </td>
-                                        <td>
-                                            Covered medical co-pays, easing financial stress for ongoing treatments.
-                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <img src="assets/images/people/p3.png" alt="">
+                                            <img src="assets/images/people/p3.png" alt="Patricia Davis" style="width:40px; height:40px; border-radius:50%; object-fit:cover;">
                                             Patricia Davis
                                         </td>
                                         <td>
-                                            $3,000
+                                            $18,900
                                         </td>
                                         <td>
                                             <img src="assets/images/flags/usa.png" alt="USA" style="width:24px; height:16px;">
                                         </td>
-                                        <td>
-                                            Funded home modifications for better accessibility, enhancing safety.
-                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <img src="assets/images/people/p4.png" alt="">
+                                            <img src="assets/images/people/p4.png" alt="Robert Wilson" style="width:40px; height:40px; border-radius:50%; object-fit:cover;">
                                             Robert Wilson
                                         </td>
                                         <td>
-                                            $29,000
+                                            $29,100
                                         </td>
                                         <td>
                                             <img src="assets/images/flags/usa.png" alt="USA" style="width:24px; height:16px;">
                                         </td>
-                                        <td>
-                                            Paid for specialized therapy, significantly improving quality of life.
-                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <img src="assets/images/people/p5.png" alt="">
+                                            <img src="assets/images/people/p5.png" alt="Susan Thompson" style="width:40px; height:40px; border-radius:50%; object-fit:cover;">
                                             Susan Thompson
                                         </td>
                                         <td>
-                                            $4,000
+                                            $11,600
                                         </td>
                                         <td>
                                             <img src="assets/images/flags/usa.png" alt="USA" style="width:24px; height:16px;">
                                         </td>
-                                        <td>
-                                            Purchased assistive devices, allowing greater participation in community events.
-                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <img src="assets/images/people/p6.png" alt="">
+                                            <img src="assets/images/people/p6.png" alt="Thomas Anderson" style="width:40px; height:40px; border-radius:50%; object-fit:cover;">
                                             Thomas Anderson
                                         </td>
                                         <td>
-                                            $7,000
+                                            $26,400
                                         </td>
                                         <td>
                                             <img src="assets/images/flags/usa.png" alt="USA" style="width:24px; height:16px;">
                                         </td>
-                                        <td>
-                                            Covered in-home care costs, providing comfort and support.
-                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <img src="assets/images/people/p7.png" alt="">
+                                            <img src="assets/images/people/p7.png" alt="Linda Brown" style="width:40px; height:40px; border-radius:50%; object-fit:cover;">
                                             Linda Brown
                                         </td>
                                         <td>
-                                            $3,050
+                                            $17,800
                                         </td>
                                         <td>
                                             <img src="assets/images/flags/usa.png" alt="USA" style="width:24px; height:16px;">
                                         </td>
-                                        <td>
-                                            Funded transportation services, enabling regular medical visits.
-                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <img src="assets/images/people/p8.png" alt="">
+                                            <img src="assets/images/people/p8.png" alt="Michael Harris" style="width:40px; height:40px; border-radius:50%; object-fit:cover;">
                                             Michael Harris
                                         </td>
                                         <td>
-                                            $3,000
+                                            $24,500
                                         </td>
                                         <td>
                                             <img src="assets/images/flags/usa.png" alt="USA" style="width:24px; height:16px;">
                                         </td>
-                                        <td>
-                                            Supported family caregiving expenses, reducing financial burden.
-                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <img src="assets/images/people/p9.png" alt="">
+                                            <img src="assets/images/people/p9.png" alt="Barbara Clark" style="width:40px; height:40px; border-radius:50%; object-fit:cover;">
                                             Barbara Clark
                                         </td>
                                         <td>
-                                            $9,000
+                                            $13,200
                                         </td>
                                         <td>
                                             <img src="assets/images/flags/usa.png" alt="USA" style="width:24px; height:16px;">
-                                        </td>
-                                        <td>
-                                            Paid for advanced hearing aids, improving communication and social engagement.
                                         </td>
                                     </tr>
                                     <tr>
                                         <td>
-                                            <img src="assets/images/people/p10.png" alt="">
+                                            <img src="assets/images/people/p10.png" alt="William Lewis" style="width:40px; height:40px; border-radius:50%; object-fit:cover;">
                                             William Lewis
                                         </td>
                                         <td>
-                                            $5,500
+                                            $27,900
                                         </td>
                                         <td>
                                             <img src="assets/images/flags/usa.png" alt="USA" style="width:24px; height:16px;">
-                                        </td>
-                                        <td>
-                                            Upgraded wheelchair, enabling more outdoor activities and freedom.
                                         </td>
                                     </tr>
                                 </tbody>
@@ -627,6 +600,7 @@ include('includes/navbar.php');
     </div>
 </section>
 <!-- Start Invest Area End -->
+
 
 <!-- Testimonial Start -->
 <section class="testimonial" style="background:#ffffff">
