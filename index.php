@@ -461,6 +461,7 @@ include('includes/navbar.php');
                                 <thead>
                                     <tr>
                                         <th scope="col">USER</th>
+                                        <th scope="col">NAME</th>
                                         <th scope="col">RECEIVED AMOUNT</th>
                                         <th scope="col">COUNTRY</th>
                                     </tr>
@@ -469,6 +470,8 @@ include('includes/navbar.php');
                                     <tr>
                                         <td>
                                             <img src="assets/images/people/p1.png" alt="Margaret Johnson" style="width:40px; height:40px; border-radius:50%; object-fit:cover;">
+                                        </td>
+                                        <td>
                                             Margaret Johnson
                                         </td>
                                         <td>
@@ -481,6 +484,8 @@ include('includes/navbar.php');
                                     <tr>
                                         <td>
                                             <img src="assets/images/people/p2.png" alt="James Carter" style="width:40px; height:40px; border-radius:50%; object-fit:cover;">
+                                        </td>
+                                        <td>
                                             James Carter
                                         </td>
                                         <td>
@@ -493,6 +498,8 @@ include('includes/navbar.php');
                                     <tr>
                                         <td>
                                             <img src="assets/images/people/p3.png" alt="Patricia Davis" style="width:40px; height:40px; border-radius:50%; object-fit:cover;">
+                                        </td>
+                                        <td>
                                             Patricia Davis
                                         </td>
                                         <td>
@@ -505,6 +512,8 @@ include('includes/navbar.php');
                                     <tr>
                                         <td>
                                             <img src="assets/images/people/p4.png" alt="Robert Wilson" style="width:40px; height:40px; border-radius:50%; object-fit:cover;">
+                                        </td>
+                                        <td>
                                             Robert Wilson
                                         </td>
                                         <td>
@@ -517,6 +526,8 @@ include('includes/navbar.php');
                                     <tr>
                                         <td>
                                             <img src="assets/images/people/p5.png" alt="Susan Thompson" style="width:40px; height:40px; border-radius:50%; object-fit:cover;">
+                                        </td>
+                                        <td>
                                             Susan Thompson
                                         </td>
                                         <td>
@@ -529,6 +540,8 @@ include('includes/navbar.php');
                                     <tr>
                                         <td>
                                             <img src="assets/images/people/p6.png" alt="Thomas Anderson" style="width:40px; height:40px; border-radius:50%; object-fit:cover;">
+                                        </td>
+                                        <td>
                                             Thomas Anderson
                                         </td>
                                         <td>
@@ -541,6 +554,8 @@ include('includes/navbar.php');
                                     <tr>
                                         <td>
                                             <img src="assets/images/people/p7.png" alt="Linda Brown" style="width:40px; height:40px; border-radius:50%; object-fit:cover;">
+                                        </td>
+                                        <td>
                                             Linda Brown
                                         </td>
                                         <td>
@@ -553,6 +568,8 @@ include('includes/navbar.php');
                                     <tr>
                                         <td>
                                             <img src="assets/images/people/p8.png" alt="Michael Harris" style="width:40px; height:40px; border-radius:50%; object-fit:cover;">
+                                        </td>
+                                        <td>
                                             Michael Harris
                                         </td>
                                         <td>
@@ -565,6 +582,8 @@ include('includes/navbar.php');
                                     <tr>
                                         <td>
                                             <img src="assets/images/people/p9.png" alt="Barbara Clark" style="width:40px; height:40px; border-radius:50%; object-fit:cover;">
+                                        </td>
+                                        <td>
                                             Barbara Clark
                                         </td>
                                         <td>
@@ -577,6 +596,8 @@ include('includes/navbar.php');
                                     <tr>
                                         <td>
                                             <img src="assets/images/people/p10.png" alt="William Lewis" style="width:40px; height:40px; border-radius:50%; object-fit:cover;">
+                                        </td>
+                                        <td>
                                             William Lewis
                                         </td>
                                         <td>
