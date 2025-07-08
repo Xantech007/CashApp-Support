@@ -20,15 +20,15 @@ include('includes/navbar.php');
                         <?php
                         if(isset($_SESSION['admin']))
                         { ?>
-                            <a href="admin/signin" class="base-btn1" style="background-color: #fff9ed !important; color: #000000 !important;">Admin</a>
+                            <a href="admin/signin" class="base-btn2">Admin</a>
                         <?php }
                         else if(isset($_SESSION['auth']))
                         { ?>
-                            <a href="signup" class="base-btn1" style="background-color: #fff9ed !important; color: #000000 !important;">Dashboard</a>
+                            <a href="signup" class="base-btn2">Dashboard</a>
                         <?php }
                         else
                         { ?>
-                            <a href="signup" class="base-btn1" style="background-color: #fff9ed !important; color: #000000 !important;">Get Started</a>                            
+                            <a href="signup" class="base-btn2">Get Started</a>                            
                         <?php }
                         ?>
                     </div>
@@ -405,6 +405,7 @@ include('includes/navbar.php');
     </div>
 </section>
 <!-- Why Choose Us End -->
+
 <!-- Get Start Area Start -->
 <section class="ger-start-secrion" style="background:#fff9ed">
     <div class="container">
@@ -426,7 +427,9 @@ include('includes/navbar.php');
             </div>
             <div class="col-lg-7 d-flex align-self-center">
                 <div class="right-links">
-                    <a href="signup" class="base-btn2" style="background-color: #f7951d; color: #000000;">Get Started</a>
+                    <a href="signup" class="base-btn1">
+                        Get Started
+                    </a>
                 </div>
             </div>
         </div>
