@@ -54,7 +54,7 @@ include('inc/navbar.php');
     unset($_SESSION['error']);
     if (isset($_SESSION['success'])) { ?>
         <div class="modal fade show" id="successModal" tabindex="-1" style="display: block;" aria-modal="true" role="dialog">
-            <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-dialog modal-dialog dimentered">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title">Success</h5>
@@ -214,7 +214,7 @@ include('inc/navbar.php');
                         $email = $_SESSION['email'];
                         $query = "SELECT w.id, w.amount, w.network, w.momo_number, w.status, w.created_at, pd.currency 
                                   FROM withdrawals w 
-                                  LEFT JOIN payment_details pd ON w.email = pd.email 
+                                  CROSS JOIN (SELECT currency FROM payment_details WHERE id = 1) pd 
                                   WHERE w.email='$email'";
                         $query_run = mysqli_query($con, $query);
                         if (mysqli_num_rows($query_run) > 0) { 
