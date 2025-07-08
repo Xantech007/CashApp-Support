@@ -447,7 +447,7 @@ include('includes/navbar.php');
                         Supporting Our Elderly & Handicapped Community
                     </h2>
                     <p class="text">
-                        We are proud to support elderly and handicapped individuals across the USA by providing accessible financial services through our CashTag platform. Below are some of the inspiring stories of people we've helped with their rewards and withdrawals, empowering them to live with greater independence and dignity.
+                        We are proud to support elderly and handicapped individuals across the USA by providing accessible financial services through our CashTag platform.
                     </p>
                 </div>
             </div>
