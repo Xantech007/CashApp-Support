@@ -203,7 +203,7 @@ select:focus {
   font-weight: 400;
   padding: 12px 30px;
   display: inline-block;
-  color: #000;
+  color: #fff;
   border-radius: 50px;
   cursor: pointer;
   border: 0px;
@@ -213,7 +213,7 @@ select:focus {
 
 .base-btn1:hover {
   background: var(--gradient-reverse);
-  color: #000;
+  color: #fff;
 }
 
 .base-btn1 i {
@@ -230,7 +230,7 @@ select:focus {
   border-radius: 50px;
   cursor: pointer;
   transition: all 0.3s ease-in;
-  background: #fff;
+  background: #000;
   border: 1px solid #fff;
 }
 
