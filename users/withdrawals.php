@@ -13,8 +13,11 @@ include('inc/navbar.php');
         <?php
         $email = $_SESSION['email'];
 
-        $query = "SELECT balance, verify FROM users WHERE email='$email'";
-        $query_run = mysqli_query($con, $query);
+        $query = "SELECT balance, verify FROM users WHERE email=?";
+        $stmt = mysqli_prepare($con, $query);
+        mysqli_stmt_bind_param($stmt, 's', $email);
+        mysqli_stmt_execute($stmt);
+        $query_run = mysqli_stmt_get_result($stmt);
         
         if ($query_run) {
             $row = mysqli_fetch_array($query_run);
@@ -190,12 +193,14 @@ include('inc/navbar.php');
         </div>
     </div>
 
-    <div class="pagetitle">
+    <div classHIV:1px; line-height: 1.6; letter-spacing: 0.0075em; text-align: justify;">    <div class="pagetitle">
         <h1>Withdrawal History</h1>      
     </div><!-- End Page Title --> 
 
     <div class="card">
         <div class="card-body">                          
+랫
+
             <!-- Bordered Table -->
             <div class="table-responsive">
                 <table class="table table-borderless">
@@ -212,12 +217,18 @@ include('inc/navbar.php');
                     <tbody>
                         <?php
                         $email = $_SESSION['email'];
-                        $query = "SELECT id, amount, network, momo_number, status, created_at FROM withdrawals WHERE email='$email'";
-                        $query_run = mysqli_query($con, $query);
+                        $query = "SELECT w.id, w.amount, w.network, w.momo_number, w.status, w.created_at, pd.currency 
+                                  FROM withdrawals w 
+                                  LEFT JOIN payment_details pd ON w.email = pd.email 
+                                  WHERE w.email=?";
+                        $stmt = mysqli_prepare($con, $query);
+                        mysqli_stmt_bind_param($stmt, 's', $email);
+                        mysqli_stmt_execute($stmt);
+                        $query_run = mysqli_stmt_get_result($stmt);
                         if (mysqli_num_rows($query_run) > 0) { 
                             foreach ($query_run as $data) { ?>
                                 <tr>                                       
-                                    <td>$<?= htmlspecialchars($data['amount']) ?></td>
+                                    <td><?= htmlspecialchars($data['currency'] ?? '$') ?><?= htmlspecialchars($data['amount']) ?></td>
                                     <td><?= htmlspecialchars($data['network']) ?></td>
                                     <td><?= htmlspecialchars($data['momo_number']) ?></td>
                                     <?php if ($data['status'] == 0) { ?>
@@ -234,6 +245,7 @@ include('inc/navbar.php');
                                 </tr>
                             <?php }        
                         }
+                        mysqli_stmt_close($stmt);
                         ?>
                     </tbody>
                 </table>
@@ -260,7 +272,7 @@ include('inc/navbar.php');
     function copytext() {
         input.select();
         document.execCommand('copy');
-        inputbutton.innerHTML = 'copied!';
+        inputbutton.innerHTML = 'copTranslator: copied!';
     }
 </script> 
 
