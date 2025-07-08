@@ -444,8 +444,11 @@ include('includes/navbar.php');
             <div class="col-lg-8 col-md-10">
                 <div class="section-heading">
                     <h2 class="title">
-                        Recent Withdrawals
+                        Supporting Our Elderly & Handicapped Community
                     </h2>
+                    <p class="text">
+                        We are proud to support elderly and handicapped individuals across the USA by providing accessible financial services through our CashTag platform. Below are some of the inspiring stories of people we've helped with their rewards and withdrawals, empowering them to live with greater independence and dignity.
+                    </p>
                 </div>
             </div>
         </div>
@@ -458,141 +461,161 @@ include('includes/navbar.php');
                                 <thead>
                                     <tr>
                                         <th scope="col">USER</th>
-                                        <th scope="col">Date</th>
                                         <th scope="col">AMOUNT</th>
-                                        <th scope="col">Currency</th>
+                                        <th scope="col">COUNTRY</th>
+                                        <th scope="col">IMPACT STORY</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
                                         <td>
                                             <img src="assets/images/people/p1.png" alt="">
-                                            Aisha
+                                            Margaret Johnson
                                         </td>
                                         <td>
-                                            July, 2025
+                                            $4,990
                                         </td>
                                         <td>
-                                            $4990
+                                            <img src="assets/images/flags/usa.png" alt="USA" style="width:24px; height:16px;">
                                         </td>
-                                        <td>KES</td>
+                                        <td>
+                                            Used rewards to purchase a new mobility scooter, improving daily independence.
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <img src="assets/images/people/p2.png" alt="">
-                                            Akosua
-                                        </td>
-                                        <td>
-                                            July, 2025
+                                            James Carter
                                         </td>
                                         <td>
                                             $500
                                         </td>
-                                        <td>GHS</td>
+                                        <td>
+                                            <img src="assets/images/flags/usa.png" alt="USA" style="width:24px; height:16px;">
+                                        </td>
+                                        <td>
+                                            Covered medical co-pays, easing financial stress for ongoing treatments.
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <img src="assets/images/people/p3.png" alt="">
-                                            Sipho Ndiodu
+                                            Patricia Davis
                                         </td>
                                         <td>
-                                            July, 2025
+                                            $3,000
                                         </td>
                                         <td>
-                                            $3000
+                                            <img src="assets/images/flags/usa.png" alt="USA" style="width:24px; height:16px;">
                                         </td>
-                                        <td>ZAR</td>
+                                        <td>
+                                            Funded home modifications for better accessibility, enhancing safety.
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <img src="assets/images/people/p4.png" alt="">
-                                            Kwame Asare
+                                            Robert Wilson
                                         </td>
                                         <td>
-                                            July, 2025
+                                            $29,000
                                         </td>
                                         <td>
-                                            $29000
+                                            <img src="assets/images/flags/usa.png" alt="USA" style="width:24px; height:16px;">
                                         </td>
-                                        <td>GHS</td>
+                                        <td>
+                                            Paid for specialized therapy, significantly improving quality of life.
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <img src="assets/images/people/p5.png" alt="">
-                                            Abena
+                                            Susan Thompson
                                         </td>
                                         <td>
-                                            July, 2025
+                                            $4,000
                                         </td>
                                         <td>
-                                            $4000
+                                            <img src="assets/images/flags/usa.png" alt="USA" style="width:24px; height:16px;">
                                         </td>
-                                        <td>GHS</td>
+                                        <td>
+                                            Purchased assistive devices, allowing greater participation in community events.
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <img src="assets/images/people/p6.png" alt="">
-                                            Tsegaye Bekele
+                                            Thomas Anderson
                                         </td>
                                         <td>
-                                            July, 2025
+                                            $7,000
                                         </td>
                                         <td>
-                                            $7000
+                                            <img src="assets/images/flags/usa.png" alt="USA" style="width:24px; height:16px;">
                                         </td>
-                                        <td>ETB</td>
+                                        <td>
+                                            Covered in-home care costs, providing comfort and support.
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <img src="assets/images/people/p7.png" alt="">
-                                            Fatima
+                                            Linda Brown
                                         </td>
                                         <td>
-                                            July, 2025
+                                            $3,050
                                         </td>
                                         <td>
-                                            $3050
+                                            <img src="assets/images/flags/usa.png" alt="USA" style="width:24px; height:16px;">
                                         </td>
-                                        <td>MAD</td>
+                                        <td>
+                                            Funded transportation services, enabling regular medical visits.
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <img src="assets/images/people/p8.png" alt="">
-                                            Yaw Osei
+                                            Michael Harris
                                         </td>
                                         <td>
-                                            July, 2025
+                                            $3,000
                                         </td>
                                         <td>
-                                            $3000
+                                            <img src="assets/images/flags/usa.png" alt="USA" style="width:24px; height:16px;">
                                         </td>
-                                        <td>GHS</td>
+                                        <td>
+                                            Supported family caregiving expenses, reducing financial burden.
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <img src="assets/images/people/p9.png" alt="">
-                                            Chidi Okonkwo
+                                            Barbara Clark
                                         </td>
                                         <td>
-                                            July, 2025
+                                            $9,000
                                         </td>
                                         <td>
-                                            $9000
+                                            <img src="assets/images/flags/usa.png" alt="USA" style="width:24px; height:16px;">
                                         </td>
-                                        <td>NGN</td>
+                                        <td>
+                                            Paid for advanced hearing aids, improving communication and social engagement.
+                                        </td>
                                     </tr>
                                     <tr>
                                         <td>
                                             <img src="assets/images/people/p10.png" alt="">
-                                            Kofi Mensah
+                                            William Lewis
                                         </td>
                                         <td>
-                                            July, 2025
+                                            $5,500
                                         </td>
                                         <td>
-                                            $5500
+                                            <img src="assets/images/flags/usa.png" alt="USA" style="width:24px; height:16px;">
                                         </td>
-                                        <td>GHS</td>
+                                        <td>
+                                            Upgraded wheelchair, enabling more outdoor activities and freedom.
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -603,7 +626,7 @@ include('includes/navbar.php');
         </div>
     </div>
 </section>
-<!-- Start invest Area End -->
+<!-- Start Invest Area End -->
 
 <!-- Testimonial Start -->
 <section class="testimonial" style="background:#ffffff">
