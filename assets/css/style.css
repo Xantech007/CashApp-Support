@@ -203,17 +203,17 @@ select:focus {
   font-weight: 400;
   padding: 12px 30px;
   display: inline-block;
-  color: #fff;
+  color: #000;
   border-radius: 50px;
   cursor: pointer;
-  border: 0px;
+  border: 15px;
   transition: all 0.3s ease-in;
   background: var(--gradient);
 }
 
 .base-btn1:hover {
   background: var(--gradient-reverse);
-  color: #fff;
+  color: #000;
 }
 
 .base-btn1 i {
