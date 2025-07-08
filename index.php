@@ -889,7 +889,7 @@ include('includes/navbar.php');
                         <li>
                             <p>
                                 <i class="fas fa-globe-americas"></i>
-                                www.dollarcash.online
+                                www.dollarpay.pro
                             </p>
                         </li>
                     </ul>
