@@ -606,7 +606,7 @@ include('includes/navbar.php');
 <!-- Start invest Area End -->
 
 <!-- Testimonial Start -->
-<section class="testimonial" style="background:##fff9ed">
+<section class="testimonial" style="background:#ffffff">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8 col-md-10">
@@ -744,7 +744,7 @@ include('includes/navbar.php');
 <!-- Testimonial End -->
 
 <!-- Faq Area Start -->
-<section class="faq-area" style="background:#fff9ed">
+<section class="faq-area" style="background:#ffffff">
     <div class="container">
         <div class="row">
             <div class="col-lg-6 d-flex align-self-center">
