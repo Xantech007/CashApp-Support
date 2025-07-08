@@ -39,8 +39,8 @@ Table of Css Content
 
 /* Root Variables for Theme Colors */
 :root {
-  --primary-color: #f7941d;
-  --secondary-color: #f76b1c;
+  --primary-color: #000;
+  --secondary-color: #000;
   --gradient: linear-gradient(to bottom, #f7941d, #f76b1c);
   --gradient-reverse: linear-gradient(to top, #f7941d, #f76b1c);
 }
@@ -59,7 +59,7 @@ body {
   font-family: "Open Sans", sans-serif;
   font-size: 16px;
   margin: 0;
-  color: #555;
+  color: #000;
   overflow-x: hidden;
   background: #fff;
 }
@@ -94,13 +94,13 @@ h3,
 h4,
 h5,
 h6 {
-  color: #131333;
+  color: #000;
   font-family: "Poppins", sans-serif;
 }
 
 p {
   font-size: 16px;
-  color: #555;
+  color: #000;
   line-height: 1.625;
   -webkit-hyphens: auto;
   hyphens: auto;
@@ -203,7 +203,7 @@ select:focus {
   font-weight: 400;
   padding: 12px 30px;
   display: inline-block;
-  color: #fff;
+  color: #000;
   border-radius: 50px;
   cursor: pointer;
   border: 0px;
@@ -213,7 +213,7 @@ select:focus {
 
 .base-btn1:hover {
   background: var(--gradient-reverse);
-  color: #fff;
+  color: #000;
 }
 
 .base-btn1 i {
@@ -236,7 +236,7 @@ select:focus {
 
 .base-btn2:hover {
   background: none;
-  color: #fff;
+  color: #000;
   border-color: var(--primary-color);
 }
 
@@ -255,7 +255,7 @@ select:focus {
 
 .base-btn3:hover {
   background: var(--primary-color);
-  color: #fff;
+  color: #000;
 }
 
 .table-striped tbody tr:nth-of-type(odd) {
@@ -272,18 +272,18 @@ select:focus {
 }
 
 .section-heading.text-white .title {
-  color: #fff;
+  color: #000;
 }
 
 .section-heading.text-white .text {
-  color: #fff;
+  color: #000;
 }
 
 .section-heading .title {
   font-size: 40px;
   line-height: 50px;
   font-weight: 600;
-  color: #131333;
+  color: #000;
   margin-bottom: 12px;
 }
 
@@ -298,7 +298,7 @@ select:focus {
 .section-heading .text {
   font-size: 16px;
   line-height: 26px;
-  color: #555;
+  color: #000;
 }
 
 .input-field {
@@ -363,7 +363,7 @@ select:focus {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: #fff;
+  background-color: #000;
   z-index: 9999999;
   transition: all 0.3s ease-in;
   display: flex;
@@ -438,7 +438,7 @@ select:focus {
   font-size: 14px;
   text-align: center;
   border-radius: 50px;
-  color: #fff;
+  color: #000;
   cursor: pointer;
   transform: rotate(-90deg);
   bottom: 15px;
@@ -465,7 +465,7 @@ select:focus {
   line-height: 50px;
   font-weight: 600;
   margin-bottom: 11px;
-  color: #fff;
+  color: #000;
 }
 
 .breadcrumb-area .title.extra-padding {
@@ -478,13 +478,13 @@ select:focus {
 
 .breadcrumb-area .breadcrumb-list li span {
   margin: 0px 7px;
-  color: #fff;
+  color: #000;
 }
 
 .breadcrumb-area .breadcrumb-list li a {
   font-size: 16px;
   transition: all 0.3s ease-in;
-  color: #fff;
+  color: #000;
 }
 
 .breadcrumb-area .breadcrumb-list li a:hover {
@@ -507,7 +507,7 @@ select:focus {
   border-radius: 50px;
   position: relative;
   z-index: 1;
-  color: #fff;
+  color: #000;
 }
 
 .video-play-btn:before {
@@ -567,7 +567,7 @@ select:focus {
 }
 
 .mainmenu-area .navbar #main_menu .navbar-nav .nav-item .nav-link {
-  color: #131333;
+  color: #000;
   line-height: 26px;
   font-size: 16px;
   font-weight: 600;
@@ -620,7 +620,7 @@ select:focus {
   font-weight: 600;
   padding: 8px 15px 8px;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  color: #555;
+  color: #000;
 }
 
 .mainmenu-area .navbar #main_menu .navbar-nav .nav-item .dropdown-menu .dropdown-item i {
@@ -630,7 +630,7 @@ select:focus {
 
 .mainmenu-area .navbar #main_menu .navbar-nav .nav-item .dropdown-menu .dropdown-item:hover {
   background: var(--gradient);
-  color: #fff;
+  color: #000;
 }
 
 .mainmenu-area .navbar #main_menu .navbar-nav .nav-item.dropdown:hover .dropdown-menu {
@@ -646,7 +646,7 @@ select:focus {
 
 .mainmenu-area .navbar .base-btn2:hover {
   background: none;
-  color: #fff;
+  color: #000;
   border-color: var(--primary-color);
 }
 
@@ -679,7 +679,7 @@ select:focus {
 }
 
 .footer .about-widget .about-content p {
-  color: #555;
+  color: #000;
 }
 
 .footer .about-widget .subscribe-form {
@@ -697,11 +697,11 @@ select:focus {
   box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.07);
   border: 1px solid rgba(0, 0, 0, 0.05);
   padding: 0px 60px 0px 20px;
-  color: #131333;
+  color: #000;
 }
 
 .footer .about-widget .subscribe-form input::placeholder {
-  color: rgba(19, 19, 51, 0.8) !important;
+  color: #000;
 }
 
 .footer .about-widget .subscribe-form .submit-btn {
@@ -710,7 +710,7 @@ select:focus {
   right: 5px;
   height: 40px;
   width: 40px;
-  color: #fff;
+  color: #000;
   border: 0px;
   border-radius: 50px;
   background: var(--gradient);
@@ -745,7 +745,7 @@ select:focus {
   font-size: 16px;
   line-height: 35px;
   font-weight: 400;
-  color: #555;
+  color: #000;
 }
 
 .footer .info-link-widget ul li a:hover {
@@ -768,7 +768,7 @@ select:focus {
   font-size: 16px;
   line-height: 26px;
   margin-bottom: 0px;
-  color: #fff;
+  color: #000;
 }
 
 .footer .copy-bg .left-area a {
@@ -776,11 +776,11 @@ select:focus {
   line-height: 26px;
   margin-bottom: 0px;
   transition: all 0.3s ease-in;
-  color: #fff;
+  color: #000;
 }
 
 .footer .copy-bg .left-area a:hover {
-  color: #131333;
+  color: #000;
 }
 
 .footer .copy-bg .social-links {
@@ -799,12 +799,12 @@ select:focus {
 .footer .copy-bg .social-links li a {
   font-size: 14px;
   border-radius: 50%;
-  color: #fff;
+  color: #000;
   transition: all 0.3s ease-in;
 }
 
 .footer .copy-bg .social-links li a:hover {
-  color: #131333;
+  color: #000;
 }
 
 .footer .subscribe-box {
@@ -840,7 +840,7 @@ select:focus {
   font-weight: 700;
   margin-bottom: 50px;
   text-transform: uppercase;
-  color: #131333;
+  color: #000;
 }
 
 .footer .subscribe-box .icon {
@@ -863,23 +863,23 @@ select:focus {
   border: 0px;
   border-bottom: 1px solid #b4b8d1;
   border-radius: 0px;
-  color: #555;
+  color: #000;
 }
 
 .footer .subscribe-box .form-area input::-webkit-input-placeholder {
-  color: #555;
+  color: #000;
 }
 
 .footer .subscribe-box .form-area input:-moz-placeholder {
-  color: #555;
+  color: #000;
 }
 
 .footer .subscribe-box .form-area input::-moz-placeholder {
-  color: #555;
+  color: #000;
 }
 
 .footer .subscribe-box .form-area input:-ms-input-placeholder {
-  color: #555;
+  color: #000;
 }
 
 .footer .subscribe-box .button-area {
@@ -930,14 +930,14 @@ select:focus {
   font-weight: 600;
   line-height: 60px;
   margin-bottom: 19px;
-  color: #fff;
+  color: #000;
 }
 
 .hero-area .left-content .content .text {
   font-size: 18px;
   line-height: 28px;
   margin-bottom: 40px;
-  color: #fff;
+  color: #000;
 }
 
 .hero-area .left-content .content .subscribe-area {
@@ -970,7 +970,7 @@ select:focus {
   padding: 0px 30px;
   background: var(--gradient);
   background-size: 100% 200%;
-  color: #fff;
+  color: #000;
   border: 0px;
   border-radius: 50px;
   transition: all 0.3s ease-in;
@@ -1043,7 +1043,7 @@ select:focus {
   border-radius: 50px;
   margin-bottom: 19px;
   font-weight: normal;
-  color: #fff;
+  color: #000;
   transition: all 0.3s ease-in;
 }
 
@@ -1073,7 +1073,7 @@ select:focus {
 }
 
 .single-counter:hover .icon {
-  color: #fff;
+  color: #000;
 }
 
 /* About Area Start */
@@ -1108,7 +1108,7 @@ select:focus {
   height: 80px;
   border-radius: 50px;
   display: inline-block;
-  color: #fff;
+  color: #000;
   margin-right: 20px;
   text-align: center;
   background: var(--gradient);
@@ -1161,7 +1161,7 @@ select:focus {
   border-radius: 50px;
   margin-bottom: 15px;
   font-weight: normal;
-  color: #555;
+  color: #000;
   text-align: center;
   transition: all 0.3s ease-in;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
@@ -1174,7 +1174,7 @@ select:focus {
 
 .choose_us .cu-menu li a.active .icon {
   background: var(--gradient);
-  color: #fff;
+  color: #000;
 }
 
 .choose_us .cu-content {
@@ -1235,14 +1235,14 @@ select:focus {
   border-radius: 50px;
   font-size: 18px;
   font-weight: 600;
-  color: #131333;
+  color: #000;
   box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.15);
   margin: 0px 5px;
 }
 
 .start-invest .tab-menu-area .nav-lend .nav-item .nav-link.active {
   background: var(--gradient);
-  color: #fff;
+  color: #000;
 }
 
 .start-invest .table {
@@ -1275,7 +1275,7 @@ select:focus {
   padding: 20px 15px;
   font-weight: 600;
   font-size: 16px;
-  color: #555;
+  color: #000;
 }
 
 .start-invest .table tr td:nth-child(1) img {
@@ -1327,7 +1327,7 @@ select:focus {
   display: inline-block;
   margin-bottom: 19px;
   font-weight: normal;
-  color: #fff;
+  color: #000;
   transition: all 0.3s ease-in;
 }
 
@@ -1440,7 +1440,7 @@ select:focus {
   padding-bottom: 5px;
   background: var(--gradient);
   padding: 12px 30px 11px;
-  color: #fff;
+  color: #000;
   border-radius: 10px 10px 0 0;
 }
 
@@ -1454,7 +1454,7 @@ select:focus {
 
 .tax-calculator .box-calculator .form-group label {
   font-weight: 600;
-  color: #131333;
+  color: #000;
 }
 
 .tax-calculator .box-calculator .form-group .input-field {
@@ -1500,7 +1500,7 @@ select:focus {
   display: inline-block;
   padding: 12px 30px;
   font-weight: 600;
-  color: #555;
+  color: #000;
   border-radius: 50px;
   cursor: pointer;
   box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.1);
@@ -1508,7 +1508,7 @@ select:focus {
 
 .pricing2 .pricing-tab .tab-menu #my-tab .nav-item .nav-link.active,
 .pricing2 .pricing-tab .tab-menu #my-tab .nav-item .nav-link:hover {
-  color: #fff;
+  color: #000;
   background: var(--gradient);
 }
 
@@ -1540,7 +1540,7 @@ select:focus {
   width: 100%;
   text-align: center;
   border-radius: 10px;
-  color: #fff;
+  color: #000;
   padding: 16px 20px 16px;
   margin: 22px 0px 17px;
   background: var(--gradient);
@@ -1562,11 +1562,11 @@ select:focus {
   line-height: 40px;
   margin-bottom: 0px;
   font-weight: 700;
-  color: #fff;
+  color: #000;
 }
 
 .pricing2 .price-box .price-rate .duration {
-  color: #fff;
+  color: #000;
   font-size: 14px;
   margin-bottom: 0px;
 }
@@ -1647,13 +1647,13 @@ select:focus {
   font-size: 18px;
   line-height: 28px;
   margin-bottom: 0px;
-  color: #131333;
+  color: #000;
 }
 
 .single-team .content .designation {
   font-size: 14px;
   line-height: 24px;
-  color: #555;
+  color: #000;
   margin-bottom: 18px;
 }
 
@@ -1666,7 +1666,7 @@ select:focus {
 }
 
 .single-team .content .social-links li a {
-  color: #131333;
+  color: #000;
   font-size: 14px;
   margin: 0px 4px;
   display: block;
@@ -1736,7 +1736,7 @@ select:focus {
   cursor: pointer;
   position: relative;
   padding-left: 34px;
-  color: #fff;
+  color: #000;
 }
 
 .single-accordion .accordion-header .title i {
@@ -1770,7 +1770,7 @@ select:focus {
   font-size: 30px;
   line-height: 40px;
   font-weight: 600;
-  color: #fff;
+  color: #000;
 }
 
 .ger-start-secrion .right-links {
@@ -1882,7 +1882,7 @@ select:focus {
   text-align: center;
   background: #F7F8FC;
   line-height: 35px;
-  color: rgba(0, 0, 0, 0.6);
+  color: #000;
   box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.2);
   font-size: 14px;
   margin: 0px 3px 0px;
@@ -1894,7 +1894,7 @@ select:focus {
 
 .pagination .page-item .page-link.active,
 .pagination .page-item .page-link:hover {
-  color: #fff;
+  color: #000;
   background: var(--primary-color);
 }
 
@@ -1938,7 +1938,7 @@ select:focus {
   font-size: 16px;
   font-weight: 600;
   margin-bottom: 0px;
-  color: #131333;
+  color: #000;
   transition: all 0.3s ease-in;
 }
 
@@ -1947,7 +1947,7 @@ select:focus {
   line-height: 10px;
   font-weight: 600;
   background: var(--primary-color);
-  color: #fff;
+  color: #000;
   padding: 4px 8px;
   border-radius: 50px;
   align-self: center;
@@ -2196,7 +2196,7 @@ select:focus {
   text-align: center;
   border-radius: 50px;
   display: inline-block;
-  color: #fff;
+  color: #000;
   background: var(--primary-color);
   font-size: 13px;
   font-weight: 600;
@@ -2216,14 +2216,14 @@ select:focus {
 .comment-area .comment-box-area li .comment-box .right .name {
   font-size: 16px;
   font-weight: 600;
-  color: #000000;
+  color: #000;
   line-height: 24px;
 }
 
 .comment-area .comment-box-area li .comment-box .right .date {
   font-size: 14px;
   font-weight: 24px;
-  color: #888;
+  color: #000;
 }
 
 .comment-area .comment-box-area li .comment-box .right .text p {
@@ -2262,7 +2262,7 @@ select:focus {
 .comment-area .comment-box-area li .replay-form .replay-form-close:hover {
   background: var(--primary-color);
   border-color: transparent;
-  color: #fff;
+  color: #000;
 }
 
 .comment-area .comment-box-area li .replay-form .input-field {
@@ -2377,7 +2377,7 @@ select:focus {
   font-size: 24px;
   font-weight: 600;
   line-height: 34px;
-  color: #fff;
+  color: #000;
   margin-bottom: 23px;
   padding-bottom: 12px;
   position: relative;
@@ -2407,7 +2407,7 @@ select:focus {
 }
 
 .contact .address-area .address-list li p {
-  color: #ffffff;
+  color: #000;
   padding-left: 30px;
   position: relative;
 }
