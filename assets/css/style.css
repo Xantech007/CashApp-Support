@@ -199,27 +199,28 @@ select:focus {
 
 /* Global style */
 .base-btn1 {
+.base-btn1 {
   font-size: 16px;
   font-weight: 400;
   padding: 12px 30px;
   display: inline-block;
-  color: #000;
+  color: #000; /* Text color */
   border-radius: 50px;
   cursor: pointer;
-  border: 15px;
+  border: 1px;
   transition: all 0.3s ease-in;
-  background: var(--gradient);
+  background: #fff9ed;
 }
 
 .base-btn1:hover {
-  background: var(--gradient-reverse);
+  background: #fff9ed;
   color: #000;
 }
 
 .base-btn1 i {
   margin-left: 5px;
   font-size: 14px;
-}
+  }
 
 .base-btn2 {
   font-size: 16px;
