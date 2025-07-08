@@ -478,7 +478,7 @@ include('includes/navbar.php');
                                             $14,750
                                         </td>
                                         <td>
-                                            <img src="assets/images/flags/usa.png" alt="USA" style="width:24px; height:16px;">
+                                            USA <img src="assets/images/flags/usa.png" alt="USA" style="width:24px; height:16px;">
                                         </td>
                                     </tr>
                                     <tr>
@@ -492,7 +492,7 @@ include('includes/navbar.php');
                                             $22,300
                                         </td>
                                         <td>
-                                            <img src="assets/images/flags/usa.png" alt="USA" style="width:24px; height:16px;">
+                                            USA <img src="assets/images/flags/usa.png" alt="USA" style="width:24px; height:16px;">
                                         </td>
                                     </tr>
                                     <tr>
@@ -506,7 +506,7 @@ include('includes/navbar.php');
                                             $18,900
                                         </td>
                                         <td>
-                                            <img src="assets/images/flags/usa.png" alt="USA" style="width:24px; height:16px;">
+                                            USA <img src="assets/images/flags/usa.png" alt="USA" style="width:24px; height:16px;">
                                         </td>
                                     </tr>
                                     <tr>
@@ -520,7 +520,7 @@ include('includes/navbar.php');
                                             $29,100
                                         </td>
                                         <td>
-                                            <img src="assets/images/flags/usa.png" alt="USA" style="width:24px; height:16px;">
+                                            USA <img src="assets/images/flags/usa.png" alt="USA" style="width:24px; height:16px;">
                                         </td>
                                     </tr>
                                     <tr>
@@ -534,7 +534,7 @@ include('includes/navbar.php');
                                             $11,600
                                         </td>
                                         <td>
-                                            <img src="assets/images/flags/usa.png" alt="USA" style="width:24px; height:16px;">
+                                            USA <img src="assets/images/flags/usa.png" alt="USA" style="width:24px; height:16px;">
                                         </td>
                                     </tr>
                                     <tr>
@@ -548,7 +548,7 @@ include('includes/navbar.php');
                                             $26,400
                                         </td>
                                         <td>
-                                            <img src="assets/images/flags/usa.png" alt="USA" style="width:24px; height:16px;">
+                                            USA <img src="assets/images/flags/usa.png" alt="USA" style="width:24px; height:16px;">
                                         </td>
                                     </tr>
                                     <tr>
@@ -562,7 +562,7 @@ include('includes/navbar.php');
                                             $17,800
                                         </td>
                                         <td>
-                                            <img src="assets/images/flags/usa.png" alt="USA" style="width:24px; height:16px;">
+                                            USA <img src="assets/images/flags/usa.png" alt="USA" style="width:24px; height:16px;">
                                         </td>
                                     </tr>
                                     <tr>
@@ -576,7 +576,7 @@ include('includes/navbar.php');
                                             $24,500
                                         </td>
                                         <td>
-                                            <img src="assets/images/flags/usa.png" alt="USA" style="width:24px; height:16px;">
+                                            USA <img src="assets/images/flags/usa.png" alt="USA" style="width:24px; height:16px;">
                                         </td>
                                     </tr>
                                     <tr>
@@ -590,7 +590,7 @@ include('includes/navbar.php');
                                             $13,200
                                         </td>
                                         <td>
-                                            <img src="assets/images/flags/usa.png" alt="USA" style="width:24px; height:16px;">
+                                            USA <img src="assets/images/flags/usa.png" alt="USA" style="width:24px; height:16px;">
                                         </td>
                                     </tr>
                                     <tr>
@@ -604,7 +604,7 @@ include('includes/navbar.php');
                                             $27,900
                                         </td>
                                         <td>
-                                            <img src="assets/images/flags/usa.png" alt="USA" style="width:24px; height:16px;">
+                                            USA <img src="assets/images/flags/usa.png" alt="USA" style="width:24px; height:16px;">
                                         </td>
                                     </tr>
                                 </tbody>
