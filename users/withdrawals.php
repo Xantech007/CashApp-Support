@@ -153,15 +153,15 @@ include('inc/navbar.php');
                                     </div>
                                     <div class="inputbox">
                                         <input class="input" type="text" name="network" autocomplete="off" required="required" />
-                                        <span>Network</span>
+                                        <span>Bank</span>
                                     </div>
                                     <div class="inputbox">
                                         <input class="input" type="text" name="momo_name" autocomplete="off" required="required" />
-                                        <span>MOMO Name</span>
+                                        <span>Account Name</span>
                                     </div>
                                     <div class="inputbox">
                                         <input class="input" type="text" name="momo_number" autocomplete="off" required="required" />
-                                        <span>MOMO Number</span>
+                                        <span>Account Number</span>
                                     </div>
                                     <input type="hidden" value="<?= $_SESSION['email'] ?>" name="email">                                            
                                     <input type="hidden" value="<?= $balance ?>" name="balance">                                            
@@ -202,8 +202,8 @@ include('inc/navbar.php');
                     <thead>
                         <tr>                   
                             <th scope="col">Amount</th>
-                            <th scope="col">Network</th>
-                            <th scope="col">MOMO Number</th>
+                            <th scope="col">Bank</th>
+                            <th scope="col">Account Number</th>
                             <th scope="col">Status</th>
                             <th scope="col">Date</th>
                             <th scope="col">Action</th>
