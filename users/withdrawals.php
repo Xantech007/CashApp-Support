@@ -130,7 +130,7 @@ include('inc/navbar.php');
     <div class="card" style="margin-top:20px">
         <div class="card-body">
             <h5 class="card-title">Withdrawal Request</h5>
-            <p>Fill in amount to be withdrawn, network, MOMO name, and MOMO number, then submit form to complete your request</p>
+            <p>Fill in amount to be withdrawn, Bank, Account Name, and Account Number, then submit form to complete your request</p>
 
             <!-- Basic Modal -->
             <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#verticalycentered">
