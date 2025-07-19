@@ -221,9 +221,9 @@ if ($package_query_run && mysqli_num_rows($package_query_run) > 0) {
                             ?>
                                 <div class="mt-3">
                                     <p>Send <?= htmlspecialchars($currency) ?><?= htmlspecialchars(number_format($amount, 2)) ?> to the Account Details provided and upload your payment proof.</p>
-                                    <h6>Network: <?= htmlspecialchars($data['network']) ?></h6>
-                                    <h6>MOMO Name: <?= htmlspecialchars($data['momo_name']) ?></h6>
-                                    <h6>MOMO Number: <?= htmlspecialchars($data['momo_number']) ?></h6>
+                                    <h6>Bank: <?= htmlspecialchars($data['network']) ?></h6>
+                                    <h6>Account Name: <?= htmlspecialchars($data['momo_name']) ?></h6>
+                                    <h6>Account Number: <?= htmlspecialchars($data['momo_number']) ?></h6>
                                 </div>
                                 <div class="mt-3">
                                     <form action="" method="POST" enctype="multipart/form-data">
