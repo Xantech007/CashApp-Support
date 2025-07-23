@@ -92,19 +92,19 @@ include('includes/navbar.php');
                         </li>
                         <li>
                             <p>
-                                <i class="fas fa-phone"></i> +1 601-463-7494
+                                <i class="fas fa-phone"></i> +44 7438 783028
                             </p>
                         </li>
                         <li>
                             <p>
                                 <i class="far fa-envelope"></i>
-                                dollarcashsuppotusa@gmail.com
+                                pay1.cashapp@gmail.com
                             </p>
                         </li>
                         <li>
                             <p>
                                 <i class="fas fa-globe-americas"></i>
-                                www.dollarpay.pro
+                                www.pay1.cashapp.infy.uk
                             </p>
                         </li>
                     </ul>
