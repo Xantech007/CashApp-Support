@@ -53,7 +53,7 @@ include('inc/sidebar.php');
                 ?>
                 <div class="row">
                 <div class="col-md-6 form-group mb-3">
-                    <label for="" class="mb-2">Package name</label>
+                    <label for="" class="mb-2">Name</label>
                     <input type="text" class="form-control" required value="<?= $name ?>" readonly>
                 </div>                                  
                 <div class="col-md-6 form-group mb-3">
