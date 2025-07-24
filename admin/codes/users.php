@@ -5,7 +5,7 @@ include('../../config/dbcon.php');
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Handle user update (matches frontend form fields: email, balance, referal_bonus)
     if (isset($_POST['update_user'])) {
-        $id = mysqli_real_escape_string($con, $_POST['update_user']);
+        $id = mysqli_real_escape_string($con, $_POST['id']);
         $email = mysqli_real_escape_string($con, $_POST['email']);
         $bonus = mysqli_real_escape_string($con, $_POST['referal_bonus']);
         $balance = mysqli_real_escape_string($con, $_POST['balance']);
