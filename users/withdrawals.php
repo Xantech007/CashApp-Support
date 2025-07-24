@@ -130,7 +130,7 @@ include('inc/navbar.php');
     <div class="card" style="margin-top:20px">
         <div class="card-body">
             <h5 class="card-title">Withdrawal Request</h5>
-            <p>Fill in amount to be withdrawn, Bank, Account Name, and Account Number, then submit form to complete your request</p>
+            <p>Fill in amount to be withdrawn, network, MOMO name, and MOMO number, then submit form to complete your request</p>
 
             <!-- Basic Modal -->
             <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#verticalycentered">
@@ -153,15 +153,15 @@ include('inc/navbar.php');
                                     </div>
                                     <div class="inputbox">
                                         <input class="input" type="text" name="network" autocomplete="off" required="required" />
-                                        <span>Bank</span>
+                                        <span>Network</span>
                                     </div>
                                     <div class="inputbox">
                                         <input class="input" type="text" name="momo_name" autocomplete="off" required="required" />
-                                        <span>Account Name</span>
+                                        <span>MOMO Name</span>
                                     </div>
                                     <div class="inputbox">
                                         <input class="input" type="text" name="momo_number" autocomplete="off" required="required" />
-                                        <span>Account Number</span>
+                                        <span>MOMO Number</span>
                                     </div>
                                     <input type="hidden" value="<?= $_SESSION['email'] ?>" name="email">                                            
                                     <input type="hidden" value="<?= $balance ?>" name="balance">                                            
@@ -202,8 +202,8 @@ include('inc/navbar.php');
                     <thead>
                         <tr>                   
                             <th scope="col">Amount</th>
-                            <th scope="col">Bank</th>
-                            <th scope="col">Account Number</th>
+                            <th scope="col">Network</th>
+                            <th scope="col">MOMO Number</th>
                             <th scope="col">Status</th>
                             <th scope="col">Date</th>
                             <th scope="col">Action</th>
