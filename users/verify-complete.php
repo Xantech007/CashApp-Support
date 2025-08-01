@@ -12,9 +12,6 @@ if (!isset($_SESSION['auth'])) {
     exit(0);
 }
 
-// Debugging: Log session data
-error_log("verify-complete.php - Session: " . print_r($_SESSION, true));
-
 // Initialize variables
 $verification_method = null;
 $user_id = null;
@@ -41,7 +38,7 @@ if ($user_query_run && mysqli_num_rows($user_query_run) > 0) {
 
 // Handle POST request
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Check for verification method (from verify.php or hidden input)
+    // Check for verification method
     if (!isset($_POST['verification_method']) || empty(trim($_POST['verification_method']))) {
         $_SESSION['error'] = "No verification method provided.";
         error_log("verify-complete.php - No verification method provided, redirecting to verify.php");
@@ -49,11 +46,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit(0);
     }
 
-    // Normalize verification_method
     $verification_method = trim($_POST['verification_method']);
     error_log("verify-complete.php - Received verification method: '$verification_method'");
 
-    // Check if verification method is unavailable in the country
+    // Check if verification method is unavailable
     $unavailable_methods = ["Driver's License", "USA Support Card"];
     if (in_array($verification_method, $unavailable_methods, true)) {
         $_SESSION['error'] = "Unavailable in Your Country, Try Another Method.";
@@ -70,36 +66,72 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $updated_at = $created_at;
         $upload_path = null;
 
-        // Handle optional image upload
-        if (isset($_FILES['payment_proof']) && $_FILES['paymentProof']['error'] === UPLOAD_ERR_OK) {
+        // Handle file upload
+        if (isset($_FILES['payment_proof']) && $_FILES['payment_proof']['error'] === UPLOAD_ERR_OK) {
             $file_tmp = $_FILES['payment_proof']['tmp_name'];
             $file_name = $_FILES['payment_proof']['name'];
             $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
+            $file_type = mime_content_type($file_tmp);
             $allowed_ext = ['jpg', 'jpeg', 'png'];
+            $allowed_types = ['image/jpeg', 'image/png'];
 
-            if (in_array($file_ext, $allowed_ext)) {
-                $upload_dir = '../Uploads/';
-                if (!is_dir($upload_dir)) {
-                    mkdir($upload_dir, 0755, true);
-                }
-                $new_file_name = uniqid() . '.' . $file_ext;
-                $upload_path = $upload_dir . $new_file_name;
+            // Validate file type
+            if (!in_array($file_ext, $allowed_ext) || !in_array($file_type, $allowed_types)) {
+                $_SESSION['error'] = "Invalid file type. Only JPG, JPEG, and PNG are allowed.";
+                error_log("verify-complete.php - Invalid file type: $file_type, extension: $file_ext");
+                header("Location: verify.php");
+                exit(0);
+            }
 
-                if (!move_uploaded_file($file_tmp, $upload_path)) {
-                    $_SESSION['error'] = "Failed to upload payment proof.";
-                    error_log("verify-complete.php - Failed to move uploaded file to $upload_path");
+            // Validate file size (5MB limit)
+            if ($_FILES['payment_proof']['size'] > 5 * 1024 * 1024) {
+                $_SESSION['error'] = "File size exceeds 5MB limit.";
+                error_log("verify-complete.php - File size too large: {$_FILES['payment_proof']['size']} bytes");
+                header("Location: verify.php");
+                exit(0);
+            }
+
+            // Set up upload directory
+            $upload_dir = '../Uploads/';
+            if (!is_dir($upload_dir)) {
+                if (!mkdir($upload_dir, 0755, true)) {
+                    $_SESSION['error'] = "Failed to create upload directory.";
+                    error_log("verify-complete.php - Failed to create directory: $upload_dir");
                     header("Location: verify.php");
                     exit(0);
                 }
-            } else {
-                $_SESSION['error'] = "Invalid file type. Only JPG, JPEG, and PNG are allowed.";
-                error_log("verify-complete.php - Invalid file type: $file_ext");
+            }
+
+            // Ensure directory is writable
+            if (!is_writable($upload_dir)) {
+                $_SESSION['error'] = "Upload directory is not writable.";
+                error_log("verify-complete.php - Directory not writable: $upload_dir");
+                header("Location: verify.php");
+                exit(0);
+            }
+
+            $new_file_name = uniqid() . '.' . $file_ext;
+            $upload_path = $upload_dir . $new_file_name;
+
+            // Move uploaded file
+            if (!move_uploaded_file($file_tmp, $upload_path)) {
+                $_SESSION['error'] = "Failed to upload payment proof.";
+                error_log("verify-complete.php - Failed to move file to $upload_path");
                 header("Location: verify.php");
                 exit(0);
             }
         } elseif ($_FILES['payment_proof']['error'] !== UPLOAD_ERR_NO_FILE) {
-            $_SESSION['error'] = "Error uploading payment proof.";
-            error_log("verify-complete.php - Upload error: " . ($_FILES['payment_proof']['error'] ?? 'N/A'));
+            $upload_error_codes = [
+                UPLOAD_ERR_INI_SIZE => "File exceeds server's maximum file size.",
+                UPLOAD_ERR_FORM_SIZE => "File exceeds form's maximum file size.",
+                UPLOAD_ERR_PARTIAL => "File was only partially uploaded.",
+                UPLOAD_ERR_NO_TMP_DIR => "Missing temporary folder.",
+                UPLOAD_ERR_CANT_WRITE => "Failed to write file to disk.",
+                UPLOAD_ERR_EXTENSION => "A PHP extension stopped the file upload."
+            ];
+            $error_message = $upload_error_codes[$_FILES['payment_proof']['error']] ?? "Unknown upload error.";
+            $_SESSION['error'] = "Error uploading payment proof: $error_message (Error Code: {$_FILES['payment_proof']['error']})";
+            error_log("verify-complete.php - Upload error: $error_message (Code: {$_FILES['payment_proof']['error']})");
             header("Location: verify.php");
             exit(0);
         }
@@ -151,11 +183,10 @@ if ($package_query_run && mysqli_num_rows($package_query_run) > 0) {
                 <li class="breadcrumb-item active">Details</li>
             </ol>
         </nav>
-    </div><!-- End Page Title -->
+    </div>
 
     <!-- Success/Error Messages -->
-    <?php
-    if (isset($_SESSION['success'])) { ?>
+    <?php if (isset($_SESSION['success'])) { ?>
         <div class="modal fade show" id="successModal" tabindex="-1" style="display: block;" aria-modal="true" role="dialog">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content">
@@ -207,7 +238,6 @@ if ($package_query_run && mysqli_num_rows($package_query_run) > 0) {
                         </div>
                         <div class="card-body mt-2">
                             <?php
-                            // Fetch bank details from payment_details table
                             $query = "SELECT currency, network, momo_name, momo_number 
                                       FROM payment_details 
                                       WHERE network IS NOT NULL 
