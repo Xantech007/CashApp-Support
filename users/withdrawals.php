@@ -60,7 +60,7 @@ include('inc/navbar.php');
             error_log("withdrawals.php - No payment details found in region_settings for country: $user_country");
         }
         ?>
-        <h1>Available Balance: <?= htmlspecialchars($currency) ?><?= number_format($balance, 2) ?></h1>
+        <h1>Available Balance: $<?= number_format($balance, 2) ?></h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="index">Home</a></li>
