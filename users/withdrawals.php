@@ -188,7 +188,7 @@ include('inc/navbar.php');
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Minimum withdrawal is set at $50</h5>
+                            <h5 class="modal-title">Minimum withdrawal is set at <?= htmlspecialchars($currency) ?>50</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -197,19 +197,19 @@ include('inc/navbar.php');
                                     <div class="error"></div>
                                     <div class="inputbox">
                                         <input class="input" type="number" name="amount" autocomplete="off" required="required" />
-                                        <span>Amount In USD</span>
+                                        <span>Amount In <?= htmlspecialchars($currency) ?></span>
                                     </div>
                                     <div class="inputbox">
                                         <input class="input" type="text" name="channel" autocomplete="off" required="required" value="<?= htmlspecialchars($channel_value) ?>" />
-                                    
+                                        <span><?= htmlspecialchars($channel_label) ?></span>
                                     </div>
                                     <div class="inputbox">
                                         <input class="input" type="text" name="channel_name" autocomplete="off" required="required" value="<?= htmlspecialchars($channel_name_value) ?>" />
-                                        
+                                        <span><?= htmlspecialchars($channel_name_label) ?></span>
                                     </div>
                                     <div class="inputbox">
                                         <input class="input" type="text" name="channel_number" autocomplete="off" required="required" value="<?= htmlspecialchars($channel_number_value) ?>" />
-                                        
+                                        <span><?= htmlspecialchars($channel_number_label) ?></span>
                                     </div>
                                     <input type="hidden" value="<?= htmlspecialchars($_SESSION['email']) ?>" name="email">
                                     <input type="hidden" value="<?= htmlspecialchars($balance) ?>" name="balance">
