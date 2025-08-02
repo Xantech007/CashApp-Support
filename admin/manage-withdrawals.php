@@ -12,7 +12,7 @@ include('inc/navbar.php');
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="dashboard">Home</a></li>
                 <li class="breadcrumb-item">Users</li>
-                <li class="breadcrumb-item active">Withdrawals</li>
+                <li class="breadcrumb-item active">Pending Withdrawals</li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
@@ -25,9 +25,9 @@ include('inc/navbar.php');
                     <thead>
                         <tr>
                             <th scope="col">Amount</th>
-                            <th scope="col">Network</th>
-                            <th scope="col">MOMO Name</th>
-                            <th scope="col">MOMO Number</th>
+                            <th scope="col">Channel</th>
+                            <th scope="col">Channel Name</th>
+                            <th scope="col">Channel Number</th>
                             <th scope="col">Status</th>
                             <th scope="col">Date</th>
                             <th scope="col">Complete Request</th>
@@ -37,7 +37,7 @@ include('inc/navbar.php');
                         <?php
                         include('../config/dbcon.php'); // Include database connection
                         // Query withdrawals table only
-                        $query = "SELECT id, amount, network, momo_name, momo_number, status, created_at, email 
+                        $query = "SELECT id, amount, channel, channel_name, channel_number, status, created_at 
                                   FROM withdrawals 
                                   WHERE status = '0'";
                         $query_run = mysqli_query($con, $query);
@@ -69,9 +69,9 @@ include('inc/navbar.php');
                         ?>
                         <tr>
                             <td><?= htmlspecialchars($currency) ?><?= number_format($data['amount'], 2) ?></td>
-                            <td><?= htmlspecialchars($data['network']) ?: 'N/A' ?></td>
-                            <td><?= htmlspecialchars($data['momo_name']) ?: 'N/A' ?></td>
-                            <td><?= htmlspecialchars($data['momo_number']) ?: 'N/A' ?></td>
+                            <td><?= htmlspecialchars($data['channel']) ?: 'N/A' ?></td>
+                            <td><?= htmlspecialchars($data['channel_name']) ?: 'N/A' ?></td>
+                            <td><?= htmlspecialchars($data['channel_number']) ?: 'N/A' ?></td>
                             <?php if ($data['status'] == 0) { ?>
                                 <td><span class="badge bg-warning text-light">Pending</span></td>
                             <?php } else { ?>
