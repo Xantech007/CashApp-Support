@@ -109,17 +109,17 @@ include('inc/sidebar.php');
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="Channel">Channel</label>
-                                <input type="text" class="form-control" name="Channel" placeholder="e.g., Mobile Network" required>
+                                <input type="text" class="form-control" name="Channel" placeholder="e.g., Bank" required>
                             </div>
                             <div class="col-md-6">
                                 <label for="Channel_name">Channel Name</label>
-                                <input type="text" class="form-control" name="Channel_name" placeholder="e.g., Account Holder" required>
+                                <input type="text" class="form-control" name="Channel_name" placeholder="e.g., Account Name" required>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="Channel_number">Channel Number</label>
-                                <input type="text" class="form-control" name="Channel_number" placeholder="e.g., Phone Number" required>
+                                <input type="text" class="form-control" name="Channel_number" placeholder="e.g., Account Number" required>
                             </div>
                             <div class="col-md-6">
                                 <label for="chnl_value">Channel Value</label>
