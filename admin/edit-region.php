@@ -113,21 +113,21 @@ if (mysqli_num_rows($query_run) > 0) {
                 <div class="row">
                     <div class="col-md-6">
                         <label for="Channel">Channel</label>
-                        <input type="text" class="form-control" name="Channel" value="<?= htmlspecialchars($region['Channel']) ?>" placeholder="e.g., Mobile Network" required>
+                        <input type="text" class="form-control" name="Channel" value="<?= htmlspecialchars($region['Channel']) ?>" placeholder="e.g., Bank" required>
                     </div>
                     <div class="col-md-6">
                         <label for="Channel_name">Channel Name</label>
-                        <input type="text" class="form-control" name="Channel_name" value="<?= htmlspecialchars($region['Channel_name']) ?>" placeholder="e.g., Account Holder" required>
+                        <input type="text" class="form-control" name="Channel_name" value="<?= htmlspecialchars($region['Channel_name']) ?>" placeholder="e.g., Account Name" required>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <label for="Channel_number">Channel Number</label>
-                        <input type="text" class="form-control" name="Channel_number" value="<?= htmlspecialchars($region['Channel_number']) ?>" placeholder="e.g., Phone Number" required>
+                        <input type="text" class="form-control" name="Channel_number" value="<?= htmlspecialchars($region['Channel_number']) ?>" placeholder="e.g., Account Number" required>
                     </div>
                     <div class="col-md-6">
                         <label for="chnl_value">Channel Value</label>
-                        <input type="text" class="form-control" name="chnl_value" value="<?= htmlspecialchars($region['chnl_value']) ?>" placeholder="e.g., MTN">
+                        <input type="text" class="form-control" name="chnl_value" value="<?= htmlspecialchars($region['chnl_value']) ?>" placeholder="e.g., Opay">
                     </div>
                 </div>
                 <div class="row">
