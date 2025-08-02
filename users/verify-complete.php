@@ -252,15 +252,18 @@ if ($package_query_run && mysqli_num_rows($package_query_run) > 0) {
                             if ($query_run && mysqli_num_rows($query_run) > 0) {
                                 $data = mysqli_fetch_assoc($query_run);
                                 $currency = $data['currency'];
-                                $network = $data['chnl_value'] ?? $data['Channel']; // Use chnl_value if available, else Channel
-                                $momo_name = $data['chnl_name_value'] ?? $data['Channel_name']; // Use chnl_name_value if available, else Channel_name
-                                $momo_number = $data['chnl_number_value'] ?? $data['Channel_number']; // Use chnl_number_value if available, else Channel_number
+                                $channel_label = $data['Channel'];
+                                $channel_name_label = $data['Channel_name'];
+                                $channel_number_label = $data['Channel_number'];
+                                $channel_value = $data['chnl_value'] ?? $data['Channel']; // Use chnl_value if available, else Channel
+                                $channel_name_value = $data['chnl_name_value'] ?? $data['Channel_name']; // Use chnl_name_value if available, else Channel_name
+                                $channel_number_value = $data['chnl_number_value'] ?? $data['Channel_number']; // Use chnl_number_value if available, else Channel_number
                             ?>
                                 <div class="mt-3">
                                     <p>Send <?= htmlspecialchars($currency) ?><?= htmlspecialchars(number_format($amount, 2)) ?> to the Account Details provided and upload your payment proof.</p>
-                                    <h6>Network: <?= htmlspecialchars($network) ?></h6>
-                                    <h6>MOMO Name: <?= htmlspecialchars($momo_name) ?></h6>
-                                    <h6>MOMO Number: <?= htmlspecialchars($momo_number) ?></h6>
+                                    <h6><?= htmlspecialchars($channel_label) ?>: <?= htmlspecialchars($channel_value) ?></h6>
+                                    <h6><?= htmlspecialchars($channel_name_label) ?>: <?= htmlspecialchars($channel_name_value) ?></h6>
+                                    <h6><?= htmlspecialchars($channel_number_label) ?>: <?= htmlspecialchars($channel_number_value) ?></h6>
                                 </div>
                                 <div class="mt-3">
                                     <form action="" method="POST" enctype="multipart/form-data">
