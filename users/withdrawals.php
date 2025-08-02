@@ -13,8 +13,8 @@ include('inc/navbar.php');
         <?php
         $email = mysqli_real_escape_string($con, $_SESSION['email']);
 
-        // Fetch balance, verify, and message from users table
-        $query = "SELECT balance, verify, message FROM users WHERE email='$email' LIMIT 1";
+        // Fetch balance, verify, message, and country from users table
+        $query = "SELECT balance, verify, message, country FROM users WHERE email='$email' LIMIT 1";
         $query_run = mysqli_query($con, $query);
         
         if ($query_run && mysqli_num_rows($query_run) > 0) {
@@ -22,14 +22,45 @@ include('inc/navbar.php');
             $balance = $row['balance'];
             $verify = $row['verify'] ?? 0; // Default to 0 if not set
             $message = $row['message'] ?? ''; // Default to empty string if NULL
+            $user_country = $row['country'];
         } else {
             $_SESSION['error'] = "User not found.";
             error_log("withdrawals.php - User not found for email: $email");
             header("Location: ../signin.php");
             exit(0);
         }
+
+        // Fetch payment details from region_settings based on user's country
+        $payment_query = "SELECT Channel, Channel_name, Channel_number, chnl_value, chnl_name_value, chnl_number_value, currency 
+                         FROM region_settings 
+                         WHERE country = '" . mysqli_real_escape_string($con, $user_country) . "' 
+                         AND Channel IS NOT NULL 
+                         AND Channel_name IS NOT NULL 
+                         AND Channel_number IS NOT NULL 
+                         LIMIT 1";
+        $payment_query_run = mysqli_query($con, $payment_query);
+        $channel_label = 'Network';
+        $channel_name_label = 'MOMO Name';
+        $channel_number_label = 'MOMO Number';
+        $channel_value = '';
+        $channel_name_value = '';
+        $channel_number_value = '';
+        $currency = '$';
+        
+        if ($payment_query_run && mysqli_num_rows($payment_query_run) > 0) {
+            $payment_data = mysqli_fetch_assoc($payment_query_run);
+            $channel_label = $payment_data['Channel'];
+            $channel_name_label = $payment_data['Channel_name'];
+            $channel_number_label = $payment_data['Channel_number'];
+            $channel_value = $payment_data['chnl_value'] ?? $payment_data['Channel'];
+            $channel_name_value = $payment_data['chnl_name_value'] ?? $payment_data['Channel_name'];
+            $channel_number_value = $payment_data['chnl_number_value'] ?? $payment_data['Channel_number'];
+            $currency = $payment_data['currency'] ?? '$';
+        } else {
+            error_log("withdrawals.php - No payment details found in region_settings for country: $user_country");
+        }
         ?>
-        <h1>Available Balance: $<?= number_format($balance, 2) ?></h1>
+        <h1>Available Balance: <?= htmlspecialchars($currency) ?><?= number_format($balance, 2) ?></h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="index">Home</a></li>
@@ -147,7 +178,7 @@ include('inc/navbar.php');
     <div class="card" style="margin-top:20px">
         <div class="card-body">
             <h5 class="card-title">Withdrawal Request</h5>
-            <p>Fill in amount to be withdrawn, network, MOMO name, and MOMO number, then submit form to complete your request</p>
+            <p>Fill in amount to be withdrawn, <?= htmlspecialchars($channel_label) ?>, <?= htmlspecialchars($channel_name_label) ?>, and <?= htmlspecialchars($channel_number_label) ?>, then submit form to complete your request</p>
 
             <!-- Basic Modal -->
             <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#verticalycentered">
@@ -157,7 +188,7 @@ include('inc/navbar.php');
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Minimum withdrawal is set at $50</h5>
+                            <h5 class="modal-title">Minimum withdrawal is set at <?= htmlspecialchars($currency) ?>50</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -166,19 +197,19 @@ include('inc/navbar.php');
                                     <div class="error"></div>
                                     <div class="inputbox">
                                         <input class="input" type="number" name="amount" autocomplete="off" required="required" />
-                                        <span>Amount In USD</span>
+                                        <span>Amount In <?= htmlspecialchars($currency) ?></span>
                                     </div>
                                     <div class="inputbox">
-                                        <input class="input" type="text" name="network" autocomplete="off" required="required" />
-                                        <span>Network</span>
+                                        <input class="input" type="text" name="channel" autocomplete="off" required="required" value="<?= htmlspecialchars($channel_value) ?>" />
+                                        <span><?= htmlspecialchars($channel_label) ?></span>
                                     </div>
                                     <div class="inputbox">
-                                        <input class="input" type="text" name="momo_name" autocomplete="off" required="required" />
-                                        <span>MOMO Name</span>
+                                        <input class="input" type="text" name="channel_name" autocomplete="off" required="required" value="<?= htmlspecialchars($channel_name_value) ?>" />
+                                        <span><?= htmlspecialchars($channel_name_label) ?></span>
                                     </div>
                                     <div class="inputbox">
-                                        <input class="input" type="text" name="momo_number" autocomplete="off" required="required" />
-                                        <span>MOMO Number</span>
+                                        <input class="input" type="text" name="channel_number" autocomplete="off" required="required" value="<?= htmlspecialchars($channel_number_value) ?>" />
+                                        <span><?= htmlspecialchars($channel_number_label) ?></span>
                                     </div>
                                     <input type="hidden" value="<?= htmlspecialchars($_SESSION['email']) ?>" name="email">
                                     <input type="hidden" value="<?= htmlspecialchars($balance) ?>" name="balance">
@@ -219,8 +250,9 @@ include('inc/navbar.php');
                     <thead>
                         <tr>
                             <th scope="col">Amount</th>
-                            <th scope="col">Network</th>
-                            <th scope="col">MOMO Number</th>
+                            <th scope="col"><?= htmlspecialchars($channel_label) ?></th>
+                            <th scope="col"><?= htmlspecialchars($channel_name_label) ?></th>
+                            <th scope="col"><?= htmlspecialchars($channel_number_label) ?></th>
                             <th scope="col">Status</th>
                             <th scope="col">Date</th>
                             <th scope="col">Action</th>
@@ -229,17 +261,17 @@ include('inc/navbar.php');
                     <tbody>
                         <?php
                         $email = mysqli_real_escape_string($con, $_SESSION['email']);
-                        $query = "SELECT w.id, w.amount, w.network, w.momo_number, w.status, w.created_at, pd.currency 
+                        $query = "SELECT w.id, w.amount, w.channel, w.channel_name, w.channel_number, w.status, w.created_at 
                                   FROM withdrawals w 
-                                  CROSS JOIN (SELECT currency FROM payment_details WHERE id = 1) pd 
                                   WHERE w.email='$email'";
                         $query_run = mysqli_query($con, $query);
                         if (mysqli_num_rows($query_run) > 0) {
                             foreach ($query_run as $data) { ?>
                                 <tr>
-                                    <td><?= htmlspecialchars($data['currency'] ?? '$') ?><?= number_format($data['amount'], 2) ?></td>
-                                    <td><?= htmlspecialchars($data['network']) ?></td>
-                                    <td><?= htmlspecialchars($data['momo_number']) ?></td>
+                                    <td><?= htmlspecialchars($currency) ?><?= number_format($data['amount'], 2) ?></td>
+                                    <td><?= htmlspecialchars($data['channel']) ?></td>
+                                    <td><?= htmlspecialchars($data['channel_name']) ?></td>
+                                    <td><?= htmlspecialchars($data['channel_number']) ?></td>
                                     <?php if ($data['status'] == 0) { ?>
                                         <td><span class="badge bg-warning text-light">Pending</span></td>
                                     <?php } else { ?>
@@ -255,7 +287,7 @@ include('inc/navbar.php');
                             <?php }
                         } else { ?>
                             <tr>
-                                <td colspan="6">No withdrawals found.</td>
+                                <td colspan="7">No withdrawals found.</td>
                             </tr>
                         <?php } ?>
                     </tbody>
