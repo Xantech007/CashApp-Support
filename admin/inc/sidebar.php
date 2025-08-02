@@ -46,7 +46,7 @@
     </a>
   </li><!-- End Dashboard Nav -->
   <li class="nav-item">
-    <a class="nav-link <?= $page == 'region_settings.php' ? '' :  'collapsed'?> " href="settings">
+    <a class="nav-link <?= $page == 'region_settings.php' ? '' :  'collapsed'?> " href="region_settings">
       <i class="bi bi-gear"></i>
       <span>Region Settings</span>
     </a>
