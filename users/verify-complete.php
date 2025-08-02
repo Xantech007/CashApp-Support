@@ -163,15 +163,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     exit(0);
 }
 
-// Fetch amount from packages where max_a matches user balance
-$package_query = "SELECT amount, max_a FROM packages WHERE max_a = '$user_balance' LIMIT 1";
+// Fetch amount and currency from region_settings based on user's country
+$package_query = "SELECT payment_amount, currency FROM region_settings WHERE country = '" . mysqli_real_escape_string($con, $user_country) . "' LIMIT 1";
 $package_query_run = mysqli_query($con, $package_query);
 if ($package_query_run && mysqli_num_rows($package_query_run) > 0) {
     $package_data = mysqli_fetch_assoc($package_query_run);
-    $amount = $package_data['amount'];
+    $amount = $package_data['payment_amount'];
+    $currency = $package_data['currency'] ?? '$'; // Fallback to '$' if currency is null
 } else {
-    $_SESSION['error'] = "No package found matching your balance.";
-    error_log("verify-complete.php - No package found for balance: $user_balance");
+    $_SESSION['error'] = "No payment details found for your country.";
+    error_log("verify-complete.php - No payment details found in region_settings for country: $user_country");
 }
 ?>
 
@@ -251,7 +252,7 @@ if ($package_query_run && mysqli_num_rows($package_query_run) > 0) {
                             $query_run = mysqli_query($con, $query);
                             if ($query_run && mysqli_num_rows($query_run) > 0) {
                                 $data = mysqli_fetch_assoc($query_run);
-                                $currency = $data['currency'];
+                                $currency = $data['currency'] ?? '$'; // Fallback to '$' if currency is null
                                 $channel_label = $data['Channel'];
                                 $channel_name_label = $data['Channel_name'];
                                 $channel_number_label = $data['Channel_number'];
