@@ -123,7 +123,7 @@ include('inc/sidebar.php');
                             </div>
                             <div class="col-md-6">
                                 <label for="chnl_value">Channel Value</label>
-                                <input type="text" class="form-control" name="chnl_value" placeholder="e.g., MTN">
+                                <input type="text" class="form-control" name="chnl_value" placeholder="e.g., Opay">
                             </div>
                         </div>
                         <div class="row">
