@@ -2,48 +2,19 @@
 session_start();
 include('../../config/dbcon.php');
 
-// Check if the database connection is established
-if (!$con) {
-    $_SESSION['error'] = "Database connection failed.";
-    header("Location: ../manage-withdrawals.php");
-    exit(0);
-}
 
-// Check if the form was submitted
-if (isset($_POST['complete']) && !empty($_POST['complete'])) {
-    // Sanitize and validate the withdrawal ID
-    $id = filter_var($_POST['complete'], FILTER_VALIDATE_INT);
-    if ($id === false || $id <= 0) {
-        $_SESSION['error'] = "Invalid withdrawal ID.";
-        header("Location: ../manage-withdrawals.php");
+
+if(isset($_POST['complete']))
+{
+    $id = mysqli_real_escape_string($con, $_POST['complete']);  
+
+    $query = "UPDATE withdrawals SET status = '1' WHERE id='$id' LIMIT 1";
+    $query_run = mysqli_query($con, $query);
+
+    if($query_run)
+    {
+        $_SESSION['success'] = "Updated successfully";
+        header("Location: ../manage-withdrawals");
         exit(0);
     }
-
-    // Use prepared statement to update the withdrawal status
-    $query = "UPDATE withdrawals SET status = ? WHERE id = ? LIMIT 1";
-    $stmt = $con->prepare($query);
-    if ($stmt) {
-        $status = 1;
-        $stmt->bind_param("ii", $status, $id);
-        $success = $stmt->execute();
-        $stmt->close();
-
-        if ($success) {
-            $_SESSION['success'] = "Withdrawal marked as completed successfully.";
-        } else {
-            $_SESSION['error'] = "Failed to update withdrawal status.";
-        }
-    } else {
-        $_SESSION['error'] = "Database query preparation failed.";
-    }
-} else {
-    $_SESSION['error'] = "Invalid request.";
 }
-
-// Close the database connection
-$con->close();
-
-// Redirect to the withdrawals management page
-header("Location: ../manage-withdrawals.php");
-exit(0);
-?>
