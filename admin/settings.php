@@ -88,9 +88,15 @@ include('inc/sidebar.php');
                                 <select class="form-control" name="country" required>
                                     <option value="" disabled selected>Select Country</option>
                                     <?php
-                                    include('users/inc/countries.php');
-                                    foreach ($countries as $country) {
-                                        echo '<option value="' . htmlspecialchars($country) . '">' . htmlspecialchars($country) . '</option>';
+                                    include('inc/countries.php');
+                                    if (isset($countries) && !empty($countries)) {
+                                        foreach ($countries as $country) {
+                                            echo '<option value="' . htmlspecialchars($country) . '">' . htmlspecialchars($country) . '</option>';
+                                        }
+                                    } else {
+                                        echo '<option value="" disabled>No countries available</option>';
+                                        error_log("region_settings.php - Countries array not set or empty");
+                                        $_SESSION['error'] = "Country list unavailable. Please contact support.";
                                     }
                                     ?>
                                 </select>
