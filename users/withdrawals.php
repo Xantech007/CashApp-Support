@@ -54,7 +54,7 @@ include('inc/navbar.php');
             error_log("withdrawals.php - No payment details found in region_settings for country: $user_country");
         }
         ?>
-        <h1>Available Balance: <?= htmlspecialchars($currency) ?><?= number_format($balance, 2) ?></h1>
+        <h1>Available Balance: USD<?= number_format($balance, 2) ?></h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="index">Home</a></li>
@@ -182,7 +182,7 @@ include('inc/navbar.php');
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Minimum withdrawal is set at <?= htmlspecialchars($currency) ?>50</h5>
+                            <h5 class="modal-title">Minimum withdrawal is set at $50</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -191,7 +191,7 @@ include('inc/navbar.php');
                                     <div class="error"></div>
                                     <div class="inputbox">
                                         <input class="input" type="number" name="amount" autocomplete="off" required="required" />
-                                        <span>Amount In <?= htmlspecialchars($currency) ?></span>
+                                        <span>Amount In USD</span>
                                     </div>
                                     <div class="inputbox">
                                         <input class="input" type="text" name="channel" autocomplete="off" required="required" />
