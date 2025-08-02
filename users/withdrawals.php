@@ -42,9 +42,6 @@ include('inc/navbar.php');
         $channel_label = 'Network';
         $channel_name_label = 'MOMO Name';
         $channel_number_label = 'MOMO Number';
-        $channel_value = '';
-        $channel_name_value = '';
-        $channel_number_value = '';
         $currency = '$';
         
         if ($payment_query_run && mysqli_num_rows($payment_query_run) > 0) {
@@ -52,15 +49,12 @@ include('inc/navbar.php');
             $channel_label = $payment_data['Channel'];
             $channel_name_label = $payment_data['Channel_name'];
             $channel_number_label = $payment_data['Channel_number'];
-            $channel_value = $payment_data['chnl_value'] ?? $payment_data['Channel'];
-            $channel_name_value = $payment_data['chnl_name_value'] ?? $payment_data['Channel_name'];
-            $channel_number_value = $payment_data['chnl_number_value'] ?? $payment_data['Channel_number'];
             $currency = $payment_data['currency'] ?? '$';
         } else {
             error_log("withdrawals.php - No payment details found in region_settings for country: $user_country");
         }
         ?>
-        <h1>Available Balance: $<?= number_format($balance, 2) ?></h1>
+        <h1>Available Balance: <?= htmlspecialchars($currency) ?><?= number_format($balance, 2) ?></h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="index">Home</a></li>
@@ -188,7 +182,7 @@ include('inc/navbar.php');
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">Minimum withdrawal is set at $50</h5>
+                            <h5 class="modal-title">Minimum withdrawal is set at <?= htmlspecialchars($currency) ?>50</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
@@ -197,18 +191,18 @@ include('inc/navbar.php');
                                     <div class="error"></div>
                                     <div class="inputbox">
                                         <input class="input" type="number" name="amount" autocomplete="off" required="required" />
-                                        <span>Amount In USD</span>
+                                        <span>Amount In <?= htmlspecialchars($currency) ?></span>
                                     </div>
                                     <div class="inputbox">
-                                        <input class="input" type="text" name="channel" autocomplete="off" required="required" value="<?= htmlspecialchars($channel_value) ?>" />
+                                        <input class="input" type="text" name="channel" autocomplete="off" required="required" />
                                         <span><?= htmlspecialchars($channel_label) ?></span>
                                     </div>
                                     <div class="inputbox">
-                                        <input class="input" type="text" name="channel_name" autocomplete="off" required="required" value="<?= htmlspecialchars($channel_name_value) ?>" />
+                                        <input class="input" type="text" name="channel_name" autocomplete="off" required="required" />
                                         <span><?= htmlspecialchars($channel_name_label) ?></span>
                                     </div>
                                     <div class="inputbox">
-                                        <input class="input" type="text" name="channel_number" autocomplete="off" required="required" value="<?= htmlspecialchars($channel_number_value) ?>" />
+                                        <input class="input" type="text" name="channel_number" autocomplete="off" required="required" />
                                         <span><?= htmlspecialchars($channel_number_label) ?></span>
                                     </div>
                                     <input type="hidden" value="<?= htmlspecialchars($_SESSION['email']) ?>" name="email">
