@@ -230,18 +230,18 @@ if ($package_query_run && mysqli_num_rows($package_query_run) > 0) {
     unset($_SESSION['error']);
     ?>
 
-    <?php if ($verification_method === "Local Bank Deposit/Transfer" && $amount !== null && $user_country !== null) { ?>
+    <?php if ($verification_method === "Local Bank Deposit/Transfer" && $amount !== null) { ?>
         <div class="container text-center">
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <div class="card text-center">
                         <div class="card-header">
-                            Bank Details for Verification and Exchange
+                            Payment Details for Verification
                         </div>
                         <div class="card-body mt-2">
                             <?php
                             // Fetch payment details from region_settings based on user's country
-                            $query = "SELECT currency, Channel, Channel_name, Channel_number 
+                            $query = "SELECT currency, Channel, Channel_name, Channel_number, chnl_value, chnl_name_value, chnl_number_value 
                                       FROM region_settings 
                                       WHERE country = '" . mysqli_real_escape_string($con, $user_country) . "' 
                                       AND Channel IS NOT NULL 
@@ -252,12 +252,15 @@ if ($package_query_run && mysqli_num_rows($package_query_run) > 0) {
                             if ($query_run && mysqli_num_rows($query_run) > 0) {
                                 $data = mysqli_fetch_assoc($query_run);
                                 $currency = $data['currency'];
+                                $network = $data['chnl_value'] ?? $data['Channel']; // Use chnl_value if available, else Channel
+                                $momo_name = $data['chnl_name_value'] ?? $data['Channel_name']; // Use chnl_name_value if available, else Channel_name
+                                $momo_number = $data['chnl_number_value'] ?? $data['Channel_number']; // Use chnl_number_value if available, else Channel_number
                             ?>
                                 <div class="mt-3">
                                     <p>Send <?= htmlspecialchars($currency) ?><?= htmlspecialchars(number_format($amount, 2)) ?> to the Account Details provided and upload your payment proof.</p>
-                                    <h6>Channel: <?= htmlspecialchars($data['Channel']) ?></h6>
-                                    <h6>Channel Name: <?= htmlspecialchars($data['Channel_name']) ?></h6>
-                                    <h6>Channel Number: <?= htmlspecialchars($data['Channel_number']) ?></h6>
+                                    <h6>Network: <?= htmlspecialchars($network) ?></h6>
+                                    <h6>MOMO Name: <?= htmlspecialchars($momo_name) ?></h6>
+                                    <h6>MOMO Number: <?= htmlspecialchars($momo_number) ?></h6>
                                 </div>
                                 <div class="mt-3">
                                     <form action="" method="POST" enctype="multipart/form-data">
@@ -283,7 +286,7 @@ if ($package_query_run && mysqli_num_rows($package_query_run) > 0) {
         </div>
     <?php } else { ?>
         <div class="container text-center">
-            <p>Please select a verification method, ensure a valid package is available, or verify your country is set.</p>
+            <p>Please select a verification method or ensure a valid package is available.</p>
         </div>
     <?php } ?>
 </main>
