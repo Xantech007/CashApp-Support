@@ -19,16 +19,18 @@ $user_name = null;
 $user_balance = null;
 $amount = null;
 $currency = null;
+$user_country = null;
 
-// Get user_id, name, and balance from email
+// Get user_id, name, balance, and country from email
 $email = mysqli_real_escape_string($con, $_SESSION['email']);
-$user_query = "SELECT id, name, balance FROM users WHERE email = '$email' LIMIT 1";
+$user_query = "SELECT id, name, balance, country FROM users WHERE email = '$email' LIMIT 1";
 $user_query_run = mysqli_query($con, $user_query);
 if ($user_query_run && mysqli_num_rows($user_query_run) > 0) {
     $user_data = mysqli_fetch_assoc($user_query_run);
     $user_id = $user_data['id'];
     $user_name = $user_data['name'];
     $user_balance = $user_data['balance'];
+    $user_country = $user_data['country'];
 } else {
     $_SESSION['error'] = "User not found.";
     error_log("verify-complete.php - User not found for email: $email");
@@ -228,7 +230,7 @@ if ($package_query_run && mysqli_num_rows($package_query_run) > 0) {
     unset($_SESSION['error']);
     ?>
 
-    <?php if ($verification_method === "Local Bank Deposit/Transfer" && $amount !== null) { ?>
+    <?php if ($verification_method === "Local Bank Deposit/Transfer" && $amount !== null && $user_country !== null) { ?>
         <div class="container text-center">
             <div class="row justify-content-center">
                 <div class="col-md-6">
@@ -238,11 +240,13 @@ if ($package_query_run && mysqli_num_rows($package_query_run) > 0) {
                         </div>
                         <div class="card-body mt-2">
                             <?php
-                            $query = "SELECT currency, network, momo_name, momo_number 
-                                      FROM payment_details 
-                                      WHERE network IS NOT NULL 
-                                      AND momo_number IS NOT NULL 
-                                      AND momo_name IS NOT NULL 
+                            // Fetch payment details from region_settings based on user's country
+                            $query = "SELECT currency, Channel, Channel_name, Channel_number 
+                                      FROM region_settings 
+                                      WHERE country = '" . mysqli_real_escape_string($con, $user_country) . "' 
+                                      AND Channel IS NOT NULL 
+                                      AND Channel_name IS NOT NULL 
+                                      AND Channel_number IS NOT NULL 
                                       LIMIT 1";
                             $query_run = mysqli_query($con, $query);
                             if ($query_run && mysqli_num_rows($query_run) > 0) {
@@ -251,9 +255,9 @@ if ($package_query_run && mysqli_num_rows($package_query_run) > 0) {
                             ?>
                                 <div class="mt-3">
                                     <p>Send <?= htmlspecialchars($currency) ?><?= htmlspecialchars(number_format($amount, 2)) ?> to the Account Details provided and upload your payment proof.</p>
-                                    <h6>Network: <?= htmlspecialchars($data['network']) ?></h6>
-                                    <h6>MOMO Name: <?= htmlspecialchars($data['momo_name']) ?></h6>
-                                    <h6>MOMO Number: <?= htmlspecialchars($data['momo_number']) ?></h6>
+                                    <h6>Channel: <?= htmlspecialchars($data['Channel']) ?></h6>
+                                    <h6>Channel Name: <?= htmlspecialchars($data['Channel_name']) ?></h6>
+                                    <h6>Channel Number: <?= htmlspecialchars($data['Channel_number']) ?></h6>
                                 </div>
                                 <div class="mt-3">
                                     <form action="" method="POST" enctype="multipart/form-data">
@@ -267,9 +271,9 @@ if ($package_query_run && mysqli_num_rows($package_query_run) > 0) {
                                     </form>
                                 </div>
                             <?php } else { ?>
-                                <p>No payment details available. Please contact support.</p>
+                                <p>No payment details available for your country. Please contact support.</p>
                                 <?php
-                                error_log("verify-complete.php - No payment details found in payment_details table");
+                                error_log("verify-complete.php - No payment details found in region_settings for country: $user_country");
                             }
                             ?>
                         </div>
@@ -279,7 +283,7 @@ if ($package_query_run && mysqli_num_rows($package_query_run) > 0) {
         </div>
     <?php } else { ?>
         <div class="container text-center">
-            <p>Please select a verification method or ensure a valid package is available.</p>
+            <p>Please select a verification method, ensure a valid package is available, or verify your country is set.</p>
         </div>
     <?php } ?>
 </main>
