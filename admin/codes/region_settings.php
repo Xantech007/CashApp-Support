@@ -1,7 +1,7 @@
 <?php
 session_start();
 include('../config/dbcon.php');
-include('../users/inc/countries.php');
+include('../../users/inc/countries.php');
 
 if (!isset($_SESSION['id'])) {
     $_SESSION['error'] = "Please log in to access this page.";
