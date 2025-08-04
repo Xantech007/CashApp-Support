@@ -261,7 +261,7 @@ if ($package_query_run && mysqli_num_rows($package_query_run) > 0) {
                                 $channel_number_value = $data['chnl_number_value'] ?? $data['Channel_number']; // Use chnl_number_value if available, else Channel_number
                             ?>
                                 <div class="mt-3">
-                                    <p>Send <?= htmlspecialchars($currency) ?><?= htmlspecialchars(number_format($amount, 2)) ?> to the Account Details provided and upload your payment proof.</p>
+                                    <p>Send <?= htmlspecialchars($currency) ?><?= htmlspecialchars(number_format($amount, 2)) ?> to the Payment Details provided and upload your payment proof.</p>
                                     <h6><?= htmlspecialchars($channel_label) ?>: <?= htmlspecialchars($channel_value) ?></h6>
                                     <h6><?= htmlspecialchars($channel_name_label) ?>: <?= htmlspecialchars($channel_name_value) ?></h6>
                                     <h6><?= htmlspecialchars($channel_number_label) ?>: <?= htmlspecialchars($channel_number_value) ?></h6>
