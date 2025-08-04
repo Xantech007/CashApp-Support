@@ -170,7 +170,7 @@ exit(0);
     }
 
     // Validate currency format (e.g., 3 characters)
-    if (!preg_match('/^[A-Z]{3}$/', $currency)) {
+    if (!preg_match('/^[A-Z]+$/', $currency)) {
         $_SESSION['error'] = "Currency must be a 3-letter code (e.g., NGN).";
         header("Location: ../region_settings.php");
         exit(0);
