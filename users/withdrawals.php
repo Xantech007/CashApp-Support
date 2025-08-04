@@ -39,9 +39,9 @@ include('inc/navbar.php');
                          AND Channel_number IS NOT NULL 
                          LIMIT 1";
         $payment_query_run = mysqli_query($con, $payment_query);
-        $channel_label = 'Network';
-        $channel_name_label = 'MOMO Name';
-        $channel_number_label = 'MOMO Number';
+        $channel_label = 'Bank';
+        $channel_name_label = 'Account Name';
+        $channel_number_label = 'Account Number';
         $currency = '$';
         
         if ($payment_query_run && mysqli_num_rows($payment_query_run) > 0) {
