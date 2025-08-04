@@ -103,7 +103,7 @@ include('inc/sidebar.php');
                             </div>
                             <div class="col-md-6">
                                 <label for="currency">Currency</label>
-                                <input type="text" class="form-control" name="currency" placeholder="e.g., NGN" maxlength="3" required>
+                                <input type="text" class="form-control" name="currency" placeholder="e.g., NGN" required>
                             </div>
                         </div>
                         <div class="row">
