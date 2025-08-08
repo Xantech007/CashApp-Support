@@ -58,7 +58,6 @@ include('users/inc/countries.php');
                             background: linear-gradient(to bottom, #f7941d, #f76b1c);
                         }
 
-                        /* Custom styling for "LogIn" link */
                         .reg-text a {
                             color: #f7951d;
                             font-weight: 600;
@@ -69,7 +68,6 @@ include('users/inc/countries.php');
                             color: #cc6f0e;
                         }
 
-                        /* Style for select dropdown to match other inputs */
                         select.form-control {
                             color: black;
                             border: 1px solid #ccc;
@@ -108,10 +106,9 @@ include('users/inc/countries.php');
                         <input class="form-control" type="text" name="name" placeholder="Enter your Name" style="color:black" required>
                         <input class="form-control" type="email" name="email" placeholder="Email Address" style="color:black" required>
                         <input class="form-control" type="password" name="password" placeholder="Password" style="color:black" required>
-                        <select class="form-control" name="country" required>
-                            <option value="" disabled selected>Select your country</option>
+                        <select class="form-control" name="country" id="countrySelect" required>
+                            <option value="" disabled>Select your country</option>
                             <?php
-                            // Assuming $countries is an array from users/inc/countries.php
                             foreach ($countries as $country) {
                                 echo '<option value="' . htmlspecialchars($country) . '">' . htmlspecialchars($country) . '</option>';
                             }
@@ -127,5 +124,56 @@ include('users/inc/countries.php');
     </div>
 </section>
 <!-- Signin Area End -->
+
+<script>
+// JavaScript to fetch user's country using Geolocation API and set it in the dropdown
+document.addEventListener('DOMContentLoaded', function () {
+    const countrySelect = document.getElementById('countrySelect');
+
+    // Check if Geolocation is supported
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            function (position) {
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+
+                // Use a reverse geocoding service (Nominatim in this case)
+                fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=3&addressdetails=1`, {
+                    headers: {
+                        'User-Agent': 'YourAppName/1.0 (your.email@example.com)' // Replace with your app name and contact
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const country = data.address?.country;
+                    if (country) {
+                        // Find the option in the dropdown that matches the country
+                        const options = Array.from(countrySelect.options);
+                        const matchingOption = options.find(option => 
+                            option.value.toLowerCase() === country.toLowerCase() || 
+                            option.text.toLowerCase() === country.toLowerCase()
+                        );
+
+                        if (matchingOption) {
+                            countrySelect.value = matchingOption.value;
+                        } else {
+                            console.warn('Country not found in dropdown:', country);
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching country:', error);
+                });
+            },
+            function (error) {
+                console.error('Geolocation error:', error.message);
+                // Fallback: Keep default "Select your country" option
+            }
+        );
+    } else {
+        console.warn('Geolocation is not supported by this browser.');
+    }
+});
+</script>
 
 <?php include('includes/footer.php') ?>
