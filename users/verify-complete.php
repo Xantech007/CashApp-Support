@@ -64,6 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['verify_payment'])) {
         $amount = mysqli_real_escape_string($con, $_POST['amount']);
         $name = mysqli_real_escape_string($con, $user_name);
+        $email = mysqli_real_escape_string($con, $_SESSION['email']); // Add email from session
         $created_at = date('Y-m-d H:i:s');
         $updated_at = $created_at;
         $upload_path = null;
@@ -138,22 +139,37 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             exit(0);
         }
 
-        // Insert into deposits table
-        $insert_query = "INSERT INTO deposits (amount, image, name, created_at, updated_at) 
-                         VALUES ('$amount', " . ($upload_path ? "'$upload_path'" : "NULL") . ", '$name', '$created_at', '$updated_at')";
-        if (mysqli_query($con, $insert_query)) {
-            // Update verify column in users table
-            $update_verify_query = "UPDATE users SET verify = 1 WHERE email = '$email'";
-            if (mysqli_query($con, $update_verify_query)) {
-                $_SESSION['success'] = "Verify Request Submitted";
-                error_log("verify-complete.php - Verification request submitted and verify set to 1 for email: $email");
+        // Insert into deposits table using prepared statement
+        $insert_query = "INSERT INTO deposits (amount, image, name, email, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)";
+        $stmt = mysqli_prepare($con, $insert_query);
+        if ($stmt) {
+            mysqli_stmt_bind_param($stmt, "dsssss", $amount, $upload_path, $name, $email, $created_at, $updated_at);
+            if (mysqli_stmt_execute($stmt)) {
+                // Update verify column in users table
+                $update_verify_query = "UPDATE users SET verify = 1 WHERE email = ?";
+                $update_stmt = mysqli_prepare($con, $update_verify_query);
+                if ($update_stmt) {
+                    mysqli_stmt_bind_param($update_stmt, "s", $email);
+                    if (mysqli_stmt_execute($update_stmt)) {
+                        $_SESSION['success'] = "Verify Request Submitted";
+                        error_log("verify-complete.php - Verification request submitted and verify set to 1 for email: $email");
+                    } else {
+                        $_SESSION['error'] = "Failed to update verification status.";
+                        error_log("verify-complete.php - Update verify query error: " . mysqli_error($con));
+                    }
+                    mysqli_stmt_close($update_stmt);
+                } else {
+                    $_SESSION['error'] = "Failed to prepare update query.";
+                    error_log("verify-complete.php - Update query preparation error: " . mysqli_error($con));
+                }
             } else {
-                $_SESSION['error'] = "Failed to update verification status.";
-                error_log("verify-complete.php - Update verify query error: " . mysqli_error($con));
+                $_SESSION['error'] = "Failed to save verification request to database.";
+                error_log("verify-complete.php - Insert query error: " . mysqli_error($con));
             }
+            mysqli_stmt_close($stmt);
         } else {
-            $_SESSION['error'] = "Failed to save verification request to database.";
-            error_log("verify-complete.php - Insert query error: " . mysqli_error($con));
+            $_SESSION['error'] = "Failed to prepare insert query.";
+            error_log("verify-complete.php - Insert query preparation error: " . mysqli_error($con));
         }
     }
 } else {
