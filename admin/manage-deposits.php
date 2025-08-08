@@ -36,10 +36,10 @@ include('../config/dbcon.php'); // Include database connection
                     </thead>
                     <tbody>
                         <?php
-                        // Fetch all deposits with matching users in descending order by created_at
+                        // Fetch all deposits in descending order by created_at
                         $query = "SELECT d.amount, d.currency, d.name, d.email, d.image, d.status, d.created_at, u.id AS user_id 
                                   FROM deposits d 
-                                  INNER JOIN users u ON d.email = u.email 
+                                  LEFT JOIN users u ON d.email = u.email 
                                   ORDER BY d.created_at DESC";
                         $query_run = mysqli_query($con, $query);
                         if (mysqli_num_rows($query_run) > 0) {
@@ -48,11 +48,11 @@ include('../config/dbcon.php'); // Include database connection
                                 $amount = htmlspecialchars($data['amount']);
                                 $currency = htmlspecialchars($data['currency'] ?? '$'); // Fallback to '$' if currency is null
                                 $name = htmlspecialchars($data['name']);
-                                $email = htmlspecialchars($data['email']);
+                                $email = htmlspecialchars($data['email'] ?? 'No Email'); // Fallback for null email
                                 $image = htmlspecialchars($data['image']);
                                 $status = $data['status'];
                                 $created_at = date('d-M-Y', strtotime($data['created_at']));
-                                $user_id = htmlspecialchars($data['user_id']); // User ID from users table
+                                $user_id = $data['user_id'] ? htmlspecialchars($data['user_id']) : ''; // Handle NULL user_id
                         ?>
                                 <tr>
                                     <td><?= $currency ?> <?= number_format($amount, 2) ?></td>
@@ -78,7 +78,11 @@ include('../config/dbcon.php'); // Include database connection
                                         <?php if ($image) { ?>
                                             <a href="../Uploads/<?= $image ?>" download class="btn btn-light btn-sm me-1">Download</a>
                                         <?php } ?>
-                                        <a href="edit-user.php?id=<?= urlencode($user_id) ?>" class="btn btn-light btn-sm">Edit</a>
+                                        <?php if ($user_id) { ?>
+                                            <a href="edit-user.php?id=<?= urlencode($user_id) ?>" class="btn btn-light btn-sm">Edit</a>
+                                        <?php } else { ?>
+                                            <a href="create-user.php?email=<?= urlencode($email) ?>" class="btn btn-light btn-sm">Create User</a>
+                                        <?php } ?>
                                     </td>
                                 </tr>
                         <?php
