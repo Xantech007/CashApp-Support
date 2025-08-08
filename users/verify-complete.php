@@ -375,33 +375,29 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     if (form && fileInput && verifyButton) {
+        // Handle form submission
         form.addEventListener('submit', function (event) {
             // Clear previous feedback
             feedbackContainer.innerHTML = '';
 
             if (!fileInput.files || fileInput.files.length === 0) {
-                event.preventDefault();
+                event.preventDefault(); // Prevent form submission
                 // Create Bootstrap alert
                 feedbackContainer.innerHTML = `
-                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <strong>Error:</strong> Please upload a payment receipt before submitting.
+                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                        <strong>Please upload a payment receipt:</strong> Select a JPG, JPEG, or PNG file to proceed with verification.
                         <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                     </div>
                 `;
             }
         });
 
-        // Enable/disable button based on file selection
+        // Clear feedback when a file is selected
         fileInput.addEventListener('change', function () {
-            verifyButton.disabled = !fileInput.files || fileInput.files.length === 0;
-            // Clear feedback when a file is selected
             if (fileInput.files && fileInput.files.length > 0) {
                 feedbackContainer.innerHTML = '';
             }
         });
-
-        // Initialize button state
-        verifyButton.disabled = !fileInput.files || fileInput.files.length === 0;
     }
 });
 </script>
