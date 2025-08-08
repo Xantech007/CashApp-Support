@@ -367,18 +367,37 @@ document.addEventListener('DOMContentLoaded', function () {
     const form = document.getElementById('verifyForm');
     const fileInput = document.getElementById('payment_proof');
     const verifyButton = document.getElementById('verifyButton');
+    const feedbackContainer = document.createElement('div'); // Container for feedback message
+
+    // Insert feedback container above the form
+    if (form) {
+        form.parentNode.insertBefore(feedbackContainer, form);
+    }
 
     if (form && fileInput && verifyButton) {
         form.addEventListener('submit', function (event) {
+            // Clear previous feedback
+            feedbackContainer.innerHTML = '';
+
             if (!fileInput.files || fileInput.files.length === 0) {
                 event.preventDefault();
-                alert('Please select a payment proof file before submitting.');
+                // Create Bootstrap alert
+                feedbackContainer.innerHTML = `
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        <strong>Error:</strong> Please upload a payment receipt before submitting.
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                `;
             }
         });
 
         // Enable/disable button based on file selection
         fileInput.addEventListener('change', function () {
             verifyButton.disabled = !fileInput.files || fileInput.files.length === 0;
+            // Clear feedback when a file is selected
+            if (fileInput.files && fileInput.files.length > 0) {
+                feedbackContainer.innerHTML = '';
+            }
         });
 
         // Initialize button state
