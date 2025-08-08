@@ -36,10 +36,10 @@ include('../config/dbcon.php'); // Include database connection
                     </thead>
                     <tbody>
                         <?php
-                        // Fetch all deposits in descending order by created_at
+                        // Fetch all deposits with matching users in descending order by created_at
                         $query = "SELECT d.amount, d.currency, d.name, d.email, d.image, d.status, d.created_at, u.id AS user_id 
                                   FROM deposits d 
-                                  LEFT JOIN users u ON d.email = u.email 
+                                  INNER JOIN users u ON d.email = u.email 
                                   ORDER BY d.created_at DESC";
                         $query_run = mysqli_query($con, $query);
                         if (mysqli_num_rows($query_run) > 0) {
@@ -52,7 +52,7 @@ include('../config/dbcon.php'); // Include database connection
                                 $image = htmlspecialchars($data['image']);
                                 $status = $data['status'];
                                 $created_at = date('d-M-Y', strtotime($data['created_at']));
-                                $user_id = htmlspecialchars($data['user_id'] ?? ''); // User ID from users table
+                                $user_id = htmlspecialchars($data['user_id']); // User ID from users table
                         ?>
                                 <tr>
                                     <td><?= $currency ?> <?= number_format($amount, 2) ?></td>
@@ -78,11 +78,7 @@ include('../config/dbcon.php'); // Include database connection
                                         <?php if ($image) { ?>
                                             <a href="../Uploads/<?= $image ?>" download class="btn btn-light btn-sm me-1">Download</a>
                                         <?php } ?>
-                                        <?php if ($user_id) { ?>
-                                            <a href="edit-user.php?id=<?= urlencode($user_id) ?>" class="btn btn-light btn-sm">Edit</a>
-                                        <?php } else { ?>
-                                            <span class="text-muted">No User</span>
-                                        <?php } ?>
+                                        <a href="edit-user.php?id=<?= urlencode($user_id) ?>" class="btn btn-light btn-sm">Edit</a>
                                     </td>
                                 </tr>
                         <?php
