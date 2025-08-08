@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (!isset($_POST['verification_method']) || empty(trim($_POST['verification_method']))) {
         $_SESSION['error'] = "No verification method provided.";
         error_log("verify-complete.php - No verification method provided, redirecting to verify.php");
-        header("Location: verify.php");
+        header("Location: withdrawals.php");
         exit(0);
     }
 
