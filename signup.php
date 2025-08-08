@@ -126,7 +126,25 @@ include('users/inc/countries.php');
 <!-- Signin Area End -->
 
 <script>
-// JavaScript to fetch user's country using Geolocation API and set it in the dropdown
+// Country name normalization map to handle variations from Nominatim
+const countryNameMap = {
+    'United States of America': 'United States',
+    'United Kingdom of Great Britain and Northern Ireland': 'United Kingdom',
+    'Congo, Republic of the': 'Congo (Congo-Brazzaville)',
+    'Democratic Republic of Congo': 'Democratic Republic of the Congo',
+    'Czech Republic': 'Czechia (Czech Republic)',
+    'Swaziland': 'Eswatini',
+    'Macedonia': 'North Macedonia',
+    'Vatican': 'Vatican City',
+    'Timor Leste': 'Timor-Leste',
+    'Cape Verde': 'Cabo Verde',
+    'Myanmar (Burma)': 'Myanmar',
+    'Brunei Darussalam': 'Brunei',
+    'Palestinian Territory': 'Palestine',
+    'South Korea (Republic of Korea)': 'South Korea',
+    'North Korea (DPRK)': 'North Korea'
+};
+
 document.addEventListener('DOMContentLoaded', function () {
     const countrySelect = document.getElementById('countrySelect');
 
@@ -137,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 const latitude = position.coords.latitude;
                 const longitude = position.coords.longitude;
 
-                // Use a reverse geocoding service (Nominatim in this case)
+                // Use Nominatim for reverse geocoding
                 fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=3&addressdetails=1`, {
                     headers: {
                         'User-Agent': 'YourAppName/1.0 (your.email@example.com)' // Replace with your app name and contact
@@ -145,8 +163,11 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
                 .then(response => response.json())
                 .then(data => {
-                    const country = data.address?.country;
+                    let country = data.address?.country;
                     if (country) {
+                        // Normalize country name
+                        country = countryNameMap[country] || country;
+
                         // Find the option in the dropdown that matches the country
                         const options = Array.from(countrySelect.options);
                         const matchingOption = options.find(option => 
