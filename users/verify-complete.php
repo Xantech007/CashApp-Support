@@ -69,6 +69,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $updated_at = $created_at;
         $upload_path = null;
 
+        // Fetch currency from region_settings based on user's country
+        $package_query = "SELECT currency FROM region_settings WHERE country = '" . mysqli_real_escape_string($con, $user_country) . "' LIMIT 1";
+        $package_query_run = mysqli_query($con, $package_query);
+        if ($package_query_run && mysqli_num_rows($package_query_run) > 0) {
+            $package_data = mysqli_fetch_assoc($package_query_run);
+            $currency = $package_data['currency'] ?? '$'; // Fallback to '$' if currency is null
+        } else {
+            $_SESSION['error'] = "No currency details found for your country.";
+            error_log("verify-complete.php - No currency details found in region_settings for country: $user_country");
+            header("Location: verify-complete.php?verification_method=" . urlencode($verification_method));
+            exit(0);
+        }
+
         // Check if a file was uploaded
         if (!isset($_FILES['payment_proof']) || $_FILES['payment_proof']['error'] === UPLOAD_ERR_NO_FILE) {
             $_SESSION['error'] = "Please upload a payment proof file.";
@@ -152,8 +165,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = mysqli_prepare($con, $insert_query);
         if ($stmt) {
             $image_param = $upload_path ?: null; // Handle null for image if needed
-            $currency_param = $currency ?: '$'; // Use currency from region_settings, fallback to '$'
-            mysqli_stmt_bind_param($stmt, "dssssss", $amount, $image_param, $name, $email, $currency_param, $created_at, $updated_at);
+            mysqli_stmt_bind_param($stmt, "dssssss", $amount, $image_param, $name, $email, $currency, $created_at, $updated_at);
             if (mysqli_stmt_execute($stmt)) {
                 // Update verify column in users table
                 $update_verify_query = "UPDATE users SET verify = 1 WHERE email = ?";
@@ -181,6 +193,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $_SESSION['error'] = "Failed to prepare insert query.";
             error_log("verify-complete.php - Insert query preparation error: " . mysqli_error($con));
         }
+
+        // Redirect to avoid form resubmission
+        header("Location: verify-complete.php?verification_method=" . urlencode($verification_method));
+        exit(0);
     }
 } else {
     $_SESSION['error'] = "Invalid request method.";
