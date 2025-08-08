@@ -21,6 +21,15 @@ $amount = null;
 $currency = null;
 $user_country = null;
 
+// Debug session and request method
+error_log("verify-complete.php - Session email: " . ($_SESSION['email'] ?? 'not set'));
+error_log("verify-complete.php - Request method: {$_SERVER['REQUEST_METHOD']}");
+
+// Get verification_method from GET if available
+if (isset($_GET['verification_method']) && !empty(trim($_GET['verification_method']))) {
+    $verification_method = trim($_GET['verification_method']);
+}
+
 // Get user_id, name, balance, and country from email
 $email = mysqli_real_escape_string($con, $_SESSION['email']);
 $user_query = "SELECT id, name, balance, country FROM users WHERE email = '$email' LIMIT 1";
@@ -38,13 +47,24 @@ if ($user_query_run && mysqli_num_rows($user_query_run) > 0) {
     exit(0);
 }
 
+// Check if user_country is set
+if (empty($user_country)) {
+    $_SESSION['error'] = "User country not set.";
+    error_log("verify-complete.php - User country is empty for email: $email");
+    header("Location: verify.php");
+    exit(0);
+}
+
 // Handle POST request
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    error_log("verify-complete.php - POST data: " . print_r($_POST, true));
+    error_log("verify-complete.php - FILES data: " . print_r($_FILES, true));
+
     // Check for verification method
     if (!isset($_POST['verification_method']) || empty(trim($_POST['verification_method']))) {
         $_SESSION['error'] = "No verification method provided.";
         error_log("verify-complete.php - No verification method provided, redirecting to verify.php");
-        header("Location: withdrawals.php");
+        header("Location: verify.php");
         exit(0);
     }
 
@@ -195,14 +215,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // Redirect to avoid form resubmission
+        error_log("verify-complete.php - Redirecting to verify-complete.php?verification_method=" . urlencode($verification_method));
         header("Location: verify-complete.php?verification_method=" . urlencode($verification_method));
         exit(0);
     }
 } else {
-    $_SESSION['error'] = "Invalid request method.";
-    error_log("verify-complete.php - Invalid request method, redirecting to verify.php");
-    header("Location: verify.php");
-    exit(0);
+    if ($verification_method === null) {
+        $_SESSION['error'] = "No verification method specified.";
+        error_log("verify-complete.php - No verification method specified, redirecting to verify.php");
+        header("Location: verify.php");
+        exit(0);
+    }
 }
 
 // Fetch amount and currency from region_settings based on user's country
@@ -212,6 +235,7 @@ if ($package_query_run && mysqli_num_rows($package_query_run) > 0) {
     $package_data = mysqli_fetch_assoc($package_query_run);
     $amount = $package_data['payment_amount'];
     $currency = $package_data['currency'] ?? '$'; // Fallback to '$' if currency is null
+    error_log("verify-complete.php - Found payment details: amount={$amount}, currency={$currency}");
 } else {
     $_SESSION['error'] = "No payment details found for your country.";
     error_log("verify-complete.php - No payment details found in region_settings for country: $user_country");
@@ -309,7 +333,7 @@ if ($package_query_run && mysqli_num_rows($package_query_run) > 0) {
                                     <h6><?= htmlspecialchars($channel_number_label) ?>: <?= htmlspecialchars($channel_number_value) ?></h6>
                                 </div>
                                 <div class="mt-3">
-                                    <form action="" method="POST" enctype="multipart/form-data" id="verifyForm">
+                                    <form action="verify-complete.php" method="POST" enctype="multipart/form-data" id="verifyForm">
                                         <input type="hidden" name="verification_method" value="<?= htmlspecialchars($verification_method) ?>">
                                         <input type="hidden" name="amount" value="<?= htmlspecialchars($amount) ?>">
                                         <div class="mb-3">
@@ -344,20 +368,22 @@ document.addEventListener('DOMContentLoaded', function () {
     const fileInput = document.getElementById('payment_proof');
     const verifyButton = document.getElementById('verifyButton');
 
-    form.addEventListener('submit', function (event) {
-        if (!fileInput.files || fileInput.files.length === 0) {
-            event.preventDefault();
-            alert('Please select a payment proof file before submitting.');
-        }
-    });
+    if (form && fileInput && verifyButton) {
+        form.addEventListener('submit', function (event) {
+            if (!fileInput.files || fileInput.files.length === 0) {
+                event.preventDefault();
+                alert('Please select a payment proof file before submitting.');
+            }
+        });
 
-    // Optional: Enable/disable button based on file selection
-    fileInput.addEventListener('change', function () {
+        // Enable/disable button based on file selection
+        fileInput.addEventListener('change', function () {
+            verifyButton.disabled = !fileInput.files || fileInput.files.length === 0;
+        });
+
+        // Initialize button state
         verifyButton.disabled = !fileInput.files || fileInput.files.length === 0;
-    });
-
-    // Initialize button state
-    verifyButton.disabled = !fileInput.files || fileInput.files.length === 0;
+    }
 });
 </script>
 
