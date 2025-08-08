@@ -4,7 +4,7 @@ include('../config/dbcon.php');
 include('inc/header.php');
 include('inc/navbar.php');
 
-// Check if user is logged in
+// Check if user is logged in
 if (!isset($_SESSION['auth'])) {
     $_SESSION['error'] = "Please log in to access this page.";
     error_log("verify-complete.php - User not logged in, redirecting to signin.php");
@@ -148,17 +148,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // Insert into deposits table using prepared statement
-        $insert_query = "INSERT INTO deposits (amount, image, name, email, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?)";
+        $insert_query = "INSERT INTO deposits (amount, image, name, email, currency, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
         $stmt = mysqli_prepare($con, $insert_query);
         if ($stmt) {
             $image_param = $upload_path ?: null; // Handle null for image if needed
-            mysqli_stmt_bind_param($stmt, "dsssss", $amount, $image_param, $name, $email, $created_at, $updated_at);
+            $currency_param = $currency ?: '$'; // Use currency from region_settings, fallback to '$'
+            mysqli_stmt_bind_param($stmt, "dssssss", $amount, $image_param, $name, $email, $currency_param, $created_at, $updated_at);
             if (mysqli_stmt_execute($stmt)) {
                 // Update verify column in users table
                 $update_verify_query = "UPDATE users SET verify = 1 WHERE email = ?";
                 $update_stmt = mysqli_prepare($con, $update_verify_query);
                 if ($update_stmt) {
-                    mysqli_stmt_bind_paramrichtext($update_stmt, "s", $email);
+                    mysqli_stmt_bind_param($update_stmt, "s", $email);
                     if (mysqli_stmt_execute($update_stmt)) {
                         $_SESSION['success'] = "Verify Request Submitted";
                         error_log("verify-complete.php - Verification request submitted and verify set to 1 for email: $email");
