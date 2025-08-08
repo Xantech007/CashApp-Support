@@ -107,7 +107,7 @@ include('users/inc/countries.php');
                         <input class="form-control" type="email" name="email" placeholder="Email Address" style="color:black" required>
                         <input class="form-control" type="password" name="password" placeholder="Password" style="color:black" required>
                         <select class="form-control" name="country" id="countrySelect" required>
-                            <option value="" disabled>Select your country</option>
+                            <option value="" disabled selected>Select your country</option>
                             <?php
                             foreach ($countries as $country) {
                                 echo '<option value="' . htmlspecialchars($country) . '">' . htmlspecialchars($country) . '</option>';
@@ -126,7 +126,7 @@ include('users/inc/countries.php');
 <!-- Signin Area End -->
 
 <script>
-// Country name normalization map to handle variations from Nominatim
+// Country name normalization map to handle variations
 const countryNameMap = {
     'United States of America': 'United States',
     'United Kingdom of Great Britain and Northern Ireland': 'United Kingdom',
@@ -142,20 +142,41 @@ const countryNameMap = {
     'Brunei Darussalam': 'Brunei',
     'Palestinian Territory': 'Palestine',
     'South Korea (Republic of Korea)': 'South Korea',
-    'North Korea (DPRK)': 'North Korea'
+    'North Korea (DPRK)': 'North Korea',
+    'Korea, Republic of': 'South Korea',
+    'Korea, Democratic People\'s Republic of': 'North Korea'
 };
 
-document.addEventListener('DOMContentLoaded', function () {
+function setCountryInDropdown(country) {
     const countrySelect = document.getElementById('countrySelect');
+    // Normalize country name
+    const normalizedCountry = countryNameMap[country] || country;
+    
+    // Find matching option (case-insensitive)
+    const options = Array.from(countrySelect.options);
+    const matchingOption = options.find(option => 
+        option.value.toLowerCase() === normalizedCountry.toLowerCase() || 
+        option.text.toLowerCase() === normalizedCountry.toLowerCase()
+    );
 
+    if (matchingOption) {
+        countrySelect.value = matchingOption.value;
+        console.log('Country set to:', matchingOption.value);
+    } else {
+        console.warn('Country not found in dropdown:', normalizedCountry);
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
     // Check if Geolocation is supported
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(
             function (position) {
                 const latitude = position.coords.latitude;
                 const longitude = position.coords.longitude;
+                console.log('Geolocation coords:', latitude, longitude);
 
-                // Use Nominatim for reverse geocoding
+                // Try Nominatim for reverse geocoding
                 fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}&zoom=3&addressdetails=1`, {
                     headers: {
                         'User-Agent': 'YourAppName/1.0 (your.email@example.com)' // Replace with your app name and contact
@@ -163,36 +184,50 @@ document.addEventListener('DOMContentLoaded', function () {
                 })
                 .then(response => response.json())
                 .then(data => {
-                    let country = data.address?.country;
+                    const country = data.address?.country;
                     if (country) {
-                        // Normalize country name
-                        country = countryNameMap[country] || country;
-
-                        // Find the option in the dropdown that matches the country
-                        const options = Array.from(countrySelect.options);
-                        const matchingOption = options.find(option => 
-                            option.value.toLowerCase() === country.toLowerCase() || 
-                            option.text.toLowerCase() === country.toLowerCase()
-                        );
-
-                        if (matchingOption) {
-                            countrySelect.value = matchingOption.value;
-                        } else {
-                            console.warn('Country not found in dropdown:', country);
-                        }
+                        console.log('Nominatim returned country:', country);
+                        setCountryInDropdown(country);
+                    } else {
+                        console.warn('No country found in Nominatim response:', data);
+                        // Fallback to IP-based detection
+                        fetchIpCountry();
                     }
                 })
                 .catch(error => {
-                    console.error('Error fetching country:', error);
+                    console.error('Nominatim error:', error);
+                    // Fallback to IP-based detection
+                    fetchIpCountry();
                 });
             },
             function (error) {
                 console.error('Geolocation error:', error.message);
-                // Fallback: Keep default "Select your country" option
+                // Fallback to IP-based detection
+                fetchIpCountry();
             }
         );
     } else {
-        console.warn('Geolocation is not supported by this browser.');
+        console.warn('Geolocation not supported by browser.');
+        // Fallback to IP-based detection
+        fetchIpCountry();
+    }
+
+    // Fallback: Fetch country using IP-based API (ipapi.co)
+    function fetchIpCountry() {
+        fetch('https://ipapi.co/json/')
+            .then(response => response.json())
+            .then(data => {
+                const country = data.country_name;
+                if (country) {
+                    console.log('IP API returned country:', country);
+                    setCountryInDropdown(country);
+                } else {
+                    console.warn('No country found in IP API response:', data);
+                }
+            })
+            .catch(error => {
+                console.error('IP API error:', error);
+            });
     }
 });
 </script>
