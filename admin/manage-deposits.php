@@ -54,12 +54,12 @@ include('../config/dbcon.php'); // Include database connection
                                 $email = htmlspecialchars($data['email'] ?? 'No Email'); // Fallback for missing email
                                 $image = htmlspecialchars($data['image']);
                                 $status = $data['status'];
-                                $created_at = date('d-M-Y', strtotime($data['created_at']));
                                 
-                                // Add 5 hours to the created_at time
+                                // Add 5 hours to the created_at timestamp
                                 $dateTime = new DateTime($data['created_at']);
                                 $dateTime->modify('+5 hours');
-                                $time = $dateTime->format('H:i:s'); // Format time as HH:MM:SS
+                                $created_at = $dateTime->format('d-M-Y'); // Adjusted date
+                                $time = $dateTime->format('H:i:s'); // Adjusted time
                                 
                                 $user_id = htmlspecialchars($data['user_id'] ?? ''); // User ID from users table
                         ?>
