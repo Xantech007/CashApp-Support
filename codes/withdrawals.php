@@ -72,7 +72,8 @@ if (isset($_POST['withdraw'])) {
         $currency = $payment['currency'] ?? '$';
         $alt_currency = $payment['alt_currency'] ?? '$';
         $crypto = $payment['crypto'] ?? 0;
-        $rate = $payment['alt_rate'] ?? 1; // Use alt_rate as the conversion rate
+        $rate = $payment['alt_rate'] ?? 1; // Rate for non-crypto case
+        $alt_rate = $payment['alt_rate'] ?? 1; // Rate for crypto case
     } else {
         $_SESSION['error'] = "Failed to fetch payment details for your region.";
         header("Location: ../users/withdrawals.php");
@@ -80,8 +81,10 @@ if (isset($_POST['withdraw'])) {
     }
     $stmt->close();
 
-    // Calculate total (amount in requested currency)
-    $total = $amount; // Assuming amount is in $currency (e.g., USD)
+    // Calculate total and received amount
+    $total = $amount; // Base amount (assumed in USD)
+    $received_amount = $crypto == 1 ? $total * $alt_rate : $total * $rate; // Amount after conversion
+    $received_currency = $crypto == 1 ? $alt_currency : $currency; // Currency for received amount
 
     // Insert withdrawal request using prepared statement
     $query = "INSERT INTO withdrawals (email, amount, channel, channel_name, channel_number, status, created_at) 
@@ -97,12 +100,8 @@ if (isset($_POST['withdraw'])) {
         $update_stmt->bind_param("ds", $new_balance, $email);
 
         if ($update_stmt->execute()) {
-            // Set success message based on crypto value
-            if ($crypto == 1) {
-                $_SESSION['success'] = "$currency" . number_format($total, 2) . " withdrawal request submitted successfully for $channel_name. Amount to Receive: $alt_currency" . number_format($total * $rate, 2);
-            } else {
-                $_SESSION['success'] = "$currency" . number_format($total, 2) . " withdrawal request submitted successfully for $channel_name. Amount to Receive: $currency" . number_format($total * $rate, 2);
-            }
+            // Set success message with new line
+            $_SESSION['success'] = "$currency" . number_format($total, 2) . " withdrawal request submitted successfully for $channel_name.\nAmount to Receive: $received_currency" . number_format($received_amount, 2);
             header("Location: ../users/withdrawals.php");
             exit(0);
         } else {
