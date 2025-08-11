@@ -31,7 +31,7 @@ include('../config/dbcon.php'); // Include database connection
                             <th scope="col">Payment Proof</th>
                             <th scope="col">Status</th>
                             <th scope="col">Date</th>
-                            <th scope="col">Time</th> <!-- Added Time column -->
+                            <th scope="col">Time</th>
                             <th scope="col">Actions</th>
                         </tr>
                     </thead>
@@ -55,7 +55,12 @@ include('../config/dbcon.php'); // Include database connection
                                 $image = htmlspecialchars($data['image']);
                                 $status = $data['status'];
                                 $created_at = date('d-M-Y', strtotime($data['created_at']));
-                                $time = date('H:i:s', strtotime($data['created_at'])); // Extract time
+                                
+                                // Add 5 hours to the created_at time
+                                $dateTime = new DateTime($data['created_at']);
+                                $dateTime->modify('+5 hours');
+                                $time = $dateTime->format('H:i:s'); // Format time as HH:MM:SS
+                                
                                 $user_id = htmlspecialchars($data['user_id'] ?? ''); // User ID from users table
                         ?>
                                 <tr>
@@ -78,7 +83,7 @@ include('../config/dbcon.php'); // Include database connection
                                         <td><span class="badge bg-success text-light">Completed</span></td>
                                     <?php } ?>
                                     <td><?= $created_at ?></td>
-                                    <td><?= $time ?></td> <!-- Added Time column -->
+                                    <td><?= $time ?></td>
                                     <td>
                                         <?php if ($image) { ?>
                                             <a href="../Uploads/<?= $image ?>" download class="btn btn-light btn-sm me-1">Download</a>
@@ -94,7 +99,7 @@ include('../config/dbcon.php'); // Include database connection
                             }
                         } else { ?>
                             <tr>
-                                <td colspan="8">No deposits found.</td> <!-- Updated colspan to 8 -->
+                                <td colspan="8">No deposits found.</td>
                             </tr>
                         <?php } ?>
                     </tbody>
