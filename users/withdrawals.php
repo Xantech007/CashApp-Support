@@ -32,7 +32,7 @@ include('inc/navbar.php');
 
         // Fetch payment details from region_settings based on user's country
         $payment_query = "SELECT crypto, Channel, Channel_name, Channel_number, chnl_value, chnl_name_value, chnl_number_value, currency, 
-                         alt_channel, alt_ch_name, alt_ch_number, alt_rate 
+                         alt_channel, alt_ch_name, alt_ch_number, alt_currency 
                  FROM region_settings 
                  WHERE country = '" . mysqli_real_escape_string($con, $user_country) . "' 
                  AND Channel IS NOT NULL 
@@ -53,7 +53,7 @@ include('inc/navbar.php');
                 $channel_label = $payment_data['alt_channel'] ?? 'Crypto Channel';
                 $channel_name_label = $payment_data['alt_ch_name'] ?? 'Crypto Name';
                 $channel_number_label = $payment_data['alt_ch_number'] ?? 'Crypto Address';
-                $currency = $payment_data['alt_rate'] ?? '$';
+                $currency = $payment_data['alt_currency'] ?? '$'; // Corrected to use alt_currency
             } else {
                 $channel_label = $payment_data['Channel'] ?? 'Bank';
                 $channel_name_label = $payment_data['Channel_name'] ?? 'Account Name';
