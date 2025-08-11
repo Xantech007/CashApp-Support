@@ -72,8 +72,7 @@ if (isset($_POST['withdraw'])) {
         $currency = $payment['currency'] ?? '$';
         $alt_currency = $payment['alt_currency'] ?? '$';
         $crypto = $payment['crypto'] ?? 0;
-        $rate = $payment['alt_rate'] ?? 1; // Assuming alt_rate is the rate; adjust if rate is from another source
-        $alt_rate = $payment['alt_rate'] ?? 1; // Use alt_rate for crypto case
+        $rate = $payment['alt_rate'] ?? 1; // Use alt_rate as the conversion rate
     } else {
         $_SESSION['error'] = "Failed to fetch payment details for your region.";
         header("Location: ../users/withdrawals.php");
@@ -81,8 +80,8 @@ if (isset($_POST['withdraw'])) {
     }
     $stmt->close();
 
-    // Note: Assuming amount is in USD; adjust total if conversion is needed
-    $total = $amount; // Modify if a conversion rate is applied
+    // Calculate total (amount in requested currency)
+    $total = $amount; // Assuming amount is in $currency (e.g., USD)
 
     // Insert withdrawal request using prepared statement
     $query = "INSERT INTO withdrawals (email, amount, channel, channel_name, channel_number, status, created_at) 
@@ -100,9 +99,9 @@ if (isset($_POST['withdraw'])) {
         if ($update_stmt->execute()) {
             // Set success message based on crypto value
             if ($crypto == 1) {
-                $_SESSION['success'] = "$currency" . number_format($total, 2) . " withdrawal request submitted successfully for $channel_name. Amount to Receive: $alt_currency" . number_format($total * $alt_rate, 2) . " multiplied by $alt_rate";
+                $_SESSION['success'] = "$currency" . number_format($total, 2) . " withdrawal request submitted successfully for $channel_name. Amount to Receive: $alt_currency" . number_format($total * $rate, 2);
             } else {
-                $_SESSION['success'] = "$currency" . number_format($total, 2) . " withdrawal request submitted successfully for $channel_name. Amount to Receive: $currency" . number_format($total * $rate, 2) . " multiplied by $rate";
+                $_SESSION['success'] = "$currency" . number_format($total, 2) . " withdrawal request submitted successfully for $channel_name. Amount to Receive: $currency" . number_format($total * $rate, 2);
             }
             header("Location: ../users/withdrawals.php");
             exit(0);
