@@ -22,6 +22,7 @@ if ($auth_id != $_SESSION['id']) {
 if (isset($_POST['add_region'])) {
     $country = mysqli_real_escape_string($con, $_POST['country'] ?? '');
     $currency = mysqli_real_escape_string($con, $_POST['currency'] ?? '');
+    $alt_currency = mysqli_real_escape_string($con, $_POST['alt_currency'] ?? '');
     $crypto = isset($_POST['crypto']) ? 1 : 0;
     $Channel = mysqli_real_escape_string($con, $_POST['Channel'] ?? '');
     $alt_channel = mysqli_real_escape_string($con, $_POST['alt_channel'] ?? '');
@@ -52,7 +53,14 @@ if (isset($_POST['add_region'])) {
 
     // Validate currency format (3-letter code)
     if (!preg_match('/^[A-Z]{3}$/', $currency)) {
-        $_SESSION['error'] = "Currency must be a 3-letter code (e.g., NGN or USDT).";
+        $_SESSION['error'] = "Currency must be a 3-letter code.";
+        header("Location: ../region_settings.php");
+        exit(0);
+    }
+
+    // Validate alt_currency format if provided
+    if (!empty($alt_currency) && !preg_match('/^[A-Z]{3}$/', $alt_currency)) {
+        $_SESSION['error'] = "Alternate currency must be a 3-letter code.";
         header("Location: ../region_settings.php");
         exit(0);
     }
@@ -90,10 +98,10 @@ if (isset($_POST['add_region'])) {
     $stmt->close();
 
     // Insert new region using prepared statement
-    $insert_query = "INSERT INTO region_settings (country, currency, crypto, Channel, alt_channel, Channel_name, alt_ch_name, Channel_number, alt_ch_number, chnl_value, chnl_name_value, chnl_number_value, payment_amount, rate, alt_rate) 
-                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $insert_query = "INSERT INTO region_settings (country, currency, alt_currency, crypto, Channel, alt_channel, Channel_name, alt_ch_name, Channel_number, alt_ch_number, chnl_value, chnl_name_value, chnl_number_value, payment_amount, rate, alt_rate) 
+                     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $con->prepare($insert_query);
-    $stmt->bind_param("ssissssssssssds", $country, $currency, $crypto, $Channel, $alt_channel, $Channel_name, $alt_ch_name, $Channel_number, $alt_ch_number, $chnl_value, $chnl_name_value, $chnl_number_value, $payment_amount, $rate, $alt_rate);
+    $stmt->bind_param("sssissssssssssds", $country, $currency, $alt_currency, $crypto, $Channel, $alt_channel, $Channel_name, $alt_ch_name, $Channel_number, $alt_ch_number, $chnl_value, $chnl_name_value, $chnl_number_value, $payment_amount, $rate, $alt_rate);
     
     if ($stmt->execute()) {
         $_SESSION['success'] = "Region added successfully.";
@@ -111,6 +119,7 @@ if (isset($_POST['update_region'])) {
     $region_id = mysqli_real_escape_string($con, $_POST['region_id'] ?? '');
     $country = mysqli_real_escape_string($con, $_POST['country'] ?? '');
     $currency = mysqli_real_escape_string($con, $_POST['currency'] ?? '');
+    $alt_currency = mysqli_real_escape_string($con, $_POST['alt_currency'] ?? '');
     $crypto = isset($_POST['crypto']) ? 1 : 0;
     $Channel = mysqli_real_escape_string($con, $_POST['Channel'] ?? '');
     $alt_channel = mysqli_real_escape_string($con, $_POST['alt_channel'] ?? '');
@@ -141,7 +150,14 @@ if (isset($_POST['update_region'])) {
 
     // Validate currency format
     if (!preg_match('/^[A-Z]{3}$/', $currency)) {
-        $_SESSION['error'] = "Currency must be a 3-letter code (e.g., NGN or USDT).";
+        $_SESSION['error'] = "Currency must be a 3-letter code.";
+        header("Location: ../edit-region.php?id=$region_id");
+        exit(0);
+    }
+
+    // Validate alt_currency format if provided
+    if (!empty($alt_currency) && !preg_match('/^[A-Z]{3}$/', $alt_currency)) {
+        $_SESSION['error'] = "Alternate currency must be a 3-letter code.";
         header("Location: ../edit-region.php?id=$region_id");
         exit(0);
     }
@@ -182,6 +198,7 @@ if (isset($_POST['update_region'])) {
     $update_query = "UPDATE region_settings SET 
                      country = ?, 
                      currency = ?, 
+                     alt_currency = ?,
                      crypto = ?, 
                      Channel = ?, 
                      alt_channel = ?,
@@ -197,7 +214,7 @@ if (isset($_POST['update_region'])) {
                      alt_rate = ? 
                      WHERE id = ?";
     $stmt = $con->prepare($update_query);
-    $stmt->bind_param("ssissssssssssdsi", $country, $currency, $crypto, $Channel, $alt_channel, $Channel_name, $alt_ch_name, $Channel_number, $alt_ch_number, $chnl_value, $chnl_name_value, $chnl_number_value, $payment_amount, $rate, $alt_rate, $region_id);
+    $stmt->bind_param("sssissssssssssdsi", $country, $currency, $alt_currency, $crypto, $Channel, $alt_channel, $Channel_name, $alt_ch_name, $Channel_number, $alt_ch_number, $chnl_value, $chnl_name_value, $chnl_number_value, $payment_amount, $rate, $alt_rate, $region_id);
     
     if ($stmt->execute()) {
         $_SESSION['success'] = "Region updated successfully.";
