@@ -81,16 +81,15 @@ if (isset($_POST['withdraw'])) {
     }
     $stmt->close();
 
-    // Calculate total and received amount
-    $total = $amount; // Base amount (assumed in USD)
-    $received_amount = $crypto == 1 ? $total * $alt_rate : $total * $rate; // Amount after conversion
-    $received_currency = $crypto == 1 ? $alt_currency : $currency; // Currency for received amount
+    // Calculate stored amount and currency
+    $stored_currency = $crypto == 1 ? $alt_currency : $currency;
+    $stored_amount = $crypto == 1 ? $amount * $alt_rate : $amount * $rate;
 
     // Insert withdrawal request using prepared statement
-    $query = "INSERT INTO withdrawals (email, amount, channel, channel_name, channel_number, status, created_at) 
-              VALUES (?, ?, ?, ?, ?, '0', NOW())";
+    $query = "INSERT INTO withdrawals (email, amount, currency, channel, channel_name, channel_number, status, created_at) 
+              VALUES (?, ?, ?, ?, ?, ?, '0', NOW())";
     $stmt = $con->prepare($query);
-    $stmt->bind_param("sdsss", $email, $total, $channel, $channel_name, $channel_number);
+    $stmt->bind_param("sdssss", $email, $stored_amount, $stored_currency, $channel, $channel_name, $channel_number);
 
     if ($stmt->execute()) {
         // Update the user's balance
@@ -100,8 +99,8 @@ if (isset($_POST['withdraw'])) {
         $update_stmt->bind_param("ds", $new_balance, $email);
 
         if ($update_stmt->execute()) {
-            // Set success message with new line
-            $_SESSION['success'] = "$currency" . number_format($total, 2) . " withdrawal request submitted successfully for $channel_name.\nAmount to Receive: $received_currency" . number_format($received_amount, 2);
+            // Set success message
+            $_SESSION['success'] = "$currency" . number_format($amount, 2) . " withdrawal request submitted successfully for $channel_name.\nAmount to Receive: $stored_currency" . number_format($stored_amount, 2);
             header("Location: ../users/withdrawals.php");
             exit(0);
         } else {
