@@ -60,8 +60,8 @@ if (isset($_POST['withdraw'])) {
         exit(0);
     }
 
-    // Fetch currency from region_settings based on user's country
-    $payment_query = "SELECT currency FROM region_settings WHERE country = ? LIMIT 1";
+    // Fetch payment details from region_settings based on user's country
+    $payment_query = "SELECT crypto, currency, alt_rate FROM region_settings WHERE country = ? LIMIT 1";
     $stmt = $con->prepare($payment_query);
     $stmt->bind_param("s", $user_country);
     $stmt->execute();
@@ -69,7 +69,7 @@ if (isset($_POST['withdraw'])) {
 
     if ($payment_result && $payment_result->num_rows > 0) {
         $payment = $payment_result->fetch_assoc();
-        $currency = $payment['currency'] ?? '$';
+        $currency = $payment['crypto'] == 1 ? ($payment['alt_rate'] ?? '$') : ($payment['currency'] ?? '$');
     } else {
         $_SESSION['error'] = "Failed to fetch payment details for your region.";
         header("Location: ../users/withdrawals.php");
@@ -78,8 +78,7 @@ if (isset($_POST['withdraw'])) {
     $stmt->close();
 
     // Note: The frontend doesn't provide a 'rate' for conversion, so we'll assume amount is in USD
-    // If you have a rate in region_settings or another table, add it to the query above
-    // For now, we'll store the amount as-is (in USD) since the frontend displays balance in USD
+    // If alt_rate or currency represents an exchange rate, additional logic would be needed here
     $total = $amount; // Adjust if you have a conversion rate
 
     // Insert withdrawal request using prepared statement
