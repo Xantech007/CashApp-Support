@@ -14,17 +14,14 @@ include('inc/navbar.php');
         $email = mysqli_real_escape_string($con, $_SESSION['email']);
 
         // Fetch balance, verify, message, and country from users table
-        $query = "SELECT balance, verify, message, country FROM users WHERE email = ? LIMIT 1";
-        $stmt = $con->prepare($query);
-        $stmt->bind_param("s", $email);
-        $stmt->execute();
-        $query_run = $stmt->get_result();
+        $query = "SELECT balance, verify, message, country FROM users WHERE email='$email' LIMIT 1";
+        $query_run = mysqli_query($con, $query);
         
-        if ($query_run && $query_run->num_rows > 0) {
-            $row = $query_run->fetch_assoc();
+        if ($query_run && mysqli_num_rows($query_run) > 0) {
+            $row = mysqli_fetch_array($query_run);
             $balance = $row['balance'];
-            $verify = $row['verify'] ?? 0;
-            $message = $row['message'] ?? '';
+            $verify = $row['verify'] ?? 0; // Default to 0 if not set
+            $message = $row['message'] ?? ''; // Default to empty string if NULL
             $user_country = $row['country'];
         } else {
             $_SESSION['error'] = "User not found.";
@@ -32,29 +29,31 @@ include('inc/navbar.php');
             header("Location: ../signin.php");
             exit(0);
         }
-        $stmt->close();
 
         // Fetch payment details from region_settings based on user's country
-        $payment_query = "SELECT currency, alt_currency, crypto, alt_rate, Channel, Channel_name, Channel_number, 
-                         alt_channel, alt_ch_name, alt_ch_number 
-                         FROM region_settings 
-                         WHERE country = ? LIMIT 1";
-        $stmt = $con->prepare($payment_query);
-        $stmt->bind_param("s", $user_country);
-        $stmt->execute();
-        $payment_query_run = $stmt->get_result();
+        $payment_query = "SELECT crypto, Channel, Channel_name, Channel_number, chnl_value, chnl_name_value, chnl_number_value, currency, 
+                         alt_channel, alt_ch_name, alt_ch_number, alt_rate 
+                 FROM region_settings 
+                 WHERE country = '" . mysqli_real_escape_string($con, $user_country) . "' 
+                 AND Channel IS NOT NULL 
+                 AND Channel_name IS NOT NULL 
+                 AND Channel_number IS NOT NULL 
+                 LIMIT 1";
+        $payment_query_run = mysqli_query($con, $payment_query);
         $channel_label = 'Bank';
         $channel_name_label = 'Account Name';
         $channel_number_label = 'Account Number';
         $currency = '$';
 
-        if ($payment_query_run && $payment_query_run->num_rows > 0) {
-            $payment_data = $payment_query_run->fetch_assoc();
+        if ($payment_query_run && mysqli_num_rows($payment_query_run) > 0) {
+            $payment_data = mysqli_fetch_assoc($payment_query_run);
+            
+            // Check if crypto is 1, then use alternative fields
             if ($payment_data['crypto'] == 1) {
                 $channel_label = $payment_data['alt_channel'] ?? 'Crypto Channel';
                 $channel_name_label = $payment_data['alt_ch_name'] ?? 'Crypto Name';
                 $channel_number_label = $payment_data['alt_ch_number'] ?? 'Crypto Address';
-                $currency = $payment_data['alt_currency'] ?? '$';
+                $currency = $payment_data['alt_rate'] ?? '$';
             } else {
                 $channel_label = $payment_data['Channel'] ?? 'Bank';
                 $channel_name_label = $payment_data['Channel_name'] ?? 'Account Name';
@@ -64,9 +63,8 @@ include('inc/navbar.php');
         } else {
             error_log("withdrawals.php - No payment details found in region_settings for country: $user_country");
         }
-        $stmt->close();
         ?>
-        <h1>Available Balance: <?= htmlspecialchars($currency) ?><?= number_format($balance, 2) ?></h1>
+        <h1>Available Balance: USD<?= number_format($balance, 2) ?></h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="index">Home</a></li>
@@ -114,7 +112,7 @@ include('inc/navbar.php');
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
-                        <?= nl2br(htmlspecialchars($_SESSION['success'])) ?>
+                        <?= htmlspecialchars($_SESSION['success']) ?>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-primary" data-bs-dismiss="modal" onclick="window.location.reload();">Ok</button>
@@ -159,6 +157,7 @@ include('inc/navbar.php');
                 margin: auto;
             }
         }
+        /* Styles for Verify Account button */
         .action-buttons {
             display: flex;
             justify-content: space-between;
@@ -265,17 +264,15 @@ include('inc/navbar.php');
                     </thead>
                     <tbody>
                         <?php
-                        $query = "SELECT w.id, w.amount, w.currency, w.channel, w.channel_name, w.channel_number, w.status, w.created_at 
+                        $email = mysqli_real_escape_string($con, $_SESSION['email']);
+                        $query = "SELECT w.id, w.amount, w.channel, w.channel_name, w.channel_number, w.status, w.created_at 
                                   FROM withdrawals w 
-                                  WHERE w.email = ?";
-                        $stmt = $con->prepare($query);
-                        $stmt->bind_param("s", $email);
-                        $stmt->execute();
-                        $query_run = $stmt->get_result();
-                        if ($query_run->num_rows > 0) {
-                            while ($data = $query_run->fetch_assoc()) { ?>
+                                  WHERE w.email='$email'";
+                        $query_run = mysqli_query($con, $query);
+                        if (mysqli_num_rows($query_run) > 0) {
+                            foreach ($query_run as $data) { ?>
                                 <tr>
-                                    <td><?= htmlspecialchars($data['currency']) ?><?= number_format($data['amount'], 2) ?></td>
+                                    <td><?= htmlspecialchars($currency) ?><?= number_format($data['amount'], 2) ?></td>
                                     <td><?= htmlspecialchars($data['channel']) ?></td>
                                     <td><?= htmlspecialchars($data['channel_name']) ?></td>
                                     <td><?= htmlspecialchars($data['channel_number']) ?></td>
@@ -296,9 +293,7 @@ include('inc/navbar.php');
                             <tr>
                                 <td colspan="7">No withdrawals found.</td>
                             </tr>
-                        <?php }
-                        $stmt->close();
-                        ?>
+                        <?php } ?>
                     </tbody>
                 </table>
             </div>
