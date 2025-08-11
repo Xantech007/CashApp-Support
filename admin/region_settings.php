@@ -121,42 +121,12 @@ include('inc/sidebar.php');
                         </div>
                         <div class="row">
                             <div class="col-md-6">
-                                <label for="Channel_name">Channel Name</label>
-                                <input type="text" class="form-control" name="Channel_name" placeholder="e.g., Account Name or Wallet Address" required>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="Channel_number">Channel Number</label>
-                                <input type="text" class="form-control" name="Channel_number" placeholder="e.g., Account Number or Recipient Address" required>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label for="chnl_value">Channel Value</label>
-                                <input type="text" class="form-control" name="chnl_value" placeholder="e.g., Opay or Ethereum">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="chnl_name_value">Channel Name Value</label>
-                                <input type="text" class="form-control" name="chnl_name_value" placeholder="e.g., John Doe or Wallet Address">
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label for="chnl_number_value">Channel Number Value</label>
-                                <input type="text" class="form-control" name="chnl_number_value" placeholder="e.g., 1234567890 or 0x1234567890abcdef">
-                            </div>
-                            <div class="col-md-6">
-                                <label for="payment_amount">Payment Amount</label>
-                                <input type="number" step="0.01" class="form-control" name="payment_amount" placeholder="e.g., 100.00" required>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label for="rate">Rate</label>
-                                <input type="number" step="0.01" class="form-control" name="rate" placeholder="e.g., 1.00" required>
-                            </div>
-                            <div class="col-md-6">
                                 <label for="alt_channel">Alt Channel</label>
                                 <input type="text" class="form-control" name="alt_channel" placeholder="e.g., Blockchain Network">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="Channel_name">Channel Name</label>
+                                <input type="text" class="form-control" name="Channel_name" placeholder="e.g., Account Name or Wallet Address" required>
                             </div>
                         </div>
                         <div class="row">
@@ -165,8 +135,38 @@ include('inc/sidebar.php');
                                 <input type="text" class="form-control" name="alt_ch_name" placeholder="e.g., Wallet Address">
                             </div>
                             <div class="col-md-6">
+                                <label for="Channel_number">Channel Number</label>
+                                <input type="text" class="form-control" name="Channel_number" placeholder="e.g., Account Number or Recipient Address" required>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
                                 <label for="alt_ch_number">Alt Channel Number</label>
                                 <input type="text" class="form-control" name="alt_ch_number" placeholder="e.g., Recipient Address">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="chnl_value">Channel Value</label>
+                                <input type="text" class="form-control" name="chnl_value" placeholder="e.g., Opay or Ethereum">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="chnl_name_value">Channel Name Value</label>
+                                <input type="text" class="form-control" name="chnl_name_value" placeholder="e.g., John Doe or Wallet Address">
+                            </div>
+                            <div class="col-md-6">
+                                <label for="chnl_number_value">Channel Number Value</label>
+                                <input type="text" class="form-control" name="chnl_number_value" placeholder="e.g., 1234567890 or 0x1234567890abcdef">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="payment_amount">Payment Amount</label>
+                                <input type="number" step="0.01" class="form-control" name="payment_amount" placeholder="e.g., 100.00" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="rate">Rate</label>
+                                <input type="number" step="0.01" class="form-control" name="rate" placeholder="e.g., 1.00" required>
                             </div>
                         </div>
                         <div class="row">
@@ -199,14 +199,17 @@ include('inc/sidebar.php');
                             <th scope="col">Currency</th>
                             <th scope="col">Crypto</th>
                             <th scope="col">Channel</th>
-                            <th scope="col">Channel Name</th>
-                            <th scope="col">Channel Number</th>
                             <th scope="col">Alt Channel</th>
+                            <th scope="col">Channel Name</th>
                             <th scope="col">Alt Channel Name</th>
+                            <th scope="col">Channel Number</th>
                             <th scope="col">Alt Channel Number</th>
-                            <th scope="col">Alt Rate</th>
+                            <th scope="col">Channel Value</th>
+                            <th scope="col">Channel Name Value</th>
+                            <th scope="col">Channel Number Value</th>
                             <th scope="col">Payment Amount</th>
                             <th scope="col">Rate</th>
+                            <th scope="col">Alt Rate</th>
                             <th scope="col">Edit</th>
                             <th scope="col">Delete</th>
                         </tr>
@@ -224,14 +227,17 @@ include('inc/sidebar.php');
                                     <td><?= htmlspecialchars($data['currency']) ?></td>
                                     <td><?= htmlspecialchars($data['crypto'] == 1 ? 'Yes' : 'No') ?></td>
                                     <td><?= htmlspecialchars($data['Channel']) ?></td>
-                                    <td><?= htmlspecialchars($data['Channel_name']) ?></td>
-                                    <td><?= htmlspecialchars($data['Channel_number']) ?></td>
                                     <td><?= htmlspecialchars($data['alt_channel'] ?? '-') ?></td>
+                                    <td><?= htmlspecialchars($data['Channel_name']) ?></td>
                                     <td><?= htmlspecialchars($data['alt_ch_name'] ?? '-') ?></td>
+                                    <td><?= htmlspecialchars($data['Channel_number']) ?></td>
                                     <td><?= htmlspecialchars($data['alt_ch_number'] ?? '-') ?></td>
-                                    <td><?= htmlspecialchars($data['alt_rate'] ?? '-') ?></td>
+                                    <td><?= htmlspecialchars($data['chnl_value'] ?? '-') ?></td>
+                                    <td><?= htmlspecialchars($data['chnl_name_value'] ?? '-') ?></td>
+                                    <td><?= htmlspecialchars($data['chnl_number_value'] ?? '-') ?></td>
                                     <td><?= htmlspecialchars(number_format($data['payment_amount'], 2)) ?></td>
                                     <td><?= htmlspecialchars(number_format($data['rate'], 2)) ?></td>
+                                    <td><?= htmlspecialchars($data['alt_rate'] ?? '-') ?></td>
                                     <td>
                                         <a href="edit-region.php?id=<?= $data['id'] ?>" class="btn btn-light">Edit</a>
                                     </td>
@@ -245,7 +251,7 @@ include('inc/sidebar.php');
                             <?php }
                         } else { ?>
                             <tr>
-                                <td colspan="15">No region settings found.</td>
+                                <td colspan="18">No region settings found.</td>
                             </tr>
                         <?php } ?>
                     </tbody>
