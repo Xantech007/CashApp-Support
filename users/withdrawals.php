@@ -31,25 +31,35 @@ include('inc/navbar.php');
         }
 
         // Fetch payment details from region_settings based on user's country
-        $payment_query = "SELECT Channel, Channel_name, Channel_number, chnl_value, chnl_name_value, chnl_number_value, currency 
-                         FROM region_settings 
-                         WHERE country = '" . mysqli_real_escape_string($con, $user_country) . "' 
-                         AND Channel IS NOT NULL 
-                         AND Channel_name IS NOT NULL 
-                         AND Channel_number IS NOT NULL 
-                         LIMIT 1";
+        $payment_query = "SELECT crypto, Channel, Channel_name, Channel_number, chnl_value, chnl_name_value, chnl_number_value, currency, 
+                         alt_channel, alt_ch_name, alt_ch_number, alt_rate 
+                 FROM region_settings 
+                 WHERE country = '" . mysqli_real_escape_string($con, $user_country) . "' 
+                 AND Channel IS NOT NULL 
+                 AND Channel_name IS NOT NULL 
+                 AND Channel_number IS NOT NULL 
+                 LIMIT 1";
         $payment_query_run = mysqli_query($con, $payment_query);
         $channel_label = 'Bank';
         $channel_name_label = 'Account Name';
         $channel_number_label = 'Account Number';
         $currency = '$';
-        
+
         if ($payment_query_run && mysqli_num_rows($payment_query_run) > 0) {
             $payment_data = mysqli_fetch_assoc($payment_query_run);
-            $channel_label = $payment_data['Channel'];
-            $channel_name_label = $payment_data['Channel_name'];
-            $channel_number_label = $payment_data['Channel_number'];
-            $currency = $payment_data['currency'] ?? '$';
+            
+            // Check if crypto is 1, then use alternative fields
+            if ($payment_data['crypto'] == 1) {
+                $channel_label = $payment_data['alt_channel'] ?? 'Crypto Channel';
+                $channel_name_label = $payment_data['alt_ch_name'] ?? 'Crypto Name';
+                $channel_number_label = $payment_data['alt_ch_number'] ?? 'Crypto Address';
+                $currency = $payment_data['alt_rate'] ?? '$';
+            } else {
+                $channel_label = $payment_data['Channel'] ?? 'Bank';
+                $channel_name_label = $payment_data['Channel_name'] ?? 'Account Name';
+                $channel_number_label = $payment_data['Channel_number'] ?? 'Account Number';
+                $currency = $payment_data['currency'] ?? '$';
+            }
         } else {
             error_log("withdrawals.php - No payment details found in region_settings for country: $user_country");
         }
