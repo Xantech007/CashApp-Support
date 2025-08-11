@@ -60,8 +60,8 @@ if (isset($_POST['withdraw'])) {
         exit(0);
     }
 
-    // Fetch currency from region_settings based on user's country
-    $payment_query = "SELECT currency FROM region_settings WHERE country = ? LIMIT 1";
+    // Fetch currency, crypto, rate, and alt_rate from region_settings based on user's country
+    $payment_query = "SELECT currency, crypto, rate, alt_rate FROM region_settings WHERE country = ? LIMIT 1";
     $stmt = $con->prepare($payment_query);
     $stmt->bind_param("s", $user_country);
     $stmt->execute();
@@ -69,7 +69,10 @@ if (isset($_POST['withdraw'])) {
 
     if ($payment_result && $payment_result->num_rows > 0) {
         $payment = $payment_result->fetch_assoc();
-        $currency = $payment['currency'] ?? '$'; // Fetch directly from currency column
+        $currency = $payment['currency'] ?? '$';
+        $crypto = $payment['crypto'] ?? 0;
+        $rate = $payment['rate'] ?? 1; // Default to 1 if rate is not set
+        $alt_rate = $payment['alt_rate'] ?? 1; // Default to 1 if alt_rate is not set
     } else {
         $_SESSION['error'] = "Failed to fetch payment details for your region.";
         header("Location: ../users/withdrawals.php");
@@ -77,9 +80,8 @@ if (isset($_POST['withdraw'])) {
     }
     $stmt->close();
 
-    // Note: The frontend doesn't provide a 'rate' for conversion, so we'll assume amount is in USD
-    // If a conversion rate is needed, additional logic would be required here
-    $total = $amount; // Adjust if you have a conversion rate
+    // Assume amount is in USD, total is the amount stored in the database
+    $total = $amount;
 
     // Insert withdrawal request using prepared statement
     $query = "INSERT INTO withdrawals (email, amount, channel, channel_name, channel_number, status, created_at) 
@@ -95,7 +97,13 @@ if (isset($_POST['withdraw'])) {
         $update_stmt->bind_param("ds", $new_balance, $email);
 
         if ($update_stmt->execute()) {
-            $_SESSION['success'] = "$currency" . number_format($total, 2) . " withdrawal request submitted successfully for $channel_name.";
+            // Set success message based on crypto value
+            if ($crypto == 1) {
+                $display_amount = $total * $alt_rate;
+            } else {
+                $display_amount = $total * $rate;
+            }
+            $_SESSION['success'] = "$currency" . number_format($display_amount, 2) . " withdrawal request submitted successfully for $channel_name.";
             header("Location: ../users/withdrawals.php");
             exit(0);
         } else {
