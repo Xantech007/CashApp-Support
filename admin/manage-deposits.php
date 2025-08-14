@@ -93,10 +93,13 @@ if (isset($_GET['edit'])) {
         <?php unset($_SESSION['error']); ?>
     <?php endif; ?>
 
-    <!-- Add Button Trigger Modal -->
+    <!-- Add Button and List Button -->
     <div class="mb-3">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#buttonModal">
+        <button type="button" class="btn btn-primary me-2" data-bs-toggle="modal" data-bs-target="#buttonModal">
             Add Button
+        </button>
+        <button type="button" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#listButtonsModal">
+            List
         </button>
     </div>
 
@@ -142,50 +145,57 @@ if (isset($_GET['edit'])) {
         </div>
     </div>
 
-    <!-- Action Buttons Table -->
-    <div class="card">
-        <div class="card-body">
-            <h5 class="card-title">Action Buttons List</h5>
-            <div class="table-responsive">
-                <table class="table table-borderless">
-                    <thead>
-                        <tr>
-                            <th scope="col">Country</th>
-                            <th scope="col">Button Name</th>
-                            <th scope="col">Button Message</th>
-                            <th scope="col">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $query = "SELECT * FROM action_button ORDER BY country ASC";
-                        $query_run = mysqli_query($con, $query);
-                        if ($query_run === false) {
-                            echo "<tr><td colspan='4'>Error fetching buttons: " . mysqli_error($con) . "</td></tr>";
-                        } elseif (mysqli_num_rows($query_run) > 0) {
-                            while ($row = mysqli_fetch_assoc($query_run)) {
-                                $id = htmlspecialchars($row['id']);
-                                $country = htmlspecialchars($row['country']);
-                                $button_name = htmlspecialchars($row['button_name']);
-                                $button_msg = htmlspecialchars($row['button_msg']);
-                        ?>
+    <!-- Modal for Listing Buttons -->
+    <div class="modal fade" id="listButtonsModal" tabindex="-1" aria-labelledby="listButtonsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="listButtonsModalLabel">Action Buttons List</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="table-responsive">
+                        <table class="table table-borderless">
+                            <thead>
                                 <tr>
-                                    <td><?= $country ?></td>
-                                    <td><?= $button_name ?></td>
-                                    <td><?= $button_msg ?></td>
-                                    <td>
-                                        <button type="button" class="btn btn-light btn-sm me-1" data-bs-toggle="modal" data-bs-target="#buttonModal" onclick="window.location.href='manage-deposits.php?edit=<?= urlencode($id) ?>'">Edit</button>
-                                        <a href="manage-deposits.php?delete=<?= urlencode($id) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this button?');">Delete</a>
-                                    </td>
+                                    <th scope="col">Country</th>
+                                    <th scope="col">Button Name</th>
+                                    <th scope="col">Actions</th>
                                 </tr>
-                        <?php
-                            }
-                        } else {
-                            echo "<tr><td colspan='4'>No buttons found.</td></tr>";
-                        }
-                        ?>
-                    </tbody>
-                </table>
+                            </thead>
+                            <tbody>
+                                <?php
+                                $query = "SELECT * FROM action_button ORDER BY country ASC";
+                                $query_run = mysqli_query($con, $query);
+                                if ($query_run === false) {
+                                    echo "<tr><td colspan='3'>Error fetching buttons: " . mysqli_error($con) . "</td></tr>";
+                                } elseif (mysqli_num_rows($query_run) > 0) {
+                                    while ($row = mysqli_fetch_assoc($query_run)) {
+                                        $id = htmlspecialchars($row['id']);
+                                        $country = htmlspecialchars($row['country']);
+                                        $button_name = htmlspecialchars($row['button_name']);
+                                ?>
+                                        <tr>
+                                            <td><?= $country ?></td>
+                                            <td><?= $button_name ?></td>
+                                            <td>
+                                                <button type="button" class="btn btn-light btn-sm me-1" onclick="window.location.href='manage-deposits.php?edit=<?= urlencode($id) ?>'; document.getElementById('listButtonsModal').classList.remove('show'); document.body.classList.remove('modal-open'); document.querySelector('.modal-backdrop').remove();">Edit</button>
+                                                <a href="manage-deposits.php?delete=<?= urlencode($id) ?>" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to delete this button?');">Delete</a>
+                                            </td>
+                                        </tr>
+                                <?php
+                                    }
+                                } else {
+                                    echo "<tr><td colspan='3'>No buttons found.</td></tr>";
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
