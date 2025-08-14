@@ -4,7 +4,6 @@ include('inc/header.php');
 include('inc/navbar.php');
 include('inc/sidebar.php');
 include('../config/dbcon.php'); // Include database connection
-include('inc/countries.php'); // Include countries array
 ?>
 
 <main id="main" class="main">
@@ -18,6 +17,11 @@ include('inc/countries.php'); // Include countries array
             </ol>
         </nav>
     </div><!-- End Page Title -->
+
+    <!-- Add Button Link -->
+    <div class="mb-3">
+        <a href="manage_action_buttons.php" class="btn btn-primary">Add Button</a>
+    </div>
 
     <div class="card">
         <div class="card-body">
@@ -38,8 +42,8 @@ include('inc/countries.php'); // Include countries array
                     </thead>
                     <tbody>
                         <?php
-                        // Fetch all deposits with user country
-                        $query = "SELECT d.amount, d.currency, d.name, d.email, d.image, d.status, d.created_at, u.id AS user_id, u.country AS user_country 
+                        // Fetch all deposits, including those without email, in descending order by created_at
+                        $query = "SELECT d.amount, d.currency, d.name, d.email, d.image, d.status, d.created_at, u.id AS user_id 
                                   FROM deposits d 
                                   LEFT JOIN users u ON d.email = u.email 
                                   ORDER BY d.created_at DESC";
@@ -50,19 +54,19 @@ include('inc/countries.php'); // Include countries array
                             foreach ($query_run as $data) {
                                 // Sanitize data to prevent XSS
                                 $amount = htmlspecialchars($data['amount']);
-                                $currency = htmlspecialchars($data['currency'] ?? '$');
+                                $currency = htmlspecialchars($data['currency'] ?? '$'); // Fallback to '$' if currency is null
                                 $name = htmlspecialchars($data['name']);
-                                $email = htmlspecialchars($data['email'] ?? 'No Email');
+                                $email = htmlspecialchars($data['email'] ?? 'No Email'); // Fallback for missing email
                                 $image = htmlspecialchars($data['image']);
                                 $status = $data['status'];
-                                $user_id = htmlspecialchars($data['user_id'] ?? '');
-                                $user_country = htmlspecialchars($data['user_country'] ?? '');
-
+                                
                                 // Add 5 hours to the created_at timestamp
                                 $dateTime = new DateTime($data['created_at']);
                                 $dateTime->modify('+5 hours');
-                                $created_at = $dateTime->format('d-M-Y');
-                                $time = $dateTime->format('H:i:s');
+                                $created_at = $dateTime->format('d-M-Y'); // Adjusted date
+                                $time = $dateTime->format('H:i:s'); // Adjusted time
+                                
+                                $user_id = htmlspecialchars($data['user_id'] ?? ''); // User ID from users table
                         ?>
                                 <tr>
                                     <td><?= $currency ?> <?= number_format($amount, 2) ?></td>
@@ -90,14 +94,9 @@ include('inc/countries.php'); // Include countries array
                                             <a href="../Uploads/<?= $image ?>" download class="btn btn-light btn-sm me-1">Download</a>
                                         <?php } ?>
                                         <?php if ($user_id) { ?>
-                                            <a href="edit-user.php?id=<?= urlencode($user_id) ?>" class="btn btn-light btn-sm me-1">Edit</a>
+                                            <a href="edit-user.php?id=<?= urlencode($user_id) ?>" class="btn btn-light btn-sm">Edit</a>
                                         <?php } else { ?>
                                             <span class="text-muted">No User</span>
-                                        <?php } ?>
-                                        <?php
-                                        // Show "Add Button" only if user country matches admin's country
-                                        if ($user_id && $user_country && $user_country === $_SESSION['admin_country']) { ?>
-                                            <button type="button" class="btn btn-primary btn-sm me-1" data-bs-toggle="modal" data-bs-target="#addButtonModal" data-user-id="<?= $user_id ?>" data-email="<?= $email ?>">Add Button</button>
                                         <?php } ?>
                                     </td>
                                 </tr>
@@ -114,62 +113,7 @@ include('inc/countries.php'); // Include countries array
             <!-- End Bordered Table -->
         </div>
     </div>
-
-    <!-- Modal for Adding Action Button -->
-    <div class="modal fade" id="addButtonModal" tabindex="-1" aria-labelledby="addButtonModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="addButtonModalLabel">Add Action Button</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <form id="addButtonForm" action="save_action_button.php" method="POST">
-                    <div class="modal-body">
-                        <input type="hidden" name="user_id" id="user_id">
-                        <input type="hidden" name="email" id="email">
-                        <div class="mb-3">
-                            <label for="country" class="form-label">Country</label>
-                            <select class="form-select" id="country" name="country" required>
-                                <option value="">Select Country</option>
-                                <?php foreach ($countries as $country) { ?>
-                                    <option value="<?= htmlspecialchars($country) ?>" <?= ($country === $_SESSION['admin_country']) ? 'selected' : '' ?>><?= htmlspecialchars($country) ?></option>
-                                <?php } ?>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="button_name" class="form-label">Button Name</label>
-                            <input type="text" class="form-control" id="button_name" name="button_name" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="button_msg" class="form-label">Button Message</label>
-                            <textarea class="form-control" id="button_msg" name="button_msg" rows="4" required></textarea>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="submit" class="btn btn-primary">Save Button</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-    </div>
 </main><!-- End #main -->
 
 <?php include('inc/footer.php'); ?>
-
-<!-- JavaScript to Pass Data to Modal -->
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    var addButtonModal = document.getElementById('addButtonModal');
-    addButtonModal.addEventListener('show.bs.modal', function (event) {
-        var button = event.relatedTarget;
-        var userId = button.getAttribute('data-user-id');
-        var email = button.getAttribute('data-email');
-        var modal = this;
-        modal.querySelector('#user_id').value = userId;
-        modal.querySelector('#email').value = email;
-    });
-});
-</script>
-
 </html>
