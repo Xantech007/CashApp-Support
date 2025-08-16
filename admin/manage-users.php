@@ -18,10 +18,15 @@ include('inc/sidebar.php');
     </div><!-- End Page Title -->  
 
     <div class="card">
-        <div class="card-body">                          
+        <div class="card-body">
+            <!-- Search Bar -->
+            <div class="mb-3">
+                <input type="text" id="searchInput" class="form-control" placeholder="Search by name or email...">
+            </div>
+
             <!-- Bordered Table -->
             <div class="table-responsive">
-                <table class="table table-borderless">
+                <table class="table table-borderless" id="usersTable">
                     <thead>
                         <tr>                   
                             <th scope="col">ID</th>                
@@ -40,24 +45,23 @@ include('inc/sidebar.php');
                         $query_run = mysqli_query($con, $query);
                         if (mysqli_num_rows($query_run) > 0) {
                             foreach ($query_run as $data) {
-                                // Map verify status to text, defaulting NULL or invalid to Not Verified
                                 $verify_status = match ((int)$data['verify']) {
                                     0 => 'Not Verified',
                                     1 => 'Under Review',
                                     2 => 'Verified',
-                                    default => 'Not Verified' // Handle NULL or invalid values
+                                    default => 'Not Verified'
                                 };
                                 $verify_badge_class = match ((int)$data['verify']) {
                                     0, null => 'bg-danger',
                                     1 => 'bg-warning',
                                     2 => 'bg-success',
-                                    default => 'bg-danger' // Handle NULL or invalid values
+                                    default => 'bg-danger'
                                 };
                         ?>
                                 <tr>                                       
                                     <td><?= htmlspecialchars($data['id']) ?></td>                   
-                                    <td><?= htmlspecialchars($data['name']) ?></td>                   
-                                    <td><?= htmlspecialchars($data['email']) ?></td>                   
+                                    <td class="user-name"><?= htmlspecialchars($data['name']) ?></td>                   
+                                    <td class="user-email"><?= htmlspecialchars($data['email']) ?></td>                   
                                     <td><?= htmlspecialchars($data['refered_by']) ?></td>                   
                                     <td>
                                         <img src="../Uploads/profile-picture/<?= htmlspecialchars($data['image']) ?>" style="width:50px;height:50px" alt="Profile" class="">
@@ -122,4 +126,23 @@ include('inc/sidebar.php');
 </main><!-- End #main -->
 
 <?php include('inc/footer.php'); ?>
+
+<!-- Add JavaScript for real-time search -->
+<script>
+document.getElementById('searchInput').addEventListener('input', function() {
+    const searchTerm = this.value.toLowerCase();
+    const rows = document.querySelectorAll('#usersTable tbody tr');
+
+    rows.forEach(row => {
+        const name = row.querySelector('.user-name').textContent.toLowerCase();
+        const email = row.querySelector('.user-email').textContent.toLowerCase();
+        
+        if (name.includes(searchTerm) || email.includes(searchTerm)) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+});
+</script>
 </html>
