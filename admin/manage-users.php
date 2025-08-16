@@ -20,13 +20,14 @@ include('inc/sidebar.php');
     <div class="card">
         <div class="card-body">
             <!-- Search Bar -->
-            <div class="mb-3">
-                <input type="text" id="searchInput" class="form-control" placeholder="Search by name or email...">
+            <div class="mb-3 mt-4">
+                <input type="text" id="searchInput" class="form-control" placeholder="Search by name or email..." style="max-width: 400px;">
             </div>
 
             <!-- Bordered Table -->
             <div class="table-responsive">
                 <table class="table table-borderless" id="usersTable">
+                    <!-- Rest of the table code remains unchanged -->
                     <thead>
                         <tr>                   
                             <th scope="col">ID</th>                
@@ -127,7 +128,7 @@ include('inc/sidebar.php');
 
 <?php include('inc/footer.php'); ?>
 
-<!-- Add JavaScript for real-time search -->
+<!-- JavaScript for real-time search -->
 <script>
 document.getElementById('searchInput').addEventListener('input', function() {
     const searchTerm = this.value.toLowerCase();
