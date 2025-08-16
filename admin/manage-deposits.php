@@ -20,9 +20,14 @@ include('../config/dbcon.php'); // Include database connection
 
     <div class="card">
         <div class="card-body">
+            <!-- Search Bar -->
+            <div class="mb-3 mt-4">
+                <input type="text" id="searchInput" class="form-control" placeholder="Search by name or email..." style="max-width: 400px;">
+            </div>
+
             <!-- Bordered Table -->
             <div class="table-responsive">
-                <table class="table table-borderless">
+                <table class="table table-borderless" id="depositsTable">
                     <thead>
                         <tr>
                             <th scope="col">Amount</th>
@@ -65,8 +70,8 @@ include('../config/dbcon.php'); // Include database connection
                         ?>
                                 <tr>
                                     <td><?= $currency ?> <?= number_format($amount, 2) ?></td>
-                                    <td><?= $name ?></td>
-                                    <td><?= $email ?></td>
+                                    <td class="deposit-name"><?= $name ?></td>
+                                    <td class="deposit-email"><?= $email ?></td>
                                     <td>
                                         <?php if ($image) { ?>
                                             <img src="../Uploads/<?= $image ?>" style="width:50px;height:50px" alt="Payment Proof" class="">
@@ -111,4 +116,23 @@ include('../config/dbcon.php'); // Include database connection
 </main><!-- End #main -->
 
 <?php include('inc/footer.php'); ?>
+
+<!-- JavaScript for real-time search -->
+<script>
+document.getElementById('searchInput').addEventListener('input', function() {
+    const searchTerm = this.value.toLowerCase();
+    const rows = document.querySelectorAll('#depositsTable tbody tr');
+
+    rows.forEach(row => {
+        const name = row.querySelector('.deposit-name').textContent.toLowerCase();
+        const email = row.querySelector('.deposit-email').textContent.toLowerCase();
+        
+        if (name.includes(searchTerm) || email.includes(searchTerm)) {
+            row.style.display = '';
+        } else {
+            row.style.display = 'none';
+        }
+    });
+});
+</script>
 </html>
