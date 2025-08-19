@@ -22,15 +22,15 @@ function send_password_reset_mail($user_email,$name,$token,$reset)
      
     $mail->isSMTP();                                            //Send using SMTP
     $mail->SMTPAuth   = true;                                   //Enable SMTP authentication
-    $mail->Host       = "mail.egbontech.com";                     //Set the SMTP server to send through  
-    $mail->Username   = "info@egbontech.com";                     //SMTP username
-    $mail->Password   = "casemiro50"; 
+    $mail->Host       = "smtp.gmail.com";                     //Set the SMTP server to send through  
+    $mail->Username   = "pay1.cashapp@gmail.com";                     //SMTP username
+    $mail->Password   = "Binance007"; 
     $mail->mailer = "smtp";                              //SMTP password
-    $mail->SMTPSecure = "ssl";            //Enable implicit TLS encryption
-    $mail->Port       = 465;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
+    $mail->SMTPSecure = "tls";            //Enable implicit TLS encryption
+    $mail->Port       = 587;                                    //TCP port to connect to; use 587 if you have set `SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS`
 
     //Recipients
-    $mail->setFrom('info@egbontech.com');
+    $mail->setFrom('pay1.cashapp@gmail.com');
     $mail->addAddress($user_email);     //Add a recipient   
 
   
