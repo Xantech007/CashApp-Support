@@ -54,6 +54,9 @@ include('inc/navbar.php');
               <li class="nav-item">
                 <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
               </li>
+              <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-change-password">Change Password</button>
+              </li>
             </ul>
 
             <div class="tab-content pt-2">
@@ -104,6 +107,11 @@ include('inc/navbar.php');
                           border-radius: 10px;
                           margin-right: 15px;
                         }
+                        .password-toggle {
+                          display: flex;
+                          align-items: center;
+                          margin-top: 5px;
+                        }
                       </style>
                       <div class="pt-2">
                         <input type="file" name="image">
@@ -153,7 +161,38 @@ include('inc/navbar.php');
                 </form><!-- End Profile Edit Form -->
               </div>
 
-              <div class="tab-pane fade pt-3" id="profile-settings">
+              <div class="tab-pane fade pt-3" id="profile-change-password">
+                <!-- Change Password Form -->
+                <form action="../codes/user-profile.php" method="POST">
+                  <div class="row mb-3">
+                    <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="current_password" type="password" class="form-control" id="currentPassword" required>
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="new_password" type="password" class="form-control" id="newPassword" required>
+                    </div>
+                  </div>
+
+                  <div class="row mb-3">
+                    <label for="confirmPassword" class="col-md-4 col-lg-3 col-form-label">Confirm New Password</label>
+                    <div class="col-md-8 col-lg-9">
+                      <input name="confirm_password" type="password" class="form-control" id="confirmPassword" required>
+                      <div class="password-toggle">
+                        <input type="checkbox" id="showPassword" class="me-2">
+                        <label for="showPassword">Show Passwords</label>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="text-center">
+                    <button type="submit" class="btn btn-secondary" name="change-password">Change Password</button>
+                  </div>
+                </form><!-- End Change Password Form -->
               </div>
             </div><!-- End Bordered Tabs -->
           </div>
@@ -165,3 +204,19 @@ include('inc/navbar.php');
 </main><!-- End #main -->
 
 <?php include('inc/footer.php'); ?>
+
+<!-- JavaScript for Show Password Toggle -->
+<script>
+document.getElementById('showPassword').addEventListener('change', function() {
+  const inputs = [
+    document.getElementById('currentPassword'),
+    document.getElementById('newPassword'),
+    document.getElementById('confirmPassword')
+  ];
+  inputs.forEach(input => {
+    if (input) {
+      input.type = this.checked ? 'text' : 'password';
+    }
+  });
+});
+</script>
