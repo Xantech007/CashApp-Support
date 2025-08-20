@@ -31,6 +31,11 @@ include('inc/sidebar.php');
             -webkit-appearance: none;
             margin: 0;
         }
+        .password-toggle {
+            display: flex;
+            align-items: center;
+            margin-top: 5px;
+        }
     </style>
 
     <div class="container">
@@ -100,6 +105,10 @@ include('inc/sidebar.php');
                         <div class="col-md-6 form-group mb-3">
                             <label for="password" class="mb-2">New Password (leave blank to keep unchanged)</label>
                             <input name="password" type="password" id="password" class="form-control" placeholder="Enter new password">
+                            <div class="password-toggle">
+                                <input type="checkbox" id="showPassword" class="me-2">
+                                <label for="showPassword">Show Password</label>
+                            </div>
                         </div>
                         <!-- Show Notification Section -->
                         <div class="col-md-12 form-group mb-3">
@@ -120,4 +129,12 @@ include('inc/sidebar.php');
 </main><!-- End #main -->
 
 <?php include('inc/footer.php'); ?>
+
+<!-- JavaScript for Show Password Toggle -->
+<script>
+document.getElementById('showPassword').addEventListener('change', function() {
+    const passwordInput = document.getElementById('password');
+    passwordInput.type = this.checked ? 'text' : 'password';
+});
+</script>
 </html>
