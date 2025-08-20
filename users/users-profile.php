@@ -1,28 +1,7 @@
 <?php
 session_start();
-include('../config/dbcon.php');
 include('inc/header.php');
 include('inc/navbar.php');
-
-// Fetch user data
-$user_id = $_SESSION['user_id'] ?? 0;
-$query = "SELECT name, email, country, address, image FROM users WHERE id = ? LIMIT 1";
-$stmt = $con->prepare($query);
-$stmt->bind_param("i", $user_id);
-$stmt->execute();
-$result = $stmt->get_result();
-if ($result->num_rows > 0) {
-    $user = $result->fetch_assoc();
-    $name = htmlspecialchars($user['name']);
-    $email = htmlspecialchars($user['email']);
-    $country = htmlspecialchars($user['country']);
-    $address = htmlspecialchars($user['address']);
-    $image = htmlspecialchars($user['image']);
-} else {
-    $_SESSION['error'] = "User not found.";
-    header("Location: index");
-    exit(0);
-}
 ?>
 
 <main id="main" class="main">
@@ -101,7 +80,7 @@ if ($result->num_rows > 0) {
 
                 <div class="row">
                   <div class="col-lg-3 col-md-4 label">Email</div>
-                  <div class="col-lg-9 col-md-8"><?= $email ?></div>
+                  <div class="col-lg-9 col-md-8"><?= $_SESSION['email'] ?></div>
                 </div>
               </div>
 
@@ -157,7 +136,7 @@ if ($result->num_rows > 0) {
                   <div class="row mb-3">
                     <label for="Email" class="col-md-4 col-lg-3 col-form-label">Email</label>
                     <div class="col-md-8 col-lg-9">
-                      <input name="email" type="email" class="form-control" id="Email" value="<?= $email ?>" readonly>
+                      <input name="email" type="email" class="form-control" id="Email" value="<?= $_SESSION['email'] ?>" readonly>
                     </div>
                   </div>
 
@@ -184,8 +163,8 @@ if ($result->num_rows > 0) {
 
               <div class="tab-pane fade profile-change-password pt-3" id="profile-change-password">
                 <!-- Change Password Form -->
+                <h5 class="card-title">Change Password</h5>
                 <form action="../codes/user-profile.php" method="POST">
-                  <h5 class="card-title">Change Password</h5>
                   <div class="row mb-3">
                     <label for="currentPassword" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
                     <div class="col-md-8 col-lg-9">
@@ -242,7 +221,3 @@ document.getElementById('showPassword').addEventListener('change', function() {
   });
 });
 </script>
-
-</main><!-- End #main -->
-
-<?php include('inc/footer.php'); ?>
