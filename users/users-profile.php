@@ -67,7 +67,52 @@ if ($result->num_rows > 0) {
             <div class="col-xl-8">
                 <div class="card">
                     <div class="card-body pt-3">
-                        <!-- Bordered Tabs -->
+                        <!-- Scrollable Bordered Tabs -->
+                        <style>
+                            .nav-tabs {
+                                display: flex;
+                                flex-wrap: nowrap;
+                                overflow-x: auto;
+                                white-space: nowrap;
+                                -webkit-overflow-scrolling: touch; /* Smooth scrolling on mobile */
+                            }
+                            .nav-tabs::-webkit-scrollbar {
+                                height: 8px; /* Thinner scrollbar */
+                            }
+                            .nav-tabs::-webkit-scrollbar-thumb {
+                                background: #6c757d; /* Scrollbar color */
+                                border-radius: 4px;
+                            }
+                            .nav-tabs::-webkit-scrollbar-track {
+                                background: #f1f1f1; /* Scrollbar track */
+                            }
+                            .nav-tabs .nav-item {
+                                flex: 0 0 auto; /* Prevent tabs from shrinking */
+                            }
+                            .nav-tabs .nav-link {
+                                padding: 10px 20px; /* Adjust padding for better spacing */
+                            }
+                            ::-webkit-file-upload-button {                         
+                                outline: none;
+                                border: none;
+                                background: #6c757d;
+                                color: #f7f7f7;
+                                border-radius: 10px;
+                            }
+                            .rounded-circle {
+                                width: 100px;
+                                height: 100px;
+                                object-fit: cover;
+                                border-radius: 10px;
+                                margin-right: 15px;
+                            }
+                            .password-toggle {
+                                display: flex;
+                                align-items: center;
+                                margin-top: 5px;
+                            }
+                        </style>
+
                         <ul class="nav nav-tabs nav-tabs-bordered">
                             <li class="nav-item">
                                 <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
@@ -110,27 +155,6 @@ if ($result->num_rows > 0) {
                                         <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Picture</label>
                                         <div class="col-md-8 col-lg-9">
                                             <img src="../Uploads/profile-picture/<?= $image ?>" alt="Profile" class="rounded-circle">
-                                            <style>
-                                                ::-webkit-file-upload-button {                         
-                                                    outline: none;
-                                                    border: none;
-                                                    background: #6c757d;
-                                                    color: #f7f7f7;
-                                                    border-radius: 10px;
-                                                }
-                                                .rounded-circle {
-                                                    width: 100px;
-                                                    height: 100px;
-                                                    object-fit: cover;
-                                                    border-radius: 10px;
-                                                    margin-right: 15px;
-                                                }
-                                                .password-toggle {
-                                                    display: flex;
-                                                    align-items: center;
-                                                    margin-top: 5px;
-                                                }
-                                            </style>
                                             <div class="pt-2">
                                                 <input type="file" name="image">
                                             </div>
