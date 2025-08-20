@@ -14,7 +14,7 @@ include('inc/sidebar.php');
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="dashboard">Home</a></li>
                 <li class="breadcrumb-item">Users</li>
-                <li class="breadcrumb-item active">Deposit</li>
+                <li class="breadcrumb-item active">Edit User</li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
@@ -36,6 +36,12 @@ include('inc/sidebar.php');
     <div class="container">
         <div class="row">
             <div class="card" style="padding:10px">
+                <?php if (isset($_SESSION['success'])): ?>
+                    <div class="alert alert-success"><?= $_SESSION['success']; unset($_SESSION['success']); ?></div>
+                <?php endif; ?>
+                <?php if (isset($_SESSION['error'])): ?>
+                    <div class="alert alert-danger"><?= $_SESSION['error']; unset($_SESSION['error']); ?></div>
+                <?php endif; ?>
                 <form action="codes/users.php" method="POST">
                     <?php
                     if (isset($_GET['id'])) {
@@ -68,7 +74,7 @@ include('inc/sidebar.php');
                     ?>
                     <div class="row">
                         <div class="col-md-6 form-group mb-3">
-                            <label for="name" class="mb-2">Package Name</label>
+                            <label for="name" class="mb-2">Name</label>
                             <input type="text" id="name" class="form-control" value="<?= htmlspecialchars($name) ?>" readonly>
                         </div>
                         <div class="col-md-6 form-group mb-3">
@@ -90,6 +96,10 @@ include('inc/sidebar.php');
                         <div class="col-md-6 form-group mb-3">
                             <label for="referal_bonus" class="mb-2">Referral Bonus</label>
                             <input name="referal_bonus" type="number" id="referal_bonus" class="form-control" required value="<?= htmlspecialchars($bonus) ?>">
+                        </div>
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="password" class="mb-2">New Password (leave blank to keep unchanged)</label>
+                            <input name="password" type="password" id="password" class="form-control" placeholder="Enter new password">
                         </div>
                         <!-- Show Notification Section -->
                         <div class="col-md-12 form-group mb-3">
