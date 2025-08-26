@@ -100,7 +100,7 @@ if (isset($_POST['withdraw'])) {
 
         if ($update_stmt->execute()) {
             // Set success message
-            $_SESSION['success'] = "$currency" . number_format($amount, 2) . " withdrawal request submitted successfully for $channel_name.\nAmount to Receive: $stored_currency" . number_format($stored_amount, 2);
+            $_SESSION['success'] = "USD" . number_format($amount, 2) . " withdrawal request submitted successfully for $channel_name.\nAmount to Receive: $stored_currency" . number_format($stored_amount, 2);
             header("Location: ../users/withdrawals.php");
             exit(0);
         } else {
