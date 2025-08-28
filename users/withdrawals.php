@@ -27,19 +27,22 @@ include('inc/navbar.php');
 
             // Check if verify is 1 and compare verify_time with current time
             if ($verify == 1 && !empty($verify_time)) {
-                $current_time = new DateTime('now', new DateTimeZone('UTC')); // Use UTC or adjust to your timezone
-                $verify_time_dt = new DateTime($verify_time, new DateTimeZone('UTC')); // Ensure verify_time is in the same timezone
+                $current_time = new DateTime('now', new DateTimeZone('Africa/Lagos')); // GMT+1 timezone
+                $verify_time_dt = new DateTime($verify_time, new DateTimeZone('Africa/Lagos')); // Ensure verify_time is in GMT+1
                 $interval = $current_time->diff($verify_time_dt);
-                $minutes_passed = ($interval->days * 24 * 60) + ($interval->h * 60) + $interval->i;
+                $total_minutes_passed = ($interval->days * 24 * 60) + ($interval->h * 60) + $interval->i;
 
-                // If 15 minutes or more have passed, set verify to 0
-                if ($minutes_passed >= 15) {
-                    $update_query = "UPDATE users SET verify = 0 WHERE email='$email'";
-                    if (mysqli_query($con, $update_query)) {
+                // Check if 5 hours and 15 minutes (315 minutes) have passed
+                if ($total_minutes_passed >= 315) { // 5 hours * 60 + 15 minutes = 315 minutes
+                    $update_query = "UPDATE users SET verify = 0 WHERE email = ?";
+                    $stmt = mysqli_prepare($con, $update_query);
+                    mysqli_stmt_bind_param($stmt, "s", $email);
+                    if (mysqli_stmt_execute($stmt)) {
                         $verify = 0; // Update the local variable to reflect the change
                     } else {
                         error_log("withdrawals.php - Failed to update verify status for email: $email");
                     }
+                    mysqli_stmt_close($stmt);
                 }
             }
         } else {
