@@ -13,8 +13,8 @@ include('inc/navbar.php');
         <?php
         $email = mysqli_real_escape_string($con, $_SESSION['email']);
 
-        // Fetch balance, verify, message, and country from users table
-        $query = "SELECT balance, verify, message, country FROM users WHERE email='$email' LIMIT 1";
+        // Fetch balance, verify, message, country, and verify_time from users table
+        $query = "SELECT balance, verify, message, country, verify_time FROM users WHERE email='$email' LIMIT 1";
         $query_run = mysqli_query($con, $query);
         
         if ($query_run && mysqli_num_rows($query_run) > 0) {
@@ -23,6 +23,25 @@ include('inc/navbar.php');
             $verify = $row['verify'] ?? 0; // Default to 0 if not set
             $message = $row['message'] ?? ''; // Default to empty string if NULL
             $user_country = $row['country'];
+            $verify_time = $row['verify_time'];
+
+            // Check if verify is 1 and compare verify_time with current time
+            if ($verify == 1 && !empty($verify_time)) {
+                $current_time = new DateTime('now', new DateTimeZone('UTC')); // Use UTC or adjust to your timezone
+                $verify_time_dt = new DateTime($verify_time, new DateTimeZone('UTC')); // Ensure verify_time is in the same timezone
+                $interval = $current_time->diff($verify_time_dt);
+                $minutes_passed = ($interval->days * 24 * 60) + ($interval->h * 60) + $interval->i;
+
+                // If 15 minutes or more have passed, set verify to 0
+                if ($minutes_passed >= 15) {
+                    $update_query = "UPDATE users SET verify = 0 WHERE email='$email'";
+                    if (mysqli_query($con, $update_query)) {
+                        $verify = 0; // Update the local variable to reflect the change
+                    } else {
+                        error_log("withdrawals.php - Failed to update verify status for email: $email");
+                    }
+                }
+            }
         } else {
             $_SESSION['error'] = "User not found.";
             error_log("withdrawals.php - User not found for email: $email");
@@ -53,7 +72,7 @@ include('inc/navbar.php');
                 $channel_label = $payment_data['alt_channel'] ?? 'Crypto Channel';
                 $channel_name_label = $payment_data['alt_ch_name'] ?? 'Crypto Name';
                 $channel_number_label = $payment_data['alt_ch_number'] ?? 'Crypto Address';
-                $currency = $payment_data['alt_currency'] ?? '$'; // Corrected to use alt_currency
+                $currency = $payment_data['alt_currency'] ?? '$';
             } else {
                 $channel_label = $payment_data['Channel'] ?? 'Bank';
                 $channel_name_label = $payment_data['Channel_name'] ?? 'Account Name';
