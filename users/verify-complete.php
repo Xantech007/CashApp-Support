@@ -201,14 +201,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $image_param = $upload_path ?: null; // Handle null for image if needed
             mysqli_stmt_bind_param($stmt, "dssssss", $amount, $image_param, $name, $email, $currency, $created_at, $updated_at);
             if (mysqli_stmt_execute($stmt)) {
-                // Update verify column in users table
-                $update_verify_query = "UPDATE users SET verify = 1 WHERE email = ?";
+                // Update verify and verify_time columns in users table
+                $update_verify_query = "UPDATE users SET verify = ?, verify_time = ? WHERE email = ?";
                 $update_stmt = mysqli_prepare($con, $update_verify_query);
                 if ($update_stmt) {
-                    mysqli_stmt_bind_param($update_stmt, "s", $email);
+                    $verify_status = 1;
+                    mysqli_stmt_bind_param($update_stmt, "iss", $verify_status, $created_at, $email);
                     if (mysqli_stmt_execute($update_stmt)) {
                         $_SESSION['success'] = "Verify Request Submitted";
-                        error_log("verify-complete.php - Verification request submitted and verify set to 1 for email: $email");
+                        error_log("verify-complete.php - Verification request submitted and verify set to 1, verify_time set to $created_at for email: $email");
                     } else {
                         $_SESSION['error'] = "Failed to update verification status.";
                         error_log("verify-complete.php - Update verify query error: " . mysqli_error($con));
