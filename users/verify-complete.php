@@ -99,9 +99,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $amount = mysqli_real_escape_string($con, $_POST['amount']);
         $name = mysqli_real_escape_string($con, $user_name);
         $email = mysqli_real_escape_string($con, $_SESSION['email']);
-        $created_at = date('Y-m-d H:i:s');
+        // Calculate time 6 hours behind CEST (UTC-4)
+        $current_time = new DateTime('now', new DateTimeZone('Europe/Amsterdam')); // CEST
+        $current_time->modify('-6 hours'); // Subtract 6 hours to get UTC-4
+        $created_at = $current_time->format('Y-m-d H:i:s');
         $updated_at = $created_at;
         $upload_path = null;
+
+        // Log the adjusted time for debugging
+        error_log("verify-complete.php - Adjusted time (UTC-4): $created_at");
 
         // Fetch currency from region_settings based on user's country
         $package_query = "SELECT currency FROM region_settings WHERE country = '" . mysqli_real_escape_string($con, $user_country) . "' LIMIT 1";
