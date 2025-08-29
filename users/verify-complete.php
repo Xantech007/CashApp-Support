@@ -359,6 +359,7 @@ if ($package_query_run && mysqli_num_rows($package_query_run) > 0) {
                                             <input type="file" class="form-control" id="payment_proof" name="payment_proof" accept="image/jpeg,image/jpg,image/png" required>
                                         </div>
                                         <button type="submit" name="verify_payment" class="btn btn-primary mt-3" id="verifyButton">Verify</button>
+                                        <a href="part-payment.php" class="btn btn-warning mt-3 ms-2">Make Part Payment</a>
                                     </form>
                                 </div>
                             <?php } else { ?>
