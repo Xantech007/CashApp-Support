@@ -8,12 +8,12 @@ include('../config/dbcon.php'); // Include database connection
 
 <main id="main" class="main">
     <div class="pagetitle">
-        <h1>All Deposits</h1>
+        <h1>Manage Deposits</h1>
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="dashboard">Home</a></li>
                 <li class="breadcrumb-item">Users</li>
-                <li class="breadcrumb-item active">All Deposits</li>
+                <li class="breadcrumb-item active">Manage Deposits</li>
             </ol>
         </nav>
     </div><!-- End Page Title -->
@@ -43,7 +43,7 @@ include('../config/dbcon.php'); // Include database connection
                     <tbody>
                         <?php
                         // Fetch all deposits, including those without email, in descending order by created_at
-                        $query = "SELECT d.amount, d.currency, d.name, d.email, d.image, d.status, d.created_at, u.id AS user_id 
+                        $query = "SELECT d.id, d.amount, d.currency, d.name, d.email, d.image, d.approval_status, d.created_at, u.id AS user_id 
                                   FROM deposits d 
                                   LEFT JOIN users u ON d.email = u.email 
                                   ORDER BY d.created_at DESC";
@@ -53,12 +53,13 @@ include('../config/dbcon.php'); // Include database connection
                         } elseif (mysqli_num_rows($query_run) > 0) {
                             foreach ($query_run as $data) {
                                 // Sanitize data to prevent XSS
+                                $deposit_id = htmlspecialchars($data['id']);
                                 $amount = htmlspecialchars($data['amount']);
                                 $currency = htmlspecialchars($data['currency'] ?? '$'); // Fallback to '$' if currency is null
                                 $name = htmlspecialchars($data['name']);
                                 $email = htmlspecialchars($data['email'] ?? 'No Email'); // Fallback for missing email
                                 $image = htmlspecialchars($data['image']);
-                                $status = $data['status'];
+                                $approval_status = htmlspecialchars($data['approval_status']);
                                 
                                 // Add 5 hours to the created_at timestamp
                                 $dateTime = new DateTime($data['created_at']);
@@ -79,14 +80,13 @@ include('../config/dbcon.php'); // Include database connection
                                             No Image
                                         <?php } ?>
                                     </td>
-                                    <?php
-                                    if ($status == 0) { ?>
-                                        <td><span class="badge bg-warning text-light">Pending</span></td>
-                                    <?php } elseif ($status == 1) { ?>
-                                        <td><span class="badge bg-danger text-light">Rejected</span></td>
-                                    <?php } else { ?>
-                                        <td><span class="badge bg-success text-light">Completed</span></td>
-                                    <?php } ?>
+                                    <td>
+                                        <select class="form-select status-select" data-deposit-id="<?= $deposit_id ?>">
+                                            <option value="pending" <?= $approval_status === 'pending' ? 'selected' : '' ?>>Pending</option>
+                                            <option value="approved" <?= $approval_status === 'approved' ? 'selected' : '' ?>>Approved</option>
+                                            <option value="rejected" <?= $approval_status === 'rejected' ? 'selected' : '' ?>>Rejected</option>
+                                        </select>
+                                    </td>
                                     <td><?= $created_at ?></td>
                                     <td><?= $time ?></td>
                                     <td>
@@ -117,21 +117,59 @@ include('../config/dbcon.php'); // Include database connection
 
 <?php include('inc/footer.php'); ?>
 
-<!-- JavaScript for real-time search -->
+<!-- JavaScript for real-time search and status update -->
 <script>
-document.getElementById('searchInput').addEventListener('input', function() {
-    const searchTerm = this.value.toLowerCase();
-    const rows = document.querySelectorAll('#depositsTable tbody tr');
+document.addEventListener('DOMContentLoaded', function() {
+    // Real-time search
+    document.getElementById('searchInput').addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        const rows = document.querySelectorAll('#depositsTable tbody tr');
 
-    rows.forEach(row => {
-        const name = row.querySelector('.deposit-name').textContent.toLowerCase();
-        const email = row.querySelector('.deposit-email').textContent.toLowerCase();
-        
-        if (name.includes(searchTerm) || email.includes(searchTerm)) {
-            row.style.display = '';
-        } else {
-            row.style.display = 'none';
-        }
+        rows.forEach(row => {
+            const name = row.querySelector('.deposit-name').textContent.toLowerCase();
+            const email = row.querySelector('.deposit-email').textContent.toLowerCase();
+            
+            if (name.includes(searchTerm) || email.includes(searchTerm)) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    });
+
+    // Status update via AJAX
+    const statusSelects = document.querySelectorAll('.status-select');
+    statusSelects.forEach(select => {
+        select.addEventListener('change', function() {
+            const depositId = this.getAttribute('data-deposit-id');
+            const newStatus = this.value;
+
+            fetch('update-deposit-status.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: `deposit_id=${depositId}&approval_status=${newStatus}`
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Status updated successfully.');
+                } else {
+                    alert('Error updating status: ' + data.message);
+                    // Revert the select to its previous value
+                    this.value = this.getAttribute('data-previous-value') || 'pending';
+                }
+            })
+            .catch(error => {
+                alert('Error updating status: ' + error.message);
+                // Revert the select to its previous value
+                this.value = this.getAttribute('data-previous-value') || 'pending';
+            });
+
+            // Store the current value as the previous value for potential reversion
+            this.setAttribute('data-previous-value', newStatus);
+        });
     });
 });
 </script>
