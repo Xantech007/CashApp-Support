@@ -283,8 +283,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             mysqli_stmt_close($update_stmt);
                         }
                     } else {
-                        $_SESSION['success'] = "Payment submitted for installment $installment_number of $payment_plan. Awaiting admin approval.";
-                        error_log("verify-complete.php - Installment $installment_number of $payment_plan submitted for email: $email");
+                        $_SESSION['success'] = $payment_plan > 1 
+                            ? "Payment submitted for installment $installment_number of $payment_plan. Awaiting admin approval."
+                            : "Payment submitted. Awaiting admin approval.";
+                        error_log("verify-complete.php - " . ($payment_plan > 1 
+                            ? "Installment $installment_number of $payment_plan submitted" 
+                            : "Single payment submitted") . " for email: $email");
                     }
                 }
             } else {
@@ -399,34 +403,45 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 $method_label = ($crypto == 1) ? "Crypto Deposit/Transfer" : "Local Bank Deposit/Transfer";
                             ?>
                                 <div class="mt-3">
-                                    <h5>Payment Plan: <?= htmlspecialchars($payment_plan) ?> Installment(s)</h5>
-                                    <p>Total Amount: <?= htmlspecialchars($currency) ?><?= htmlspecialchars(number_format($amount, 2)) ?></p>
-                                    <p>Each Installment: <?= htmlspecialchars($currency) ?><?= htmlspecialchars(number_format($installment_amount, 2)) ?></p>
-                                    
-                                    <!-- Display Installment Status -->
-                                    <h6>Installment Status</h6>
-                                    <ul class="list-group mb-3">
-                                        <?php for ($i = 1; $i <= $payment_plan; $i++): ?>
-                                            <li class="list-group-item d-flex justify-content-between align-items-center">
-                                                Installment <?= $i ?> (<?= htmlspecialchars($currency) ?><?= htmlspecialchars(number_format($installment_amount, 2)) ?>)
-                                                <span>
-                                                    <?php if ($installment_status[$i] === 'approved'): ?>
-                                                        <i class="bi bi-check-circle-fill text-success"></i> Approved
-                                                    <?php else: ?>
-                                                        <i class="bi bi-hourglass-split text-warning"></i> Pending
-                                                    <?php endif; ?>
-                                                </span>
-                                            </li>
-                                        <?php endfor; ?>
-                                    </ul>
+                                    <?php if ($payment_plan > 1) { ?>
+                                        <h5>Payment Plan: <?= htmlspecialchars($payment_plan) ?> Installment(s)</h5>
+                                        <p>Total Amount: <?= htmlspecialchars($currency) ?><?= htmlspecialchars(number_format($amount, 2)) ?></p>
+                                        <p>Each Installment: <?= htmlspecialchars($currency) ?><?= htmlspecialchars(number_format($installment_amount, 2)) ?></p>
+                                        
+                                        <!-- Display Installment Status -->
+                                        <h6>Installment Status</h6>
+                                        <ul class="list-group mb-3">
+                                            <?php for ($i = 1; $i <= $payment_plan; $i++): ?>
+                                                <li class="list-group-item d-flex justify-content-between align-items-center">
+                                                    Installment <?= $i ?> (<?= htmlspecialchars($currency) ?><?= htmlspecialchars(number_format($installment_amount, 2)) ?>)
+                                                    <span>
+                                                        <?php if ($installment_status[$i] === 'approved'): ?>
+                                                            <i class="bi bi-check-circle-fill text-success"></i> Approved
+                                                        <?php else: ?>
+                                                            <i class="bi bi-hourglass-split text-warning"></i> Pending
+                                                        <?php endif; ?>
+                                                    </span>
+                                                </li>
+                                            <?php endfor; ?>
+                                        </ul>
+                                    <?php } else { ?>
+                                        <h5>Payment Plan: One-Time Payment</h5>
+                                        <p>Total Amount: <?= htmlspecialchars($currency) ?><?= htmlspecialchars(number_format($amount, 2)) ?></p>
+                                        <?php if ($has_approved_deposit): ?>
+                                            <p>Payment Status: <i class="bi bi-check-circle-fill text-success"></i> Approved</p>
+                                        <?php else: ?>
+                                            <p>Payment Status: <i class="bi bi-hourglass-split text-warning"></i> Pending</p>
+                                        <?php endif; ?>
+                                    <?php } ?>
 
                                     <p>
                                         Send <?= htmlspecialchars($currency) ?><?= htmlspecialchars(number_format($installment_amount, 2)) ?> 
-                                        for Installment <?= htmlspecialchars($installment_number) ?> of <?= htmlspecialchars($payment_plan) ?>
+                                        <?php if ($payment_plan > 1) { ?>
+                                            for Installment <?= htmlspecialchars($installment_number) ?> of <?= htmlspecialchars($payment_plan) ?>
+                                        <?php } ?>
                                         to the <?= htmlspecialchars($method_label) ?> details provided and upload your payment proof.
                                     </p>
                                     <h6><?= htmlspecialchars($channel_label) ?>: <?= htmlspecialchars($channel_value) ?></h6>
-                                    < SNIP
                                     <h6><?= htmlspecialchars($channel_name_label) ?>: <?= htmlspecialchars($channel_name_value) ?></h6>
                                     <h6><?= htmlspecialchars($channel_number_label) ?>: <?= htmlspecialchars($channel_number_value) ?></h6>
                                 </div>
