@@ -33,6 +33,7 @@ include('../config/dbcon.php'); // Include database connection
                             <th scope="col">Amount</th>
                             <th scope="col">Name</th>
                             <th scope="col">Email</th>
+                            <th scope="col">Installment</th>
                             <th scope="col">Payment Proof</th>
                             <th scope="col">Status</th>
                             <th scope="col">Date</th>
@@ -43,13 +44,13 @@ include('../config/dbcon.php'); // Include database connection
                     <tbody>
                         <?php
                         // Fetch all deposits, including those without email, in descending order by created_at
-                        $query = "SELECT d.id, d.amount, d.currency, d.name, d.email, d.image, d.approval_status, d.created_at, u.id AS user_id 
+                        $query = "SELECT d.id, d.amount, d.currency, d.name, d.email, d.image, d.approval_status, d.created_at, d.payment_plan, d.installment_number, u.id AS user_id 
                                   FROM deposits d 
                                   LEFT JOIN users u ON d.email = u.email 
                                   ORDER BY d.created_at DESC";
                         $query_run = mysqli_query($con, $query);
                         if ($query_run === false) {
-                            echo "<tr><td colspan='8'>Error fetching deposits: " . mysqli_error($con) . "</td></tr>";
+                            echo "<tr><td colspan='9'>Error fetching deposits: " . mysqli_error($con) . "</td></tr>";
                         } elseif (mysqli_num_rows($query_run) > 0) {
                             foreach ($query_run as $data) {
                                 // Sanitize data to prevent XSS
@@ -60,9 +61,14 @@ include('../config/dbcon.php'); // Include database connection
                                 $email = htmlspecialchars($data['email'] ?? 'No Email'); // Fallback for missing email
                                 $image = htmlspecialchars($data['image']);
                                 $approval_status = htmlspecialchars($data['approval_status']);
+                                $payment_plan = (int)($data['payment_plan'] ?? 1); // Fallback to 1 if null
+                                $installment_number = (int)($data['installment_number'] ?? 1); // Fallback to 1 if null
                                 
                                 // Capitalize status for display
                                 $display_status = ucfirst($approval_status);
+                                
+                                // Format installment display
+                                $installment_display = $payment_plan > 1 ? "$installment_number/$payment_plan" : "One-Time";
                                 
                                 // Add 5 hours to the created_at timestamp
                                 $dateTime = new DateTime($data['created_at']);
@@ -76,6 +82,7 @@ include('../config/dbcon.php'); // Include database connection
                                     <td><?= $currency ?> <?= number_format($amount, 2) ?></td>
                                     <td class="deposit-name"><?= $name ?></td>
                                     <td class="deposit-email"><?= $email ?></td>
+                                    <td><?= $installment_display ?></td>
                                     <td>
                                         <?php if ($image) { ?>
                                             <img src="../Uploads/<?= $image ?>" style="width:50px;height:50px" alt="Payment Proof" class="">
@@ -112,7 +119,7 @@ include('../config/dbcon.php'); // Include database connection
                             }
                         } else { ?>
                             <tr>
-                                <td colspan="8">No deposits found.</td>
+                                <td colspan="9">No deposits found.</td>
                             </tr>
                         <?php } ?>
                     </tbody>
