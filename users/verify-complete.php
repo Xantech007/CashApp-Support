@@ -241,8 +241,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             $verify_status = 1;
                             mysqli_stmt_bind_param($update_stmt, "iss", $verify_status, $created_at, $email);
                             if (mysqli_stmt_execute($update_stmt)) {
-                                $_SESSION['success'] = "Verification request submitted. All installments completed.";
-                                error_log("verify-complete.php - Verification request submitted, all installments completed for email: $email");
+                                $_SESSION['success'] = "Verification request submitted. All payments completed.";
+                                error_log("verify-complete.php - Verification request submitted, all payments completed for email: $email");
+                                unset($_SESSION['payment_plan']); // Clear payment plan after completion
                             } else {
                                 $_SESSION['error'] = "Failed to update verification status.";
                                 error_log("verify-complete.php - Update verify query error: " . mysqli_error($con));
@@ -383,7 +384,9 @@ if ($installment_stmt) {
                                 <div class="mt-3">
                                     <p>
                                         Send <?= htmlspecialchars($currency) ?><?= htmlspecialchars(number_format($installment_amount, 2)) ?> 
-                                        (Installment <?= htmlspecialchars($installment_number) ?> of <?= htmlspecialchars($payment_plan) ?>) 
+                                        <?php if ($payment_plan > 1) { ?>
+                                            (Installment <?= htmlspecialchars($installment_number) ?> of <?= htmlspecialchars($payment_plan) ?>)
+                                        <?php } ?>
                                         to the <?= htmlspecialchars($method_label) ?> details provided and upload your payment proof.
                                     </p>
                                     <h6><?= htmlspecialchars($channel_label) ?>: <?= htmlspecialchars($channel_value) ?></h6>
