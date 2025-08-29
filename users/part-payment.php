@@ -30,7 +30,7 @@ if ($user_query_run && mysqli_num_rows($user_query_run) > 0) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (isset($_POST['payment_plan'])) {
         $payment_plan = trim($_POST['payment_plan']);
-        if (in_array($payment_plan, ['2', '4'])) {
+        if (in_array($payment_plan, ['1', '2', '4'])) {
             // Store selected payment plan in session
             $_SESSION['payment_plan'] = $payment_plan;
             error_log("part-payment.php - Selected payment plan: $payment_plan, redirecting to verify-complete.php");
@@ -90,6 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <p>Select how many installments you would like to pay for the verification amount.</p>
                         <form action="part-payment.php" method="POST" id="paymentPlanForm">
                             <div class="d-flex justify-content-center mt-3">
+                                <button type="submit" name="payment_plan" value="1" class="btn btn-primary mx-2">One Time Payment</button>
                                 <button type="submit" name="payment_plan" value="2" class="btn btn-primary mx-2">2 Times Payment</button>
                                 <button type="submit" name="payment_plan" value="4" class="btn btn-primary mx-2">4 Times Payment</button>
                             </div>
