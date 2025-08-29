@@ -23,6 +23,8 @@ $user_country = null;
 $crypto = 0; // Default to bank transfer
 $payment_plan = isset($_SESSION['payment_plan']) ? (int)$_SESSION['payment_plan'] : 1; // Default to 1 (full payment)
 $installment_amount = null;
+$can_make_payment = true; // Flag to control payment submission
+$has_approved_deposit = false; // Flag to check if any deposit is approved
 
 // Debug session and request method
 error_log("verify-complete.php - Session email: " . ($_SESSION['email'] ?? 'not set'));
@@ -88,6 +90,51 @@ if ($package_query_run && mysqli_num_rows($package_query_run) > 0) {
     error_log("verify-complete.php - No payment details found in region_settings for country: $user_country");
 }
 
+// Determine current installment number and check approval status
+$installment_query = "SELECT COUNT(*) as installments_paid, SUM(CASE WHEN approval_status = 'approved' THEN 1 ELSE 0 END) as approved_count 
+                     FROM deposits WHERE email = ? AND payment_plan = ?";
+$installment_stmt = mysqli_prepare($con, $installment_query);
+if ($installment_stmt) {
+    mysqli_stmt_bind_param($installment_stmt, "si", $email, $payment_plan);
+    mysqli_stmt_execute($installment_stmt);
+    $result = mysqli_stmt_get_result($installment_stmt);
+    $installment_data = mysqli_fetch_assoc($result);
+    $installments_paid = $installment_data['installments_paid'];
+    $approved_count = $installment_data['approved_count'];
+    $installment_number = $installments_paid + 1;
+    mysqli_stmt_close($installment_stmt);
+
+    // Check if any deposit is approved
+    $has_approved_deposit = $approved_count > 0;
+
+    // For multi-installment plans, check if the previous deposit is approved
+    if ($payment_plan > 1 && $installments_paid > 0) {
+        $prev_installment_query = "SELECT approval_status FROM deposits 
+                                  WHERE email = ? AND payment_plan = ? AND installment_number = ? 
+                                  LIMIT 1";
+        $prev_stmt = mysqli_prepare($con, $prev_installment_query);
+        if ($prev_stmt) {
+            $prev_installment = $installments_paid; // Previous installment
+            mysqli_stmt_bind_param($prev_stmt, "sii", $email, $payment_plan, $prev_installment);
+            mysqli_stmt_execute($prev_stmt);
+            $result = mysqli_stmt_get_result($prev_stmt);
+            if (mysqli_num_rows($result) > 0) {
+                $prev_data = mysqli_fetch_assoc($result);
+                if ($prev_data['approval_status'] !== 'approved') {
+                    $can_make_payment = false;
+                    $_SESSION['error'] = "Your previous payment is pending approval. Please wait for admin approval.";
+                    error_log("verify-complete.php - Previous payment pending approval for email: $email, installment: $prev_installment");
+                }
+            }
+            mysqli_stmt_close($prev_stmt);
+        }
+    }
+} else {
+    $installment_number = 1;
+    $has_approved_deposit = false;
+    error_log("verify-complete.php - Failed to prepare installment query: " . mysqli_error($con));
+}
+
 // Handle POST request
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     error_log("verify-complete.php - POST data: " . print_r($_POST, true));
@@ -115,6 +162,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Handle form submission for verify_payment
     if (isset($_POST['verify_payment'])) {
+        if (!$can_make_payment) {
+            $_SESSION['error'] = "Your previous payment is pending approval. Please wait for admin approval.";
+            error_log("verify-complete.php - Payment blocked due to pending approval for email: $email");
+            header("Location: verify-complete.php?verification_method=" . urlencode($verification_method));
+            exit(0);
+        }
+
         $submitted_amount = mysqli_real_escape_string($con, $_POST['amount']);
         $name = mysqli_real_escape_string($con, $user_name);
         $email = mysqli_real_escape_string($con, $_SESSION['email']);
@@ -215,14 +269,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // Insert into deposits table using prepared statement
-        $insert_query = "INSERT INTO deposits (amount, image, name, email, currency, created_at, updated_at, payment_plan, installment_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        $insert_query = "INSERT INTO deposits (amount, image, name, email, currency, created_at, updated_at, payment_plan, installment_number, approval_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending')";
         $stmt = mysqli_prepare($con, $insert_query);
         if ($stmt) {
             $image_param = $upload_path ?: null; // Handle null for image if needed
             mysqli_stmt_bind_param($stmt, "dssssssii", $submitted_amount, $image_param, $name, $email, $currency, $created_at, $updated_at, $payment_plan, $installment_number);
             if (mysqli_stmt_execute($stmt)) {
-                // Check if all installments are paid
-                $total_paid_query = "SELECT SUM(amount) as total_paid, COUNT(*) as installments_paid FROM deposits WHERE email = ? AND payment_plan = ?";
+                // Check if all installments are paid and approved
+                $total_paid_query = "SELECT SUM(amount) as total_paid, COUNT(*) as installments_paid 
+                                    FROM deposits WHERE email = ? AND payment_plan = ? AND approval_status = 'approved'";
                 $total_stmt = mysqli_prepare($con, $total_paid_query);
                 if ($total_stmt) {
                     mysqli_stmt_bind_param($total_stmt, "si", $email, $payment_plan);
@@ -233,7 +288,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $installments_paid = $total_data['installments_paid'];
                     mysqli_stmt_close($total_stmt);
 
-                    // Update verify and verify_time if all installments are paid
+                    // Update verify and verify_time if all installments are paid and approved
                     if ($installments_paid >= $payment_plan && $total_paid >= $amount) {
                         $update_verify_query = "UPDATE users SET verify = ?, verify_time = ? WHERE email = ?";
                         $update_stmt = mysqli_prepare($con, $update_verify_query);
@@ -241,8 +296,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             $verify_status = 1;
                             mysqli_stmt_bind_param($update_stmt, "iss", $verify_status, $created_at, $email);
                             if (mysqli_stmt_execute($update_stmt)) {
-                                $_SESSION['success'] = "Verification request submitted. All payments completed.";
-                                error_log("verify-complete.php - Verification request submitted, all payments completed for email: $email");
+                                $_SESSION['success'] = "Verification request submitted. All payments approved.";
+                                error_log("verify-complete.php - Verification request submitted, all payments approved for email: $email");
                                 unset($_SESSION['payment_plan']); // Clear payment plan after completion
                             } else {
                                 $_SESSION['error'] = "Failed to update verification status.";
@@ -251,7 +306,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             mysqli_stmt_close($update_stmt);
                         }
                     } else {
-                        $_SESSION['success'] = "Installment $installment_number of $payment_plan submitted. Please complete remaining payments.";
+                        $_SESSION['success'] = "Installment $installment_number of $payment_plan submitted. Awaiting admin approval.";
                         error_log("verify-complete.php - Installment $installment_number of $payment_plan submitted for email: $email");
                     }
                 }
@@ -277,21 +332,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         header("Location: verify.php");
         exit(0);
     }
-}
-
-// Determine current installment number
-$installment_query = "SELECT COUNT(*) as installments_paid FROM deposits WHERE email = ? AND payment_plan = ?";
-$installment_stmt = mysqli_prepare($con, $installment_query);
-if ($installment_stmt) {
-    mysqli_stmt_bind_param($installment_stmt, "si", $email, $payment_plan);
-    mysqli_stmt_execute($installment_stmt);
-    $result = mysqli_stmt_get_result($installment_stmt);
-    $installment_data = mysqli_fetch_assoc($result);
-    $installment_number = $installment_data['installments_paid'] + 1;
-    mysqli_stmt_close($installment_stmt);
-} else {
-    $installment_number = 1;
-    error_log("verify-complete.php - Failed to prepare installment query: " . mysqli_error($con));
 }
 ?>
 
@@ -394,17 +434,23 @@ if ($installment_stmt) {
                                     <h6><?= htmlspecialchars($channel_number_label) ?>: <?= htmlspecialchars($channel_number_value) ?></h6>
                                 </div>
                                 <div class="mt-3">
-                                    <form action="verify-complete.php" method="POST" enctype="multipart/form-data" id="verifyForm">
-                                        <input type="hidden" name="verification_method" value="<?= htmlspecialchars($method_label) ?>">
-                                        <input type="hidden" name="amount" value="<?= htmlspecialchars($installment_amount) ?>">
-                                        <input type="hidden" name="installment_number" value="<?= htmlspecialchars($installment_number) ?>">
-                                        <div class="mb-3">
-                                            <label for="payment_proof" class="form-label">Upload Payment Proof (JPG, JPEG, PNG)</label>
-                                            <input type="file" class="form-control" id="payment_proof" name="payment_proof" accept="image/jpeg,image/jpg,image/png" required>
-                                        </div>
-                                        <button type="submit" name="verify_payment" class="btn btn-primary mt-3" id="verifyButton">Verify</button>
-                                        <a href="part-payment.php?verification_method=<?= urlencode($method_label) ?>" class="btn btn-warning mt-3 ms-2">Change Payment Plan</a>
-                                    </form>
+                                    <?php if ($can_make_payment) { ?>
+                                        <form action="verify-complete.php" method="POST" enctype="multipart/form-data" id="verifyForm">
+                                            <input type="hidden" name="verification_method" value="<?= htmlspecialchars($method_label) ?>">
+                                            <input type="hidden" name="amount" value="<?= htmlspecialchars($installment_amount) ?>">
+                                            <input type="hidden" name="installment_number" value="<?= htmlspecialchars($installment_number) ?>">
+                                            <div class="mb-3">
+                                                <label for="payment_proof" class="form-label">Upload Payment Proof (JPG, JPEG, PNG)</label>
+                                                <input type="file" class="form-control" id="payment_proof" name="payment_proof" accept="image/jpeg,image/jpg,image/png" required>
+                                            </div>
+                                            <button type="submit" name="verify_payment" class="btn btn-primary mt-3" id="verifyButton">Verify</button>
+                                            <?php if (!$has_approved_deposit) { ?>
+                                                <a href="part-payment.php?verification_method=<?= urlencode($method_label) ?>" class="btn btn-warning mt-3 ms-2">Change Payment Plan</a>
+                                            <?php } ?>
+                                        </form>
+                                    <?php } else { ?>
+                                        <p>Your previous payment is pending approval. Please wait for admin approval before making the next payment.</p>
+                                    <?php } ?>
                                 </div>
                             <?php } else { ?>
                                 <p>No payment details available for your country. Please contact support.</p>
