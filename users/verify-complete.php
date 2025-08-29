@@ -285,8 +285,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         }
                     } else {
                         $_SESSION['success'] = $payment_plan > 1 
-                            ? "Payment submitted for installment $installment_number of $payment_plan. Awaiting admin approval."
-                            : "Payment submitted. Awaiting admin approval.";
+                            ? "Payment submitted for installment $installment_number of $payment_plan. Awaiting approval."
+                            : "Payment submitted. Awaiting approval.";
                         error_log("verify-complete.php - " . ($payment_plan > 1 
                             ? "Installment $installment_number of $payment_plan submitted" 
                             : "Single payment submitted") . " for email: $email");
