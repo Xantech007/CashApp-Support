@@ -89,10 +89,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <div class="card-body mt-2">
                         <p>Select how many installments you would like to pay for the verification amount.</p>
                         <form action="part-payment.php" method="POST" id="paymentPlanForm">
-                            <div class="d-flex justify-content-center mt-3">
-                                <button type="submit" name="payment_plan" value="1" class="btn btn-primary mx-2">One Time Payment</button>
-                                <button type="submit" name="payment_plan" value="2" class="btn btn-primary mx-2">2 Times Payment</button>
-                                <button type="submit" name="payment_plan" value="4" class="btn btn-primary mx-2">4 Times Payment</button>
+                            <div class="d-grid gap-2 mt-3">
+                                <button type="submit" name="payment_plan" value="1" class="btn btn-primary">One Time Payment</button>
+                                <button type="submit" name="payment_plan" value="2" class="btn btn-primary">2 Times Payment</button>
+                                <button type="submit" name="payment_plan" value="4" class="btn btn-primary">4 Times Payment</button>
                             </div>
                         </form>
                     </div>
