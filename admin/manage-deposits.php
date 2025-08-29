@@ -61,6 +61,9 @@ include('../config/dbcon.php'); // Include database connection
                                 $image = htmlspecialchars($data['image']);
                                 $approval_status = htmlspecialchars($data['approval_status']);
                                 
+                                // Capitalize status for display
+                                $display_status = ucfirst($approval_status);
+                                
                                 // Add 5 hours to the created_at timestamp
                                 $dateTime = new DateTime($data['created_at']);
                                 $dateTime->modify('+5 hours');
@@ -81,11 +84,16 @@ include('../config/dbcon.php'); // Include database connection
                                         <?php } ?>
                                     </td>
                                     <td>
-                                        <select class="form-select status-select" data-deposit-id="<?= $deposit_id ?>">
-                                            <option value="pending" <?= $approval_status === 'pending' ? 'selected' : '' ?>>Pending</option>
-                                            <option value="approved" <?= $approval_status === 'approved' ? 'selected' : '' ?>>Approved</option>
-                                            <option value="rejected" <?= $approval_status === 'rejected' ? 'selected' : '' ?>>Rejected</option>
-                                        </select>
+                                        <span class="badge 
+                                            <?= $approval_status === 'pending' ? 'bg-warning text-light' : 
+                                               ($approval_status === 'approved' ? 'bg-success text-light' : 'bg-danger text-light') ?> 
+                                            status-badge" 
+                                            data-deposit-id="<?= $deposit_id ?>" 
+                                            data-current-status="<?= $approval_status ?>" 
+                                            style="cursor: pointer;" 
+                                            onclick="changeStatus(<?= $deposit_id ?>, '<?= $approval_status ?>')">
+                                            <?= $display_status ?>
+                                        </span>
                                     </td>
                                     <td><?= $created_at ?></td>
                                     <td><?= $time ?></td>
@@ -137,40 +145,54 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Status update via AJAX
-    const statusSelects = document.querySelectorAll('.status-select');
-    statusSelects.forEach(select => {
-        select.addEventListener('change', function() {
-            const depositId = this.getAttribute('data-deposit-id');
-            const newStatus = this.value;
+    // Function to handle status change
+    window.changeStatus = function(depositId, currentStatus) {
+        const validStatuses = ['pending', 'approved', 'rejected'];
+        const statusPrompt = prompt(`Enter new status for deposit ${depositId} (pending, approved, rejected):`, currentStatus);
+        
+        if (statusPrompt === null) {
+            return; // User cancelled the prompt
+        }
 
-            fetch('update-deposit-status.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: `deposit_id=${depositId}&approval_status=${newStatus}`
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('Status updated successfully.');
-                } else {
-                    alert('Error updating status: ' + data.message);
-                    // Revert the select to its previous value
-                    this.value = this.getAttribute('data-previous-value') || 'pending';
-                }
-            })
-            .catch(error => {
-                alert('Error updating status: ' + error.message);
-                // Revert the select to its previous value
-                this.value = this.getAttribute('data-previous-value') || 'pending';
-            });
+        const newStatus = statusPrompt.toLowerCase().trim();
+        
+        if (!validStatuses.includes(newStatus)) {
+            alert('Invalid status. Please enter "pending", "approved", or "rejected".');
+            return;
+        }
 
-            // Store the current value as the previous value for potential reversion
-            this.setAttribute('data-previous-value', newStatus);
+        if (newStatus === currentStatus) {
+            return; // No change needed
+        }
+
+        fetch('update-deposit-status.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `deposit_id=${depositId}&approval_status=${newStatus}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Status updated successfully.');
+                // Update the badge text and class
+                const badge = document.querySelector(`.status-badge[data-deposit-id="${depositId}"]`);
+                badge.textContent = newStatus.charAt(0).toUpperCase() + newStatus.slice(1);
+                badge.className = `badge status-badge ${
+                    newStatus === 'pending' ? 'bg-warning text-light' :
+                    newStatus === 'approved' ? 'bg-success text-light' :
+                    'bg-danger text-light'
+                }`;
+                badge.setAttribute('data-current-status', newStatus);
+            } else {
+                alert('Error updating status: ' + data.message);
+            }
+        })
+        .catch(error => {
+            alert('Error updating status: ' + error.message);
         });
-    });
+    };
 });
 </script>
 </html>
