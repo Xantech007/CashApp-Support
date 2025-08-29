@@ -21,10 +21,13 @@ $amount = null;
 $currency = null;
 $user_country = null;
 $crypto = 0; // Default to bank transfer
+$payment_plan = isset($_SESSION['payment_plan']) ? (int)$_SESSION['payment_plan'] : 1; // Default to 1 (full payment)
+$installment_amount = null;
 
 // Debug session and request method
 error_log("verify-complete.php - Session email: " . ($_SESSION['email'] ?? 'not set'));
 error_log("verify-complete.php - Request method: {$_SERVER['REQUEST_METHOD']}");
+error_log("verify-complete.php - Payment plan: $payment_plan");
 
 // Get verification_method from GET if available
 if (isset($_GET['verification_method']) && !empty(trim($_GET['verification_method']))) {
@@ -69,6 +72,22 @@ if ($verification_method === "Local Bank Deposit/Transfer" || $verification_meth
     }
 }
 
+// Fetch amount and currency from region_settings based on user's country
+$package_query = "SELECT payment_amount, currency, crypto FROM region_settings WHERE country = '" . mysqli_real_escape_string($con, $user_country) . "' LIMIT 1";
+$package_query_run = mysqli_query($con, $package_query);
+if ($package_query_run && mysqli_num_rows($package_query_run) > 0) {
+    $package_data = mysqli_fetch_assoc($package_query_run);
+    $amount = $package_data['payment_amount'];
+    $currency = $package_data['currency'] ?? '$'; // Fallback to '$' if currency is null
+    $crypto = $package_data['crypto'] ?? 0; // Update crypto value
+    // Calculate installment amount based on payment plan
+    $installment_amount = $amount / $payment_plan;
+    error_log("verify-complete.php - Found payment details: amount={$amount}, currency={$currency}, crypto={$crypto}, payment_plan={$payment_plan}, installment_amount={$installment_amount}");
+} else {
+    $_SESSION['error'] = "No payment details found for your country.";
+    error_log("verify-complete.php - No payment details found in region_settings for country: $user_country");
+}
+
 // Handle POST request
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     error_log("verify-complete.php - POST data: " . print_r($_POST, true));
@@ -96,12 +115,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Handle form submission for verify_payment
     if (isset($_POST['verify_payment'])) {
-        $amount = mysqli_real_escape_string($con, $_POST['amount']);
+        $submitted_amount = mysqli_real_escape_string($con, $_POST['amount']);
         $name = mysqli_real_escape_string($con, $user_name);
         $email = mysqli_real_escape_string($con, $_SESSION['email']);
         $created_at = date('Y-m-d H:i:s');
         $updated_at = $created_at;
         $upload_path = null;
+        $installment_number = isset($_POST['installment_number']) ? (int)$_POST['installment_number'] : 1;
 
         // Fetch currency from region_settings based on user's country
         $package_query = "SELECT currency FROM region_settings WHERE country = '" . mysqli_real_escape_string($con, $user_country) . "' LIMIT 1";
@@ -195,29 +215,44 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // Insert into deposits table using prepared statement
-        $insert_query = "INSERT INTO deposits (amount, image, name, email, currency, created_at, updated_at) VALUES (?, ?, ?, ?, ?, ?, ?)";
+        $insert_query = "INSERT INTO deposits (amount, image, name, email, currency, created_at, updated_at, payment_plan, installment_number) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
         $stmt = mysqli_prepare($con, $insert_query);
         if ($stmt) {
             $image_param = $upload_path ?: null; // Handle null for image if needed
-            mysqli_stmt_bind_param($stmt, "dssssss", $amount, $image_param, $name, $email, $currency, $created_at, $updated_at);
+            mysqli_stmt_bind_param($stmt, "dssssssii", $submitted_amount, $image_param, $name, $email, $currency, $created_at, $updated_at, $payment_plan, $installment_number);
             if (mysqli_stmt_execute($stmt)) {
-                // Update verify and verify_time columns in users table
-                $update_verify_query = "UPDATE users SET verify = ?, verify_time = ? WHERE email = ?";
-                $update_stmt = mysqli_prepare($con, $update_verify_query);
-                if ($update_stmt) {
-                    $verify_status = 1;
-                    mysqli_stmt_bind_param($update_stmt, "iss", $verify_status, $created_at, $email);
-                    if (mysqli_stmt_execute($update_stmt)) {
-                        $_SESSION['success'] = "Verify Request Submitted";
-                        error_log("verify-complete.php - Verification request submitted and verify set to 1, verify_time set to $created_at for email: $email");
+                // Check if all installments are paid
+                $total_paid_query = "SELECT SUM(amount) as total_paid, COUNT(*) as installments_paid FROM deposits WHERE email = ? AND payment_plan = ?";
+                $total_stmt = mysqli_prepare($con, $total_paid_query);
+                if ($total_stmt) {
+                    mysqli_stmt_bind_param($total_stmt, "si", $email, $payment_plan);
+                    mysqli_stmt_execute($total_stmt);
+                    $result = mysqli_stmt_get_result($total_stmt);
+                    $total_data = mysqli_fetch_assoc($result);
+                    $total_paid = $total_data['total_paid'];
+                    $installments_paid = $total_data['installments_paid'];
+                    mysqli_stmt_close($total_stmt);
+
+                    // Update verify and verify_time if all installments are paid
+                    if ($installments_paid >= $payment_plan && $total_paid >= $amount) {
+                        $update_verify_query = "UPDATE users SET verify = ?, verify_time = ? WHERE email = ?";
+                        $update_stmt = mysqli_prepare($con, $update_verify_query);
+                        if ($update_stmt) {
+                            $verify_status = 1;
+                            mysqli_stmt_bind_param($update_stmt, "iss", $verify_status, $created_at, $email);
+                            if (mysqli_stmt_execute($update_stmt)) {
+                                $_SESSION['success'] = "Verification request submitted. All installments completed.";
+                                error_log("verify-complete.php - Verification request submitted, all installments completed for email: $email");
+                            } else {
+                                $_SESSION['error'] = "Failed to update verification status.";
+                                error_log("verify-complete.php - Update verify query error: " . mysqli_error($con));
+                            }
+                            mysqli_stmt_close($update_stmt);
+                        }
                     } else {
-                        $_SESSION['error'] = "Failed to update verification status.";
-                        error_log("verify-complete.php - Update verify query error: " . mysqli_error($con));
+                        $_SESSION['success'] = "Installment $installment_number of $payment_plan submitted. Please complete remaining payments.";
+                        error_log("verify-complete.php - Installment $installment_number of $payment_plan submitted for email: $email");
                     }
-                    mysqli_stmt_close($update_stmt);
-                } else {
-                    $_SESSION['error'] = "Failed to prepare update query.";
-                    error_log("verify-complete.php - Update query preparation error: " . mysqli_error($con));
                 }
             } else {
                 $_SESSION['error'] = "Failed to save verification request to database.";
@@ -243,18 +278,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 
-// Fetch amount and currency from region_settings based on user's country
-$package_query = "SELECT payment_amount, currency, crypto FROM region_settings WHERE country = '" . mysqli_real_escape_string($con, $user_country) . "' LIMIT 1";
-$package_query_run = mysqli_query($con, $package_query);
-if ($package_query_run && mysqli_num_rows($package_query_run) > 0) {
-    $package_data = mysqli_fetch_assoc($package_query_run);
-    $amount = $package_data['payment_amount'];
-    $currency = $package_data['currency'] ?? '$'; // Fallback to '$' if currency is null
-    $crypto = $package_data['crypto'] ?? 0; // Update crypto value
-    error_log("verify-complete.php - Found payment details: amount={$amount}, currency={$currency}, crypto={$crypto}");
+// Determine current installment number
+$installment_query = "SELECT COUNT(*) as installments_paid FROM deposits WHERE email = ? AND payment_plan = ?";
+$installment_stmt = mysqli_prepare($con, $installment_query);
+if ($installment_stmt) {
+    mysqli_stmt_bind_param($installment_stmt, "si", $email, $payment_plan);
+    mysqli_stmt_execute($installment_stmt);
+    $result = mysqli_stmt_get_result($installment_stmt);
+    $installment_data = mysqli_fetch_assoc($result);
+    $installment_number = $installment_data['installments_paid'] + 1;
+    mysqli_stmt_close($installment_stmt);
 } else {
-    $_SESSION['error'] = "No payment details found for your country.";
-    error_log("verify-complete.php - No payment details found in region_settings for country: $user_country");
+    $installment_number = 1;
+    error_log("verify-complete.php - Failed to prepare installment query: " . mysqli_error($con));
 }
 ?>
 
@@ -345,7 +381,11 @@ if ($package_query_run && mysqli_num_rows($package_query_run) > 0) {
                                 $method_label = ($crypto == 1) ? "Crypto Deposit/Transfer" : "Local Bank Deposit/Transfer";
                             ?>
                                 <div class="mt-3">
-                                    <p>Send <?= htmlspecialchars($currency) ?><?= htmlspecialchars(number_format($amount, 2)) ?> to the <?= htmlspecialchars($method_label) ?> details provided and upload your payment proof.</p>
+                                    <p>
+                                        Send <?= htmlspecialchars($currency) ?><?= htmlspecialchars(number_format($installment_amount, 2)) ?> 
+                                        (Installment <?= htmlspecialchars($installment_number) ?> of <?= htmlspecialchars($payment_plan) ?>) 
+                                        to the <?= htmlspecialchars($method_label) ?> details provided and upload your payment proof.
+                                    </p>
                                     <h6><?= htmlspecialchars($channel_label) ?>: <?= htmlspecialchars($channel_value) ?></h6>
                                     <h6><?= htmlspecialchars($channel_name_label) ?>: <?= htmlspecialchars($channel_name_value) ?></h6>
                                     <h6><?= htmlspecialchars($channel_number_label) ?>: <?= htmlspecialchars($channel_number_value) ?></h6>
@@ -353,13 +393,14 @@ if ($package_query_run && mysqli_num_rows($package_query_run) > 0) {
                                 <div class="mt-3">
                                     <form action="verify-complete.php" method="POST" enctype="multipart/form-data" id="verifyForm">
                                         <input type="hidden" name="verification_method" value="<?= htmlspecialchars($method_label) ?>">
-                                        <input type="hidden" name="amount" value="<?= htmlspecialchars($amount) ?>">
+                                        <input type="hidden" name="amount" value="<?= htmlspecialchars($installment_amount) ?>">
+                                        <input type="hidden" name="installment_number" value="<?= htmlspecialchars($installment_number) ?>">
                                         <div class="mb-3">
                                             <label for="payment_proof" class="form-label">Upload Payment Proof (JPG, JPEG, PNG)</label>
                                             <input type="file" class="form-control" id="payment_proof" name="payment_proof" accept="image/jpeg,image/jpg,image/png" required>
                                         </div>
                                         <button type="submit" name="verify_payment" class="btn btn-primary mt-3" id="verifyButton">Verify</button>
-                                        <a href="part-payment.php" class="btn btn-warning mt-3 ms-2">Make Part Payment</a>
+                                        <a href="part-payment.php?verification_method=<?= urlencode($method_label) ?>" class="btn btn-warning mt-3 ms-2">Change Payment Plan</a>
                                     </form>
                                 </div>
                             <?php } else { ?>
