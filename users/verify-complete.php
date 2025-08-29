@@ -21,7 +21,8 @@ $amount = null;
 $currency = null;
 $user_country = null;
 $crypto = 0; // Default to bank transfer
-$payment_plan = isset($_SESSION['payment_plan']) ? (int)$_SESSION['payment_plan'] : 1; // Default to 1 (full payment)
+// Default to one-time payment (1) for new users unless explicitly changed
+$payment_plan = isset($_SESSION['payment_plan']) && is_numeric($_SESSION['payment_plan']) ? (int)$_SESSION['payment_plan'] : 1;
 $installment_amount = null;
 
 // Debug session and request method
