@@ -3,7 +3,7 @@
 
 <div class="d-flex align-items-center justify-content-between">
 <a href="index.php" class="logo d-flex align-items-center">  
-    <img src="../Uploads/logo/logodark.png" alt="">
+    <img src="../uploads/logo/logodark.png" alt="">
 </a>
 </div><!-- End Logo -->
 
@@ -30,7 +30,7 @@
                 $bonus = $data['referal_bonus'];
 
                 // Set default profile picture if image is empty or not set
-                $profile_image = !empty($image) && file_exists("../Uploads/profile-picture/$image") 
+                $profile_image = !empty($image) && file_exists("../uploads/profile-picture/$image") 
                     ? $image 
                     : 'ppdefault.png';
             } else {
@@ -41,7 +41,7 @@
             ?>
             
             <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-                <img src="../Uploads/profile-picture/<?= $profile_image ?>" alt="Profile" class="rounded-circle">
+                <img src="../uploads/profile-picture/<?= $profile_image ?>" alt="Profile" class="rounded-circle">
                 <span class="d-none d-md-block dropdown-toggle ps-2"><?= $name ?></span>
             </a><!-- End Profile Image Icon -->
 
