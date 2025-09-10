@@ -1,5 +1,5 @@
 <?php
-include '../config/dbcon.php'; // Your database connection file
+// No need to include config.php since header.php already includes the database connection
 
 $query = "SELECT name, amount FROM popup_withdrawals ORDER BY RAND() LIMIT 1";
 $result = mysqli_query($con, $query);
