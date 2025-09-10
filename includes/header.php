@@ -1,5 +1,6 @@
 <?php
 include('config/dbcon.php');
+include('popup_notifications.php')
 ?>
 <!DOCTYPE html>
 <html lang="en">
