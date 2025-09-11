@@ -926,11 +926,15 @@ include('includes/navbar.php');
     left: 5%; /* Center: (100% - 80%) / 2 */
     width: 90%; /* 80% of screen width */
     background: #fff;
-    padding: 10px 27px;
+    padding: 10px 27px; /* Padding determines vertical spacing around content */
     box-shadow: 0px 5px 13px 0px rgba(0,0,0,.3);
     font-size: 13.5px; /* Reduced by 20% from assumed 16px default */
     opacity: 0;
     transition: opacity 0.3s ease; /* For fade in/out */
+    box-sizing: border-box; /* Ensure padding is included in width */
+    min-height: 0; /* Prevent any minimum height constraints */
+    height: auto; /* Explicitly allow height to adjust to content */
+    line-height: 1.5; /* Improve text readability and consistent height */
 }
 .mgm.visible {
     opacity: 1; /* Visible state */
@@ -943,6 +947,10 @@ include('includes/navbar.php');
 .mgm a, .mgm a:active {
     transition: all .2s ease;
     color: #f2d516;
+}
+.mgm .txt {
+    display: inline-block; /* Ensure text container fits content */
+    width: 100%; /* Match parent width */
 }
 </style>
 
