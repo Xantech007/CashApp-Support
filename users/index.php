@@ -278,12 +278,12 @@ $formatted_balance = number_format($balance, 2, '.', $balance >= 1000 ? ',' : ''
     position: fixed;
     z-index: 90;
     top: 15%; /* Position 15% from the top */
-    left: 50%; /* Center horizontally */
-    transform: translateX(-50%); /* Offset to truly center the element */
+    left: 10%; /* Center horizontally: (100% - 80%) / 2 */
+    width: 80%; /* 80% of screen width */
     background: #fff;
     padding: 10px 27px;
     box-shadow: 0px 5px 13px 0px rgba(0,0,0,.3);
-    font-size: 80%; /* Reduce text size by 20% */
+    font-size: 12.8px; /* Reduced by 20% from assumed default of 16px */
 }
 .mgm a {
     font-weight: 700;
