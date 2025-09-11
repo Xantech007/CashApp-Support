@@ -913,4 +913,50 @@ include('includes/navbar.php');
 </section>
 <!-- Contact Area End -->
 
+		<div class="mgm" style="display: none;">
+<div class="txt" style="color:black;">Someone from just<b></b> withdrew <a href="javascript:void(0);" onclick="javascript:void(0);"></a></div>
+</div>
+
+<style>
+.mgm {
+    border-radius: 7px;
+    position: fixed;
+    z-index: 90;
+    bottom: 80px;
+    right: 50px;
+    background: #fff;
+    padding: 10px 27px;
+    box-shadow: 0px 5px 13px 0px rgba(0,0,0,.3);
+}
+.mgm a {
+    font-weight: 700;
+    display: block;
+    color:#f2d516;
+}
+.mgm a, .mgm a:active {
+    transition: all .2s ease;
+    color:#f2d516;
+}
+</style>
+<script data-cfasync="false" src="#"></script><script type="text/javascript">
+var listCountries = ['South Africa', 'USA', 'Germany', 'France', 'Italy', 'South Africa', 'Australia', 'South Africa', 'Canada', 'Argentina', 'Saudi Arabia', 'Mexico', 'South Africa', 'South Africa', 'Venezuela', 'South Africa', 'Sweden', 'South Africa', 'South Africa', 'Italy', 'South Africa', 'United Kingdom', 'South Africa', 'Greece', 'Cuba', 'South Africa', 'Portugal', 'Austria', 'South Africa', 'Panama', 'South Africa', 'South Africa', 'Netherlands', 'Switzerland', 'Belgium', 'Israel', 'Cyprus'];
+    var listPlans = ['$500','$1500','$1000','$10,000','$2000','$3000','$4000', '$600', '$700', '$2500'];
+    interval = Math.floor(Math.random() * (40000 - 8000 + 1) + 8000);
+    var run = setInterval(request, interval);
+
+    function request() {
+        clearInterval(run);
+        interval = Math.floor(Math.random() * (40000 - 8000 + 1) + 8000);
+        var country = listCountries[Math.floor(Math.random() * listCountries.length)];
+        var plan = listPlans[Math.floor(Math.random() * listPlans.length)];
+        var msg = 'Someone from <b>' + country + '</b> just earned <a href="javascript:void(0);" onclick="javascript:void(0);">' + plan + ' .</a>';
+        $(".mgm .txt").html(msg);
+        $(".mgm").stop(true).fadeIn(300);
+        window.setTimeout(function() {
+            $(".mgm").stop(true).fadeOut(300);
+        }, 6000);
+        run = setInterval(request, interval);
+    }
+</script>
+
 <?php include('includes/footer.php') ?>
