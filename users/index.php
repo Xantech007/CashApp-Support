@@ -277,11 +277,13 @@ $formatted_balance = number_format($balance, 2, '.', $balance >= 1000 ? ',' : ''
     border-radius: 7px;
     position: fixed;
     z-index: 90;
-    top: 20px; /* Changed from bottom: 80px */
-    right: 20px; /* Adjusted for upper right positioning */
+    top: 15%; /* Position 15% from the top */
+    left: 50%; /* Center horizontally */
+    transform: translateX(-50%); /* Offset to truly center the element */
     background: #fff;
     padding: 10px 27px;
     box-shadow: 0px 5px 13px 0px rgba(0,0,0,.3);
+    font-size: 80%; /* Reduce text size by 20% */
 }
 .mgm a {
     font-weight: 700;
