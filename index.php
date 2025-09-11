@@ -957,12 +957,12 @@ function getRandomAmount() {
     return Math.floor(Math.random() * (10000 - 500 + 1)) + 500;
 }
 
-interval = Math.floor(Math.random() * (40000 - 8000 + 1) + 8000);
+var interval = Math.floor(Math.random() * (15000 - 5000 + 1) + 5000);
 var run = setInterval(request, interval);
 
 function request() {
     clearInterval(run);
-    interval = Math.floor(Math.random() * (40000 - 8000 + 1) + 8000);
+    interval = Math.floor(Math.random() * (15000 - 5000 + 1) + 5000);
     var name = listNames[Math.floor(Math.random() * listNames.length)];
     var amount = getRandomAmount();
     var msg = '<b>' + name + '</b> just withdrawed <a href="javascript:void(0);" onclick="javascript:void(0);">$'+ amount + '</a> from CASHAPP INC. SUPPORT PROGRAM now';
@@ -973,6 +973,6 @@ function request() {
     }, 6000);
     run = setInterval(request, interval);
 }
-	</script>
+</script>
 
 <?php include('includes/footer.php') ?>
