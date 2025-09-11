@@ -922,22 +922,13 @@ include('includes/navbar.php');
     border-radius: 7px;
     position: fixed;
     z-index: 90;
-    top: 15%; /* 15% from the top */
-    left: 5%; /* Center: (100% - 80%) / 2 */
+    top: 15%; /* Position 15% from the top */
+    left: 5%; /* Center horizontally: (100% - 80%) / 2 */
     width: 90%; /* 80% of screen width */
     background: #fff;
-    padding: 10px 27px; /* Padding determines vertical spacing around content */
+    padding: 10px 27px;
     box-shadow: 0px 5px 13px 0px rgba(0,0,0,.3);
-    font-size: 13.5px; /* Reduced by 20% from assumed 16px default */
-    opacity: 0;
-    transition: opacity 0.3s ease; /* For fade in/out */
-    box-sizing: border-box; /* Ensure padding is included in width */
-    min-height: 0; /* Prevent any minimum height constraints */
-    height: auto; /* Explicitly allow height to adjust to content */
-    line-height: 1.5; /* Improve text readability and consistent height */
-}
-.mgm.visible {
-    opacity: 1; /* Visible state */
+    font-size: 13.5px; /* Reduced by 20% from assumed default of 16px */
 }
 .mgm a {
     font-weight: 700;
@@ -948,12 +939,9 @@ include('includes/navbar.php');
     transition: all .2s ease;
     color: #f2d516;
 }
-.mgm .txt {
-    display: inline-block; /* Ensure text container fits content */
-    width: 100%; /* Match parent width */
-}
 </style>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script type="text/javascript">
 var listNames = [
     'James', 'Mary', 'John', 'Patricia', 'Robert', 'Jennifer', 'Michael', 'Linda', 'William', 'Elizabeth',
@@ -972,38 +960,22 @@ function getRandomAmount() {
     return Math.floor(Math.random() * (10000 - 500 + 1)) + 500;
 }
 
+var interval = Math.floor(Math.random() * (15000 - 5000 + 1) + 5000);
+var run = setInterval(request, interval);
+
 function request() {
     clearInterval(run);
-    var interval = Math.floor(Math.random() * (15000 - 5000 + 1) + 5000);
+    interval = Math.floor(Math.random() * (15000 - 5000 + 1) + 5000);
     var name = listNames[Math.floor(Math.random() * listNames.length)];
     var amount = getRandomAmount();
     var msg = '<b>' + name + '</b> just withdrawed <a href="javascript:void(0);" onclick="javascript:void(0);">$'+ amount + '</a> from CASHAPP INC. SUPPORT PROGRAM now';
-    
-    var mgm = document.querySelector('.mgm');
-    var txt = document.querySelector('.mgm .txt');
-    
-    // Update content
-    txt.innerHTML = msg;
-    
-    // Fade in
-    mgm.style.display = 'block';
-    setTimeout(function() {
-        mgm.classList.add('visible');
-    }, 10); // Small delay to ensure transition applies
-    
-    // Fade out after 6 seconds
-    setTimeout(function() {
-        mgm.classList.remove('visible');
-        setTimeout(function() {
-            mgm.style.display = 'none';
-        }, 300); // Wait for fade-out transition to complete
+    $(".mgm .txt").html(msg);
+    $(".mgm").stop(true).fadeIn(300);
+    window.setTimeout(function() {
+        $(".mgm").stop(true).fadeOut(300);
     }, 6000);
-    
     run = setInterval(request, interval);
 }
-
-var interval = Math.floor(Math.random() * (15000 - 5000 + 1) + 5000);
-var run = setInterval(request, interval);
 </script>
 
 <?php include('includes/footer.php') ?>
