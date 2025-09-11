@@ -277,8 +277,8 @@ $formatted_balance = number_format($balance, 2, '.', $balance >= 1000 ? ',' : ''
     border-radius: 7px;
     position: fixed;
     z-index: 90;
-    bottom: 80px;
-    right: 50px;
+    top: 20px; /* Changed from bottom: 80px */
+    right: 20px; /* Adjusted for upper right positioning */
     background: #fff;
     padding: 10px 27px;
     box-shadow: 0px 5px 13px 0px rgba(0,0,0,.3);
@@ -294,6 +294,7 @@ $formatted_balance = number_format($balance, 2, '.', $balance >= 1000 ? ',' : ''
 }
 </style>
 
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 <script type="text/javascript">
 var listNames = [
     'James', 'Mary', 'John', 'Patricia', 'Robert', 'Jennifer', 'Michael', 'Linda', 'William', 'Elizabeth',
