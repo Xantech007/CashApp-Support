@@ -279,7 +279,7 @@ $formatted_balance = number_format($balance, 2, '.', $balance >= 1000 ? ',' : ''
     z-index: 90;
     top: 15%; /* Position 15% from the top */
     left: 5%; /* Center horizontally: (100% - 80%) / 2 */
-    width: 80%; /* 80% of screen width */
+    width: 90%; /* 80% of screen width */
     background: #fff;
     padding: 10px 27px;
     box-shadow: 0px 5px 13px 0px rgba(0,0,0,.3);
