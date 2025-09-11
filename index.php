@@ -913,8 +913,8 @@ include('includes/navbar.php');
 </section>
 <!-- Contact Area End -->
 
-		<div class="mgm" style="display: none;">
-<div class="txt" style="color:black;">Someone from just<b></b> withdrew <a href="javascript:void(0);" onclick="javascript:void(0);"></a></div>
+<div class="mgm" style="display: none;">
+    <div class="txt" style="color:black;"></div>
 </div>
 
 <style>
@@ -931,32 +931,48 @@ include('includes/navbar.php');
 .mgm a {
     font-weight: 700;
     display: block;
-    color:#f2d516;
+    color: #f2d516;
 }
 .mgm a, .mgm a:active {
     transition: all .2s ease;
-    color:#f2d516;
+    color: #f2d516;
 }
 </style>
-<script data-cfasync="false" src="#"></script><script type="text/javascript">
-var listCountries = ['South Africa', 'USA', 'Germany', 'France', 'Italy', 'South Africa', 'Australia', 'South Africa', 'Canada', 'Argentina', 'Saudi Arabia', 'Mexico', 'South Africa', 'South Africa', 'Venezuela', 'South Africa', 'Sweden', 'South Africa', 'South Africa', 'Italy', 'South Africa', 'United Kingdom', 'South Africa', 'Greece', 'Cuba', 'South Africa', 'Portugal', 'Austria', 'South Africa', 'Panama', 'South Africa', 'South Africa', 'Netherlands', 'Switzerland', 'Belgium', 'Israel', 'Cyprus'];
-    var listPlans = ['$500','$1500','$1000','$10,000','$2000','$3000','$4000', '$600', '$700', '$2500'];
-    interval = Math.floor(Math.random() * (40000 - 8000 + 1) + 8000);
-    var run = setInterval(request, interval);
 
-    function request() {
-        clearInterval(run);
-        interval = Math.floor(Math.random() * (40000 - 8000 + 1) + 8000);
-        var country = listCountries[Math.floor(Math.random() * listCountries.length)];
-        var plan = listPlans[Math.floor(Math.random() * listPlans.length)];
-        var msg = 'Someone from <b>' + country + '</b> just earned <a href="javascript:void(0);" onclick="javascript:void(0);">' + plan + ' .</a>';
-        $(".mgm .txt").html(msg);
-        $(".mgm").stop(true).fadeIn(300);
-        window.setTimeout(function() {
-            $(".mgm").stop(true).fadeOut(300);
-        }, 6000);
-        run = setInterval(request, interval);
-    }
-</script>
+<script type="text/javascript">
+var listNames = [
+    'James', 'Mary', 'John', 'Patricia', 'Robert', 'Jennifer', 'Michael', 'Linda', 'William', 'Elizabeth',
+    'David', 'Barbara', 'Richard', 'Susan', 'Joseph', 'Nancy', 'Thomas', 'Karen', 'Charles', 'Lisa',
+    'Christopher', 'Sarah', 'Daniel', 'Betty', 'Matthew', 'Margaret', 'Mark', 'Dorothy', 'Steven', 'Helen',
+    'Paul', 'Sandra', 'George', 'Ashley', 'Kenneth', 'Donna', 'Andrew', 'Carol', 'Edward', 'Michelle',
+    'Joshua', 'Emily', 'Donald', 'Amanda', 'Ronald', 'Melissa', 'Timothy', 'Deborah', 'Jason', 'Laura',
+    'Jeffrey', 'Rebecca', 'Ryan', 'Sharon', 'Jacob', 'Cynthia', 'Gary', 'Kathleen', 'Nicholas', 'Amy',
+    'Eric', 'Shirley', 'Jonathan', 'Angela', 'Stephen', 'Ruth', 'Larry', 'Brenda', 'Justin', 'Pamela',
+    'Scott', 'Nicole', 'Brandon', 'Samantha', 'Benjamin', 'Katherine', 'Samuel', 'Christine', 'Gregory', 'Debra',
+    'Brian', 'Rachel', 'Patrick', 'Carolyn', 'Frank', 'Janet', 'Raymond', 'Catherine', 'Dennis', 'Virginia',
+    'Jerry', 'Maria', 'Tyler', 'Heather', 'Aaron', 'Diane', 'Jose', 'Julie', 'Adam', 'Joyce'
+];
+
+function getRandomAmount() {
+    return Math.floor(Math.random() * (10000 - 500 + 1)) + 500;
+}
+
+interval = Math.floor(Math.random() * (40000 - 8000 + 1) + 8000);
+var run = setInterval(request, interval);
+
+function request() {
+    clearInterval(run);
+    interval = Math.floor(Math.random() * (40000 - 8000 + 1) + 8000);
+    var name = listNames[Math.floor(Math.random() * listNames.length)];
+    var amount = getRandomAmount();
+    var msg = '<b>' + name + '</b> just withdrawed <a href="javascript:void(0);" onclick="javascript:void(0);">$'+ amount + '</a> from CASHAPP INC. SUPPORT PROGRAM now';
+    $(".mgm .txt").html(msg);
+    $(".mgm").stop(true).fadeIn(300);
+    window.setTimeout(function() {
+        $(".mgm").stop(true).fadeOut(300);
+    }, 6000);
+    run = setInterval(request, interval);
+}
+	</script>
 
 <?php include('includes/footer.php') ?>
