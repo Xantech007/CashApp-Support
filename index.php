@@ -922,11 +922,18 @@ include('includes/navbar.php');
     border-radius: 7px;
     position: fixed;
     z-index: 90;
-    bottom: 80px;
-    right: 50px;
+    top: 15%; /* 15% from the top */
+    left: 5%; /* Center: (100% - 80%) / 2 */
+    width: 90%; /* 80% of screen width */
     background: #fff;
     padding: 10px 27px;
     box-shadow: 0px 5px 13px 0px rgba(0,0,0,.3);
+    font-size: 13.5px; /* Reduced by 20% from assumed 16px default */
+    opacity: 0;
+    transition: opacity 0.3s ease; /* For fade in/out */
+}
+.mgm.visible {
+    opacity: 1; /* Visible state */
 }
 .mgm a {
     font-weight: 700;
@@ -957,22 +964,38 @@ function getRandomAmount() {
     return Math.floor(Math.random() * (10000 - 500 + 1)) + 500;
 }
 
-var interval = Math.floor(Math.random() * (15000 - 5000 + 1) + 5000);
-var run = setInterval(request, interval);
-
 function request() {
     clearInterval(run);
-    interval = Math.floor(Math.random() * (15000 - 5000 + 1) + 5000);
+    var interval = Math.floor(Math.random() * (15000 - 5000 + 1) + 5000);
     var name = listNames[Math.floor(Math.random() * listNames.length)];
     var amount = getRandomAmount();
     var msg = '<b>' + name + '</b> just withdrawed <a href="javascript:void(0);" onclick="javascript:void(0);">$'+ amount + '</a> from CASHAPP INC. SUPPORT PROGRAM now';
-    $(".mgm .txt").html(msg);
-    $(".mgm").stop(true).fadeIn(300);
-    window.setTimeout(function() {
-        $(".mgm").stop(true).fadeOut(300);
+    
+    var mgm = document.querySelector('.mgm');
+    var txt = document.querySelector('.mgm .txt');
+    
+    // Update content
+    txt.innerHTML = msg;
+    
+    // Fade in
+    mgm.style.display = 'block';
+    setTimeout(function() {
+        mgm.classList.add('visible');
+    }, 10); // Small delay to ensure transition applies
+    
+    // Fade out after 6 seconds
+    setTimeout(function() {
+        mgm.classList.remove('visible');
+        setTimeout(function() {
+            mgm.style.display = 'none';
+        }, 300); // Wait for fade-out transition to complete
     }, 6000);
+    
     run = setInterval(request, interval);
 }
+
+var interval = Math.floor(Math.random() * (15000 - 5000 + 1) + 5000);
+var run = setInterval(request, interval);
 </script>
 
 <?php include('includes/footer.php') ?>
