@@ -19,7 +19,7 @@ if ($auth_id != $_SESSION['id']) {
 }
 
 // Helper function to handle QR image upload
-function handleQrImageUpload($con, $upload_dir = '../uploads/qr_images/') {
+function handleQrImageUpload($con, $upload_dir = '../Uploads/qr_codes/') {
     if (!isset($_FILES['qr_image']) || $_FILES['qr_image']['error'] === UPLOAD_ERR_NO_FILE) {
         return null; // No file uploaded
     }
