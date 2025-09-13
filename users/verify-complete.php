@@ -444,8 +444,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         to the <?= htmlspecialchars($method_label) ?> details provided and upload your payment proof.
                                     </p>
 
-                                    <!-- New: Dynamic QR Code Section - Moved above channel details -->
-                                    <?php if (!empty($qr_image) && file_exists($qr_image)): ?>
+                                    <!-- New: Dynamic QR Code Section - Only for Crypto -->
+                                    <?php if ($crypto == 1 && !empty($qr_image) && file_exists($qr_image)): ?>
                                         <div class="mt-4">
                                             <h6>Scan QR Code for Quick Payment (<?= htmlspecialchars($method_label) ?>)</h6>
                                             <div class="qr-container d-flex justify-content-center">
@@ -453,9 +453,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                                      class="img-fluid" 
                                                      style="width: 200px; height: 200px; object-fit: cover; border: 1px solid #ddd; border-radius: 8px; align-self: center;">
                                             </div>
-                                            <?php if ($crypto == 1): ?>
-                                                <p class="mt-2 small text-muted">Scan this QR code with your crypto wallet app to complete the transfer.</p>
-                                            <?php endif; ?>
+                                            <p class="mt-2 small text-muted">Scan this QR code with your crypto wallet app to complete the transfer.</p>
                                         </div>
                                     <?php endif; ?>
 
