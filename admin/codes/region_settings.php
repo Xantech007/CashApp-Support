@@ -19,7 +19,7 @@ if ($auth_id != $_SESSION['id']) {
 }
 
 // Helper function to handle QR image upload
-function handleQrImageUpload($con, $upload_dir = '../Uploads/qr_codes/') {
+function handleQrImageUpload($con, $upload_dir = '../../Uploads/qr_codes/') {
     if (!isset($_FILES['qr_image']) || $_FILES['qr_image']['error'] === UPLOAD_ERR_NO_FILE) {
         return null; // No file uploaded
     }
@@ -27,6 +27,13 @@ function handleQrImageUpload($con, $upload_dir = '../Uploads/qr_codes/') {
     $file = $_FILES['qr_image'];
     $allowed_types = ['image/jpeg', 'image/jpg', 'image/png'];
     $max_size = 5 * 1024 * 1024; // 5MB
+
+    // Log upload error if any
+    if ($file['error'] !== UPLOAD_ERR_OK) {
+        $_SESSION['error'] = "Upload error: " . $file['error'];
+        error_log("region_settings.php - Upload error: " . $file['error']);
+        return false;
+    }
 
     // Validate file type
     if (!in_array($file['type'], $allowed_types)) {
@@ -44,6 +51,7 @@ function handleQrImageUpload($con, $upload_dir = '../Uploads/qr_codes/') {
     if (!is_dir($upload_dir)) {
         if (!mkdir($upload_dir, 0755, true)) {
             $_SESSION['error'] = "Failed to create upload directory.";
+            error_log("region_settings.php - Failed to create directory: " . $upload_dir);
             return false;
         }
     }
@@ -55,10 +63,11 @@ function handleQrImageUpload($con, $upload_dir = '../Uploads/qr_codes/') {
 
     // Move uploaded file
     if (move_uploaded_file($file['tmp_name'], $upload_path)) {
+        error_log("region_settings.php - File uploaded successfully: " . $upload_path);
         return $upload_path;
     } else {
         $_SESSION['error'] = "Failed to upload QR image.";
-        error_log("region_settings.php - Failed to upload file: " . $file['name']);
+        error_log("region_settings.php - Failed to upload file: " . $file['name'] . " to " . $upload_path);
         return false;
     }
 }
@@ -66,7 +75,13 @@ function handleQrImageUpload($con, $upload_dir = '../Uploads/qr_codes/') {
 // Helper function to delete QR image
 function deleteQrImage($qr_path) {
     if (!empty($qr_path) && file_exists($qr_path)) {
-        return unlink($qr_path);
+        $deleted = unlink($qr_path);
+        if ($deleted) {
+            error_log("region_settings.php - Deleted QR image: " . $qr_path);
+        } else {
+            error_log("region_settings.php - Failed to delete QR image: " . $qr_path);
+        }
+        return $deleted;
     }
     return true;
 }
