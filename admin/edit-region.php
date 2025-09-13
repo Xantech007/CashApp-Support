@@ -13,22 +13,16 @@ if (!isset($_GET['id']) || empty($_GET['id'])) {
 }
 
 $region_id = mysqli_real_escape_string($con, $_GET['id']);
+$query = "SELECT * FROM region_settings WHERE id = '$region_id' LIMIT 1";
+$query_run = mysqli_query($con, $query);
 
-// Fetch region settings data using prepared statement
-$query = "SELECT * FROM region_settings WHERE id = ? LIMIT 1";
-$stmt = $con->prepare($query);
-$stmt->bind_param("i", $region_id);
-$stmt->execute();
-$result = $stmt->get_result();
-
-if ($result && $result->num_rows > 0) {
-    $region = $result->fetch_assoc();
+if (mysqli_num_rows($query_run) > 0) {
+    $region = mysqli_fetch_assoc($query_run);
 } else {
     $_SESSION['error'] = "Region not found.";
     header("Location: region_settings.php");
     exit(0);
 }
-$stmt->close();
 ?>
 
 <main id="main" class="main">
@@ -38,7 +32,7 @@ $stmt->close();
         <nav>
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="dashboard">Home</a></li>
-                <li class="breadcrumb-item"><a href="region_settings.php">Region Settings</a></li>
+                <li class="breadcrumb-item"><a href="region_settings">Region Settings</a></li>
                 <li class="breadcrumb-item active">Edit</li>
             </ol>
         </nav>
@@ -85,18 +79,37 @@ $stmt->close();
         .card-body label {
             font-weight: 500;
         }
-        .qr-preview {
+        .file-upload-area {
+            border: 2px dashed #ccc;
+            border-radius: 8px;
+            padding: 40px;
+            text-align: center;
+            background-color: #f8f9fa;
+            transition: border-color 0.3s ease;
+            cursor: pointer;
+        }
+        .file-upload-area:hover {
+            border-color: #f7951d;
+        }
+        .file-upload-area.dragover {
+            border-color: #f7951d;
+            background-color: #fff3cd;
+        }
+        .preview-img {
             max-width: 200px;
             max-height: 200px;
             border: 1px solid #ddd;
-            border-radius: 8px;
+            border-radius: 4px;
             margin-top: 10px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
         }
     </style>
 
     <div class="card">
         <div class="card-body">
-            <h5 class="card-title">Edit Region: <?= htmlspecialchars($region['country']) ?></h5>
+            <h5 class="card-title">Edit Region</h5>
             <form action="codes/region_settings.php" method="POST" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-md-6">
@@ -120,7 +133,7 @@ $stmt->close();
                     </div>
                     <div class="col-md-3">
                         <label for="currency">Currency</label>
-                        <input type="text" class="form-control" name="currency" value="<?= htmlspecialchars($region['currency']) ?>" placeholder="" required>
+                        <input type="text" class="form-control" name="currency" value="<?= htmlspecialchars($region['currency']) ?>" placeholder="e.g., NGN or USDT" required>
                     </div>
                     <div class="col-md-3">
                         <label for="alt_currency">Alt Currency</label>
@@ -137,7 +150,7 @@ $stmt->close();
                     </div>
                     <div class="col-md-6">
                         <label for="Channel">Channel</label>
-                        <input type="text" class="form-control" name="Channel" value="<?= htmlspecialchars($region['Channel']) ?>" placeholder="" required>
+                        <input type="text" class="form-control" name="Channel" value="<?= htmlspecialchars($region['Channel']) ?>" placeholder="e.g., Bank or Blockchain Network" required>
                     </div>
                 </div>
                 <div class="row">
@@ -147,7 +160,7 @@ $stmt->close();
                     </div>
                     <div class="col-md-6">
                         <label for="Channel_name">Channel Name</label>
-                        <input type="text" class="form-control" name="Channel_name" value="<?= htmlspecialchars($region['Channel_name']) ?>" placeholder="" required>
+                        <input type="text" class="form-control" name="Channel_name" value="<?= htmlspecialchars($region['Channel_name']) ?>" placeholder="e.g., Account Name or Wallet Address" required>
                     </div>
                 </div>
                 <div class="row">
@@ -157,7 +170,7 @@ $stmt->close();
                     </div>
                     <div class="col-md-6">
                         <label for="Channel_number">Channel Number</label>
-                        <input type="text" class="form-control" name="Channel_number" value="<?= htmlspecialchars($region['Channel_number']) ?>" placeholder="" required>
+                        <input type="text" class="form-control" name="Channel_number" value="<?= htmlspecialchars($region['Channel_number']) ?>" placeholder="e.g., Account Number or Recipient Address" required>
                     </div>
                 </div>
                 <div class="row">
@@ -167,27 +180,27 @@ $stmt->close();
                     </div>
                     <div class="col-md-6">
                         <label for="chnl_value">Channel Value</label>
-                        <input type="text" class="form-control" name="chnl_value" value="<?= htmlspecialchars($region['chnl_value'] ?? '') ?>" placeholder="">
+                        <input type="text" class="form-control" name="chnl_value" value="<?= htmlspecialchars($region['chnl_value'] ?? '') ?>" placeholder="e.g., Opay or Ethereum">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <label for="chnl_name_value">Channel Name Value</label>
-                        <input type="text" class="form-control" name="chnl_name_value" value="<?= htmlspecialchars($region['chnl_name_value'] ?? '') ?>" placeholder="">
+                        <input type="text" class="form-control" name="chnl_name_value" value="<?= htmlspecialchars($region['chnl_name_value'] ?? '') ?>" placeholder="e.g., John Doe or Wallet Address">
                     </div>
                     <div class="col-md-6">
                         <label for="chnl_number_value">Channel Number Value</label>
-                        <input type="text" class="form-control" name="chnl_number_value" value="<?= htmlspecialchars($region['chnl_number_value'] ?? '') ?>" placeholder="">
+                        <input type="text" class="form-control" name="chnl_number_value" value="<?= htmlspecialchars($region['chnl_number_value'] ?? '') ?>" placeholder="e.g., 1234567890 or 0x1234567890abcdef">
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-6">
                         <label for="payment_amount">Payment Amount</label>
-                        <input type="number" step="0.01" class="form-control" name="payment_amount" value="<?= htmlspecialchars($region['payment_amount']) ?>" placeholder="" required>
+                        <input type="number" step="0.01" class="form-control" name="payment_amount" value="<?= htmlspecialchars($region['payment_amount']) ?>" placeholder="e.g., 100.00" required>
                     </div>
                     <div class="col-md-6">
                         <label for="rate">Rate</label>
-                        <input type="number" step="0.01" class="form-control" name="rate" value="<?= htmlspecialchars($region['rate']) ?>" placeholder="" required>
+                        <input type="number" step="0.01" class="form-control" name="rate" value="<?= htmlspecialchars($region['rate']) ?>" placeholder="e.g., 1.00" required>
                     </div>
                 </div>
                 <div class="row">
@@ -195,24 +208,19 @@ $stmt->close();
                         <label for="alt_rate">Alt Rate</label>
                         <input type="text" class="form-control" name="alt_rate" value="<?= htmlspecialchars($region['alt_rate'] ?? '') ?>" placeholder="">
                     </div>
-                </div>
-
-                <!-- New: QR Image Upload Section -->
-                <div class="row">
-                    <div class="col-md-12">
-                        <label for="qr_image">QR Code Image (for <?= $region['crypto'] == 1 ? 'Crypto' : 'Bank' ?> Deposit)</label>
-                        <input type="file" class="form-control" name="qr_image" id="qr_image" accept="image/jpeg,image/jpg,image/png">
-                        <small class="form-text text-muted">Upload a QR code image (JPG, JPEG, PNG). Max size: 5MB. Leave empty to keep current.</small>
-                        <?php if (!empty($region['qr_image'])): ?>
-                            <div class="mt-2">
-                                <label>Current Image:</label><br>
-                                <img src="<?= htmlspecialchars($region['qr_image']) ?>" alt="Current QR Code" class="qr-preview img-fluid">
-                                <p class="small text-muted">Path: <?= htmlspecialchars($region['qr_image']) ?></p>
-                            </div>
-                        <?php endif; ?>
+                    <div class="col-md-6">
+                        <label for="qr_image">QR/Image Upload</label>
+                        <div class="file-upload-area" id="fileUploadArea">
+                            <input type="file" class="form-control" name="qr_image" id="qr_image" accept="image/*">
+                            <small class="text-muted d-block mt-2">Upload QR code (for crypto) or bank logo (for local bank). Current: <?= htmlspecialchars(basename($region['qr_image'] ?? 'No image')) ?></small>
+                            <?php if (!empty($region['qr_image']) && file_exists($region['qr_image'])): ?>
+                                <img src="<?= htmlspecialchars($region['qr_image']) ?>" alt="Current QR/Image" class="preview-img">
+                                <input type="hidden" name="existing_qr_image" value="<?= htmlspecialchars($region['qr_image']) ?>">
+                            <?php endif; ?>
+                        </div>
+                        <small class="text-muted">Leave empty to keep current image.</small>
                     </div>
                 </div>
-
                 <input type="hidden" name="region_id" value="<?= $region['id'] ?>">
                 <input type="hidden" name="auth_id" value="<?= $_SESSION['id'] ?>">
                 <div class="mt-3">
@@ -226,40 +234,74 @@ $stmt->close();
 </main><!-- End #main -->
 
 <script>
+// JavaScript for drag and drop file upload and preview
 document.addEventListener('DOMContentLoaded', function() {
-    const qrInput = document.getElementById('qr_image');
-    const form = qrInput.closest('form');
+    const fileInput = document.getElementById('qr_image');
+    const uploadArea = document.getElementById('fileUploadArea');
 
-    if (qrInput) {
-        qrInput.addEventListener('change', function(event) {
-            const file = event.target.files[0];
+    if (fileInput && uploadArea) {
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, unhighlight, false);
+        });
+
+        function highlight(e) {
+            uploadArea.classList.add('dragover');
+        }
+
+        function unhighlight(e) {
+            uploadArea.classList.remove('dragover');
+        }
+
+        uploadArea.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            fileInput.files = files;
+            previewImage(files[0]);
+        }
+
+        // Preview image on select
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
             if (file) {
-                // Basic client-side validation
-                if (file.size > 5 * 1024 * 1024) {
-                    alert('File size exceeds 5MB limit.');
-                    event.target.value = '';
-                    return;
-                }
-                const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
-                if (!allowedTypes.includes(file.type)) {
-                    alert('Invalid file type. Only JPG, JPEG, and PNG are allowed.');
-                    event.target.value = '';
-                    return;
-                }
-
-                // Preview the selected image
-                const preview = document.querySelector('.mt-2 .qr-preview');
-                if (preview) {
-                    preview.src = URL.createObjectURL(file);
-                    preview.style.display = 'block';
-                }
+                previewImage(file);
             }
         });
+
+        function previewImage(file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                let preview = uploadArea.querySelector('.preview-img');
+                if (preview && preview.src.includes('data:')) {
+                    // If it's a preview, update it
+                    preview.src = e.target.result;
+                } else {
+                    // Create new preview if none or if it's the existing one
+                    preview = document.createElement('img');
+                    preview.className = 'preview-img';
+                    preview.alt = 'Preview';
+                    uploadArea.appendChild(preview);
+                }
+                preview.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
     }
 });
 </script>
 
-<?php
-$con->close();
-include('inc/footer.php');
-?>
+<?php include('inc/footer.php'); ?>
