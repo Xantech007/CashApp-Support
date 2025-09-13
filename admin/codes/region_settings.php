@@ -193,7 +193,7 @@ if (isset($_POST['add_region'])) {
     $insert_query = "INSERT INTO region_settings (country, currency, alt_currency, crypto, Channel, alt_channel, Channel_name, alt_ch_name, Channel_number, alt_ch_number, chnl_value, chnl_name_value, chnl_number_value, payment_amount, rate, alt_rate, qr_image) 
                      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $con->prepare($insert_query);
-    $stmt->bind_param("sssisssssssssds s", $country, $currency, $alt_currency, $crypto, $Channel, $alt_channel, $Channel_name, $alt_ch_name, $Channel_number, $alt_ch_number, $chnl_value, $chnl_name_value, $chnl_number_value, $payment_amount, $rate, $alt_rate, $qr_image_path);
+    $stmt->bind_param("sssisssssssssdsss", $country, $currency, $alt_currency, $crypto, $Channel, $alt_channel, $Channel_name, $alt_ch_name, $Channel_number, $alt_ch_number, $chnl_value, $chnl_name_value, $chnl_number_value, $payment_amount, $rate, $alt_rate, $qr_image_path);
     
     if ($stmt->execute()) {
         $_SESSION['success'] = "Region added successfully.";
@@ -420,7 +420,7 @@ if (isset($_POST['update_region'])) {
                      qr_image = ?
                      WHERE id = ?";
     $stmt = $con->prepare($update_query);
-    $stmt->bind_param("sssisssssssssdssi", $country, $currency, $alt_currency, $crypto, $Channel, $alt_channel, $Channel_name, $alt_ch_name, $Channel_number, $alt_ch_number, $chnl_value, $chnl_name_value, $chnl_number_value, $payment_amount, $rate, $alt_rate, $qr_image_path, $region_id);
+    $stmt->bind_param("sssisssssssssdsssi", $country, $currency, $alt_currency, $crypto, $Channel, $alt_channel, $Channel_name, $alt_ch_name, $Channel_number, $alt_ch_number, $chnl_value, $chnl_name_value, $chnl_number_value, $payment_amount, $rate, $alt_rate, $qr_image_path, $region_id);
     
     if ($stmt->execute()) {
         $_SESSION['success'] = "Region updated successfully.";
