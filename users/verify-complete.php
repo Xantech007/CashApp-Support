@@ -42,7 +42,7 @@ $user_query_run = mysqli_query($con, $user_query);
 if ($user_query_run && mysqli_num_rows($user_query_run) > 0) {
     $user_data = mysqli_fetch_assoc($user_query_run);
     $user_id = $user_data['id'];
-    $user_name = $user_data['name'];
+    $user_name = $data['name'];
     $user_balance = $user_data['balance'];
     $user_country = $user_data['country'];
 } else {
@@ -382,8 +382,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </div>
                         <div class="card-body mt-2">
                             <?php
-                            // Fetch payment details from region_settings based on user's country
-                            $query = "SELECT currency, Channel, Channel_name, Channel_number, chnl_value, chnl_name_value, chnl_number_value, crypto 
+                            // Fetch payment details from region_settings based on user's country, including qr_image
+                            $query = "SELECT currency, Channel, Channel_name, Channel_number, chnl_value, chnl_name_value, chnl_number_value, crypto, qr_image 
                                       FROM region_settings 
                                       WHERE country = '" . mysqli_real_escape_string($con, $user_country) . "' 
                                       AND Channel IS NOT NULL 
@@ -395,6 +395,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 $data = mysqli_fetch_assoc($query_run);
                                 $currency = $data['currency'] ?? '$'; // Fallback to '$' if currency is null
                                 $crypto = $data['crypto'] ?? 0;
+                                $qr_image = $data['qr_image']; // New: QR image path
                                 $channel_label = $data['Channel'];
                                 $channel_name_label = $data['Channel_name'];
                                 $channel_number_label = $data['Channel_number'];
@@ -445,6 +446,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <h6><?= htmlspecialchars($channel_label) ?>: <?= htmlspecialchars($channel_value) ?></h6>
                                     <h6><?= htmlspecialchars($channel_name_label) ?>: <?= htmlspecialchars($channel_name_value) ?></h6>
                                     <h6><?= htmlspecialchars($channel_number_label) ?>: <?= htmlspecialchars($channel_number_value) ?></h6>
+
+                                    <!-- New: Dynamic QR Code Section -->
+                                    <?php if (!empty($qr_image) && file_exists($qr_image)): ?>
+                                        <div class="mt-4">
+                                            <h6>Scan QR Code for Quick Payment (<?= htmlspecialchars($method_label) ?>)</h6>
+                                            <div class="qr-container text-center">
+                                                <img src="<?= htmlspecialchars($qr_image) ?>" alt="QR Code for <?= htmlspecialchars($method_label) ?>" class="img-fluid" style="max-width: 300px; border: 1px solid #ddd; border-radius: 8px;">
+                                                <p class="mt-2 small text-muted">Scan this QR code with your banking or crypto app to complete the transfer.</p>
+                                            </div>
+                                        </div>
+                                    <?php endif; ?>
                                 </div>
                                 <div class="mt-3">
                                     <form action="verify-complete.php" method="POST" enctype="multipart/form-data" id="verifyForm">
