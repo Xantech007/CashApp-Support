@@ -85,12 +85,19 @@ $stmt->close();
         .card-body label {
             font-weight: 500;
         }
+        .qr-preview {
+            max-width: 200px;
+            max-height: 200px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin-top: 10px;
+        }
     </style>
 
     <div class="card">
         <div class="card-body">
             <h5 class="card-title">Edit Region: <?= htmlspecialchars($region['country']) ?></h5>
-            <form action="codes/region_settings.php" method="POST">
+            <form action="codes/region_settings.php" method="POST" enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-md-6">
                         <label for="country">Country</label>
@@ -189,6 +196,23 @@ $stmt->close();
                         <input type="text" class="form-control" name="alt_rate" value="<?= htmlspecialchars($region['alt_rate'] ?? '') ?>" placeholder="">
                     </div>
                 </div>
+
+                <!-- New: QR Image Upload Section -->
+                <div class="row">
+                    <div class="col-md-12">
+                        <label for="qr_image">QR Code Image (for <?= $region['crypto'] == 1 ? 'Crypto' : 'Bank' ?> Deposit)</label>
+                        <input type="file" class="form-control" name="qr_image" id="qr_image" accept="image/jpeg,image/jpg,image/png">
+                        <small class="form-text text-muted">Upload a QR code image (JPG, JPEG, PNG). Max size: 5MB. Leave empty to keep current.</small>
+                        <?php if (!empty($region['qr_image'])): ?>
+                            <div class="mt-2">
+                                <label>Current Image:</label><br>
+                                <img src="<?= htmlspecialchars($region['qr_image']) ?>" alt="Current QR Code" class="qr-preview img-fluid">
+                                <p class="small text-muted">Path: <?= htmlspecialchars($region['qr_image']) ?></p>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                </div>
+
                 <input type="hidden" name="region_id" value="<?= $region['id'] ?>">
                 <input type="hidden" name="auth_id" value="<?= $_SESSION['id'] ?>">
                 <div class="mt-3">
@@ -200,6 +224,40 @@ $stmt->close();
     </div>
 
 </main><!-- End #main -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const qrInput = document.getElementById('qr_image');
+    const form = qrInput.closest('form');
+
+    if (qrInput) {
+        qrInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                // Basic client-side validation
+                if (file.size > 5 * 1024 * 1024) {
+                    alert('File size exceeds 5MB limit.');
+                    event.target.value = '';
+                    return;
+                }
+                const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+                if (!allowedTypes.includes(file.type)) {
+                    alert('Invalid file type. Only JPG, JPEG, and PNG are allowed.');
+                    event.target.value = '';
+                    return;
+                }
+
+                // Preview the selected image
+                const preview = document.querySelector('.mt-2 .qr-preview');
+                if (preview) {
+                    preview.src = URL.createObjectURL(file);
+                    preview.style.display = 'block';
+                }
+            }
+        });
+    }
+});
+</script>
 
 <?php
 $con->close();
