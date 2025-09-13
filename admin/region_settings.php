@@ -66,6 +66,19 @@ include('inc/sidebar.php');
         .modal-body label {
             font-weight: 500;
         }
+        .qr-preview {
+            max-width: 100px;
+            max-height: 100px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            margin: 5px 0;
+        }
+        .table img {
+            max-width: 50px;
+            max-height: 50px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
     </style>
 
     <div class="add-btn">
@@ -81,7 +94,7 @@ include('inc/sidebar.php');
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form action="codes/region_settings.php" method="POST">
+                    <form action="codes/region_settings.php" method="POST" enctype="multipart/form-data">
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="country">Country</label>
@@ -179,6 +192,17 @@ include('inc/sidebar.php');
                                 <input type="text" class="form-control" name="alt_rate" placeholder="">
                             </div>
                         </div>
+
+                        <!-- New: QR Image Upload Section for Add Modal -->
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label for="qr_image">QR Code Image (Optional)</label>
+                                <input type="file" class="form-control" name="qr_image" id="qr_image" accept="image/jpeg,image/jpg,image/png">
+                                <small class="form-text text-muted">Upload a QR code image (JPG, JPEG, PNG). Max size: 5MB.</small>
+                                <div id="qr_preview_add" class="mt-2"></div>
+                            </div>
+                        </div>
+
                         <input type="hidden" name="auth_id" value="<?= $_SESSION['id'] ?>">
                         <div class="modal-footer">
                             <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
@@ -212,6 +236,7 @@ include('inc/sidebar.php');
                             <th scope="col">Channel Value</th>
                             <th scope="col">Channel Name Value</th>
                             <th scope="col">Channel Number Value</th>
+                            <th scope="col">QR Image</th>
                             <th scope="col">Payment Amount</th>
                             <th scope="col">Rate</th>
                             <th scope="col">Alt Rate</th>
@@ -241,6 +266,14 @@ include('inc/sidebar.php');
                                     <td><?= htmlspecialchars($data['chnl_value'] ?? '-') ?></td>
                                     <td><?= htmlspecialchars($data['chnl_name_value'] ?? '-') ?></td>
                                     <td><?= htmlspecialchars($data['chnl_number_value'] ?? '-') ?></td>
+                                    <td>
+                                        <?php if (!empty($data['qr_image']) && file_exists($data['qr_image'])): ?>
+                                            <img src="<?= htmlspecialchars($data['qr_image']) ?>" alt="QR Code" title="QR Code for <?= htmlspecialchars($data['country']) ?>">
+                                            <br><small><?= htmlspecialchars(basename($data['qr_image'])) ?></small>
+                                        <?php else: ?>
+                                            -
+                                        <?php endif; ?>
+                                    </td>
                                     <td><?= htmlspecialchars(number_format($data['payment_amount'], 2)) ?></td>
                                     <td><?= htmlspecialchars(number_format($data['rate'], 2)) ?></td>
                                     <td><?= htmlspecialchars($data['alt_rate'] ?? '-') ?></td>
@@ -248,16 +281,17 @@ include('inc/sidebar.php');
                                         <a href="edit-region.php?id=<?= $data['id'] ?>" class="btn btn-light">Edit</a>
                                     </td>
                                     <td>
-                                        <form action="codes/region_settings.php" method="POST">
+                                        <form action="codes/region_settings.php" method="POST" style="display: inline;">
                                             <input type="hidden" value="<?= $user_id ?>" name="auth_id">
-                                            <button class="btn btn-danger" value="<?= $data['id'] ?>" name="delete">Delete</button>
+                                            <input type="hidden" value="<?= $data['id'] ?>" name="region_id">
+                                            <button type="submit" class="btn btn-danger" name="delete" onclick="return confirm('Are you sure you want to delete this region? This will also delete the associated QR image if any.');">Delete</button>
                                         </form>
                                     </td>
                                 </tr>
                             <?php }
                         } else { ?>
                             <tr>
-                                <td colspan="19">No region settings found.</td>
+                                <td colspan="20">No region settings found.</td>
                             </tr>
                         <?php } ?>
                     </tbody>
@@ -268,5 +302,48 @@ include('inc/sidebar.php');
     </div>
 
 </main><!-- End #main -->
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Shared function for QR preview
+    function handleQrPreview(inputId, previewId) {
+        const qrInput = document.getElementById(inputId);
+        const qrPreview = document.getElementById(previewId);
+        if (qrInput && qrPreview) {
+            qrInput.addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    // Basic client-side validation
+                    if (file.size > 5 * 1024 * 1024) {
+                        alert('File size exceeds 5MB limit.');
+                        event.target.value = '';
+                        qrPreview.innerHTML = '';
+                        return;
+                    }
+                    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
+                    if (!allowedTypes.includes(file.type)) {
+                        alert('Invalid file type. Only JPG, JPEG, and PNG are allowed.');
+                        event.target.value = '';
+                        qrPreview.innerHTML = '';
+                        return;
+                    }
+
+                    // Preview the selected image
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        qrPreview.innerHTML = '<img src="' + e.target.result + '" alt="QR Preview" class="qr-preview img-fluid">';
+                    };
+                    reader.readAsDataURL(file);
+                } else {
+                    qrPreview.innerHTML = '';
+                }
+            });
+        }
+    }
+
+    // For Add Modal
+    handleQrPreview('qr_image', 'qr_preview_add');
+});
+</script>
 
 <?php include('inc/footer.php'); ?>
