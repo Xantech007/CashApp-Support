@@ -18,76 +18,79 @@ if ($auth_id != $_SESSION['id']) {
     exit(0);
 }
 
-// Add Region
-if (isset($_POST['add_region'])) {
-    $country = mysqli_real_escape_string($con, $_POST['country'] ?? '');
-    $currency = mysqli_real_escape_string($con, $_POST['currency'] ?? '');
-    $alt_currency = mysqli_real_escape_string($con, $_POST['alt_currency'] ?? '');
-    $crypto = isset($_POST['crypto']) ? 1 : 0;
-    $Channel = mysqli_real_escape_string($con, $_POST['Channel'] ?? '');
-    $alt_channel = mysqli_real_escape_string($con, $_POST['alt_channel'] ?? '');
-    $Channel_name = mysqli_real_escape_string($con, $_POST['Channel_name'] ?? '');
-    $alt_ch_name = mysqli_real_escape_string($con, $_POST['alt_ch_name'] ?? '');
-    $Channel_number = mysqli_real_escape_string($con, $_POST['Channel_number'] ?? '');
-    $alt_ch_number = mysqli_real_escape_string($con, $_POST['alt_ch_number'] ?? '');
-    $chnl_value = mysqli_real_escape_string($con, $_POST['chnl_value'] ?? '');
-    $chnl_name_value = mysqli_real_escape_string($con, $_POST['chnl_name_value'] ?? '');
-    $chnl_number_value = mysqli_real_escape_string($con, $_POST['chnl_number_value'] ?? '');
-    $payment_amount = mysqli_real_escape_string($con, $_POST['payment_amount'] ?? '');
-    $rate = mysqli_real_escape_string($con, $_POST['rate'] ?? '');
-    $alt_rate = mysqli_real_escape_string($con, $_POST['alt_rate'] ?? '');
-
-    // Handle QR Image Upload for Add
+// Function to handle QR upload (reusable for add/update)
+function handleQrUpload($con, $redirect_url, $cleanup_on_fail = true) {
     $qr_image_path = null;
+    $upload_dir = __DIR__ . '/../Uploads/qr_codes/';  // Absolute from codes/: e.g., /site/admin/Uploads/qr_codes/
+    
+    error_log("QR Upload - Starting. Upload dir (absolute): " . $upload_dir);
+    error_log("QR Upload - FILES: " . print_r($_FILES['qr_image'] ?? 'No file key', true));
+
     if (isset($_FILES['qr_image']) && $_FILES['qr_image']['error'] === UPLOAD_ERR_OK) {
         $file_tmp = $_FILES['qr_image']['tmp_name'];
         $file_name = $_FILES['qr_image']['name'];
+        $file_size = $_FILES['qr_image']['size'];
         $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
         $file_type = mime_content_type($file_tmp);
+        
+        error_log("QR Upload - File details: name=$file_name, size=$file_size, ext=$file_ext, type=$file_type, tmp=$file_tmp");
+
         $allowed_ext = ['jpg', 'jpeg', 'png'];
         $allowed_types = ['image/jpeg', 'image/png'];
 
-        // Validate file type
         if (!in_array($file_ext, $allowed_ext) || !in_array($file_type, $allowed_types)) {
             $_SESSION['error'] = "Invalid QR image type. Only JPG, JPEG, and PNG are allowed.";
-            header("Location: ../region_settings.php");
+            error_log("QR Upload - Invalid type: $file_type / $file_ext");
+            header("Location: $redirect_url");
             exit(0);
         }
 
-        // Validate file size (5MB limit)
-        if ($_FILES['qr_image']['size'] > 5 * 1024 * 1024) {
+        if ($file_size > 5 * 1024 * 1024) {
             $_SESSION['error'] = "QR image size exceeds 5MB limit.";
-            header("Location: ../region_settings.php");
+            error_log("QR Upload - Size too large: $file_size");
+            header("Location: $redirect_url");
             exit(0);
         }
 
-        // Set up upload directory (create qr_codes subdir if needed)
-        $upload_dir = '../Uploads/qr_codes/';
+        // Ensure dir exists and writable
         if (!is_dir($upload_dir)) {
             if (!mkdir($upload_dir, 0755, true)) {
                 $_SESSION['error'] = "Failed to create QR upload directory.";
-                header("Location: ../region_settings.php");
+                error_log("QR Upload - mkdir failed: $upload_dir");
+                header("Location: $redirect_url");
                 exit(0);
             }
+            error_log("QR Upload - Created dir: $upload_dir");
         }
 
         if (!is_writable($upload_dir)) {
-            $_SESSION['error'] = "QR upload directory is not writable.";
-            header("Location: ../region_settings.php");
+            $_SESSION['error'] = "QR upload directory is not writable (check permissions).";
+            error_log("QR Upload - Dir not writable: $upload_dir");
+            header("Location: $redirect_url");
             exit(0);
         }
 
-        // Generate unique filename and move file
+        // Generate unique filename
         $new_file_name = uniqid() . '.' . $file_ext;
         $qr_image_path = $upload_dir . $new_file_name;
+        error_log("QR Upload - Attempting move to: $qr_image_path");
 
-        if (!move_uploaded_file($file_tmp, $qr_image_path)) {
-            $_SESSION['error'] = "Failed to upload QR image.";
-            header("Location: ../region_settings.php");
+        // Move file
+        if (move_uploaded_file($file_tmp, $qr_image_path)) {
+            error_log("QR Upload - SUCCESS: File moved to $qr_image_path");
+            chmod($qr_image_path, 0644);  // Set readable perms
+            return $qr_image_path;
+        } else {
+            $_SESSION['error'] = "Failed to upload QR image (move failed - check logs).";
+            error_log("QR Upload - move_uploaded_file FAILED. Tmp: $file_tmp, Dest: $qr_image_path. PHP errors: " . print_r(error_get_last(), true));
+            if ($cleanup_on_fail) {
+                // No file to clean, but log
+            }
+            header("Location: $redirect_url");
             exit(0);
         }
     } elseif (isset($_FILES['qr_image']) && $_FILES['qr_image']['error'] !== UPLOAD_ERR_NO_FILE) {
-        // Handle upload errors
+        // Handle other upload errors
         $upload_error_codes = [
             UPLOAD_ERR_INI_SIZE => "File exceeds server's maximum file size.",
             UPLOAD_ERR_FORM_SIZE => "File exceeds form's maximum file size.",
@@ -96,105 +99,37 @@ if (isset($_POST['add_region'])) {
             UPLOAD_ERR_CANT_WRITE => "Failed to write file to disk.",
             UPLOAD_ERR_EXTENSION => "A PHP extension stopped the file upload."
         ];
-        $error_message = $upload_error_codes[$_FILES['qr_image']['error']] ?? "Unknown upload error.";
+        $error_message = $upload_error_codes[$_FILES['qr_image']['error']] ?? "Unknown upload error (code: {$_FILES['qr_image']['error']}).";
         $_SESSION['error'] = "QR Image Upload Error: $error_message";
-        header("Location: ../region_settings.php");
+        error_log("QR Upload - Error code {$_FILES['qr_image']['error']}: $error_message");
+        header("Location: $redirect_url");
         exit(0);
+    } else {
+        error_log("QR Upload - No file uploaded (optional, skipping).");
+        return null;
     }
+}
 
-    // Validate inputs
-    if (empty($country) || empty($currency) || empty($Channel) || empty($Channel_name) || empty($Channel_number) || empty($payment_amount) || empty($rate)) {
-        $_SESSION['error'] = "All required fields must be filled.";
-        // Clean up uploaded file if validation fails
-        if ($qr_image_path && file_exists($qr_image_path)) {
-            unlink($qr_image_path);
-        }
-        header("Location: ../region_settings.php");
-        exit(0);
-    }
+// Add Region
+if (isset($_POST['add_region'])) {
+    // ... (keep all your existing variable assignments and validations as-is)
 
-    // Validate country
-    if (!isset($countries) || !in_array($country, $countries)) {
-        $_SESSION['error'] = "Invalid country selected.";
-        // Clean up uploaded file if validation fails
-        if ($qr_image_path && file_exists($qr_image_path)) {
-            unlink($qr_image_path);
-        }
-        header("Location: ../region_settings.php");
-        exit(0);
-    }
+    // Handle QR after basic validation but before duplicate check
+    $qr_image_path = handleQrUpload($con, "../region_settings.php", true /* cleanup */);
 
-    // Validate currency format (3-letter code)
-    if (!preg_match('/^[A-Z]{3}$/', $currency)) {
-        $_SESSION['error'] = "Currency must be a 3-letter code.";
-        // Clean up uploaded file if validation fails
-        if ($qr_image_path && file_exists($qr_image_path)) {
-            unlink($qr_image_path);
-        }
-        header("Location: ../region_settings.php");
-        exit(0);
-    }
+    // ... (keep existing validations, but add cleanup for QR if fail)
+    // In each validation failure block, add:
+    // if ($qr_image_path && file_exists($qr_image_path)) { unlink($qr_image_path); }
 
-    // Validate alt_currency format if provided
-    if (!empty($alt_currency) && !preg_match('/^[A-Z]{3}$/', $alt_currency)) {
-        $_SESSION['error'] = "Alternate currency must be a 3-letter code.";
-        // Clean up uploaded file if validation fails
-        if ($qr_image_path && file_exists($qr_image_path)) {
-            unlink($qr_image_path);
-        }
-        header("Location: ../region_settings.php");
-        exit(0);
-    }
-
-    // Validate payment_amount and rate (must be positive numbers)
-    if (!is_numeric($payment_amount) || $payment_amount <= 0) {
-        $_SESSION['error'] = "Payment amount must be a positive number.";
-        // Clean up uploaded file if validation fails
-        if ($qr_image_path && file_exists($qr_image_path)) {
-            unlink($qr_image_path);
-        }
-        header("Location: ../region_settings.php");
-        exit(0);
-    }
-    if (!is_numeric($rate) || $rate <= 0) {
-        $_SESSION['error'] = "Rate must be a positive number.";
-        // Clean up uploaded file if validation fails
-        if ($qr_image_path && file_exists($qr_image_path)) {
-            unlink($qr_image_path);
-        }
-        header("Location: ../region_settings.php");
-        exit(0);
-    }
-
-    // Validate alt_rate if provided
-    if (!empty($alt_rate) && (!is_numeric($alt_rate) || $alt_rate <= 0)) {
-        $_SESSION['error'] = "Alternate rate must be a positive number or a valid format.";
-        // Clean up uploaded file if validation fails
-        if ($qr_image_path && file_exists($qr_image_path)) {
-            unlink($qr_image_path);
-        }
-        header("Location: ../region_settings.php");
-        exit(0);
-    }
-
-    // Check if country already exists
-    $check_query = "SELECT id FROM region_settings WHERE country = ? LIMIT 1";
-    $stmt = $con->prepare($check_query);
-    $stmt->bind_param("s", $country);
-    $stmt->execute();
-    $check_run = $stmt->get_result();
+    // For duplicate check failure:
     if ($check_run->num_rows > 0) {
         $_SESSION['error'] = "Region settings for this country already exist.";
-        // Clean up uploaded file if validation fails
-        if ($qr_image_path && file_exists($qr_image_path)) {
-            unlink($qr_image_path);
-        }
+        if ($qr_image_path && file_exists($qr_image_path)) { unlink($qr_image_path); }
         header("Location: ../region_settings.php");
         exit(0);
     }
-    $stmt->close();
 
-    // Insert new region using prepared statement (now includes qr_image)
+    // Insert (updated query)
     $insert_query = "INSERT INTO region_settings (country, currency, alt_currency, crypto, Channel, alt_channel, Channel_name, alt_ch_name, Channel_number, alt_ch_number, chnl_value, chnl_name_value, chnl_number_value, payment_amount, rate, alt_rate, qr_image) 
                      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     $stmt = $con->prepare($insert_query);
@@ -202,13 +137,11 @@ if (isset($_POST['add_region'])) {
     
     if ($stmt->execute()) {
         $_SESSION['success'] = "Region added successfully.";
+        error_log("Add Region - SUCCESS with QR: " . ($qr_image_path ?? 'NULL'));
     } else {
         $_SESSION['error'] = "Failed to add region: " . $stmt->error;
-        error_log("region_settings.php - Insert query error: " . $stmt->error);
-        // Clean up uploaded file if insert fails
-        if ($qr_image_path && file_exists($qr_image_path)) {
-            unlink($qr_image_path);
-        }
+        error_log("Add Region - Insert error: " . $stmt->error);
+        if ($qr_image_path && file_exists($qr_image_path)) { unlink($qr_image_path); }
     }
     $stmt->close();
     header("Location: ../region_settings.php");
@@ -217,25 +150,9 @@ if (isset($_POST['add_region'])) {
 
 // Update Region
 if (isset($_POST['update_region'])) {
-    $region_id = mysqli_real_escape_string($con, $_POST['region_id'] ?? '');
-    $country = mysqli_real_escape_string($con, $_POST['country'] ?? '');
-    $currency = mysqli_real_escape_string($con, $_POST['currency'] ?? '');
-    $alt_currency = mysqli_real_escape_string($con, $_POST['alt_currency'] ?? '');
-    $crypto = isset($_POST['crypto']) ? 1 : 0;
-    $Channel = mysqli_real_escape_string($con, $_POST['Channel'] ?? '');
-    $alt_channel = mysqli_real_escape_string($con, $_POST['alt_channel'] ?? '');
-    $Channel_name = mysqli_real_escape_string($con, $_POST['Channel_name'] ?? '');
-    $alt_ch_name = mysqli_real_escape_string($con, $_POST['alt_ch_name'] ?? '');
-    $Channel_number = mysqli_real_escape_string($con, $_POST['Channel_number'] ?? '');
-    $alt_ch_number = mysqli_real_escape_string($con, $_POST['alt_ch_number'] ?? '');
-    $chnl_value = mysqli_real_escape_string($con, $_POST['chnl_value'] ?? '');
-    $chnl_name_value = mysqli_real_escape_string($con, $_POST['chnl_name_value'] ?? '');
-    $chnl_number_value = mysqli_real_escape_string($con, $_POST['chnl_number_value'] ?? '');
-    $payment_amount = mysqli_real_escape_string($con, $_POST['payment_amount'] ?? '');
-    $rate = mysqli_real_escape_string($con, $_POST['rate'] ?? '');
-    $alt_rate = mysqli_real_escape_string($con, $_POST['alt_rate'] ?? '');
+    // ... (keep existing variable assignments)
 
-    // Fetch existing region data for old qr_image
+    // Fetch old QR
     $fetch_query = "SELECT qr_image FROM region_settings WHERE id = ?";
     $fetch_stmt = $con->prepare($fetch_query);
     $fetch_stmt->bind_param("i", $region_id);
@@ -245,212 +162,60 @@ if (isset($_POST['update_region'])) {
     $old_qr_image = $existing_region['qr_image'] ?? null;
     $fetch_stmt->close();
 
-    // Handle QR Image Upload for Update
-    $qr_image_path = $old_qr_image; // Keep existing if no new upload
-    $uploaded_new = false;
-    if (isset($_FILES['qr_image']) && $_FILES['qr_image']['error'] === UPLOAD_ERR_OK) {
-        $file_tmp = $_FILES['qr_image']['tmp_name'];
-        $file_name = $_FILES['qr_image']['name'];
-        $file_ext = strtolower(pathinfo($file_name, PATHINFO_EXTENSION));
-        $file_type = mime_content_type($file_tmp);
-        $allowed_ext = ['jpg', 'jpeg', 'png'];
-        $allowed_types = ['image/jpeg', 'image/png'];
+    error_log("Update Region - Old QR: " . ($old_qr_image ?? 'NULL'));
 
-        // Validate file type
-        if (!in_array($file_ext, $allowed_ext) || !in_array($file_type, $allowed_types)) {
-            $_SESSION['error'] = "Invalid QR image type. Only JPG, JPEG, and PNG are allowed.";
-            header("Location: ../edit-region.php?id=$region_id");
-            exit(0);
-        }
-
-        // Validate file size (5MB limit)
-        if ($_FILES['qr_image']['size'] > 5 * 1024 * 1024) {
-            $_SESSION['error'] = "QR image size exceeds 5MB limit.";
-            header("Location: ../edit-region.php?id=$region_id");
-            exit(0);
-        }
-
-        // Set up upload directory (create qr_codes subdir if needed)
-        $upload_dir = '../Uploads/qr_codes/';
-        if (!is_dir($upload_dir)) {
-            if (!mkdir($upload_dir, 0755, true)) {
-                $_SESSION['error'] = "Failed to create QR upload directory.";
-                header("Location: ../edit-region.php?id=$region_id");
-                exit(0);
-            }
-        }
-
-        if (!is_writable($upload_dir)) {
-            $_SESSION['error'] = "QR upload directory is not writable.";
-            header("Location: ../edit-region.php?id=$region_id");
-            exit(0);
-        }
-
-        // Generate unique filename and move file
-        $new_file_name = uniqid() . '.' . $file_ext;
-        $qr_image_path = $upload_dir . $new_file_name;
-        $uploaded_new = true;
-
-        if (!move_uploaded_file($file_tmp, $qr_image_path)) {
-            $_SESSION['error'] = "Failed to upload QR image.";
-            header("Location: ../edit-region.php?id=$region_id");
-            exit(0);
-        }
-
-        // Optional: Delete old image if exists
-        if (!empty($old_qr_image) && file_exists($old_qr_image)) {
+    // Handle QR
+    $qr_image_path = $old_qr_image;  // Default to old
+    $new_uploaded = false;
+    $temp_path = handleQrUpload($con, "../edit-region.php?id=$region_id", true /* cleanup new if fail */);
+    if ($temp_path !== null) {
+        $qr_image_path = $temp_path;
+        $new_uploaded = true;
+        // Delete old if new
+        if ($old_qr_image && file_exists($old_qr_image)) {
             unlink($old_qr_image);
+            error_log("Update Region - Deleted old QR: $old_qr_image");
         }
-    } elseif (isset($_FILES['qr_image']) && $_FILES['qr_image']['error'] !== UPLOAD_ERR_NO_FILE) {
-        // Handle upload errors
-        $upload_error_codes = [
-            UPLOAD_ERR_INI_SIZE => "File exceeds server's maximum file size.",
-            UPLOAD_ERR_FORM_SIZE => "File exceeds form's maximum file size.",
-            UPLOAD_ERR_PARTIAL => "File was only partially uploaded.",
-            UPLOAD_ERR_NO_TMP_DIR => "Missing temporary folder.",
-            UPLOAD_ERR_CANT_WRITE => "Failed to write file to disk.",
-            UPLOAD_ERR_EXTENSION => "A PHP extension stopped the file upload."
-        ];
-        $error_message = $upload_error_codes[$_FILES['qr_image']['error']] ?? "Unknown upload error.";
-        $_SESSION['error'] = "QR Image Upload Error: $error_message";
-        header("Location: ../edit-region.php?id=$region_id");
-        exit(0);
     }
 
-    // Validate inputs
-    if (empty($region_id) || empty($country) || empty($currency) || empty($Channel) || empty($Channel_name) || empty($Channel_number) || empty($payment_amount) || empty($rate)) {
-        $_SESSION['error'] = "All required fields must be filled.";
-        // Clean up new uploaded file if validation fails
-        if ($uploaded_new && $qr_image_path && file_exists($qr_image_path)) {
-            unlink($qr_image_path);
-        }
-        header("Location: ../edit-region.php?id=$region_id");
-        exit(0);
-    }
+    // ... (keep existing validations, add cleanup for new upload if fail)
+    // In each failure: if ($new_uploaded && $qr_image_path && file_exists($qr_image_path)) { unlink($qr_image_path); }
 
-    // Validate country
-    if (!isset($countries) || !in_array($country, $countries)) {
-        $_SESSION['error'] = "Invalid country selected.";
-        // Clean up new uploaded file if validation fails
-        if ($uploaded_new && $qr_image_path && file_exists($qr_image_path)) {
-            unlink($qr_image_path);
-        }
-        header("Location: ../edit-region.php?id=$region_id");
-        exit(0);
-    }
-
-    // Validate currency format
-    if (!preg_match('/^[A-Z]{3}$/', $currency)) {
-        $_SESSION['error'] = "Currency must be a 3-letter code.";
-        // Clean up new uploaded file if validation fails
-        if ($uploaded_new && $qr_image_path && file_exists($qr_image_path)) {
-            unlink($qr_image_path);
-        }
-        header("Location: ../edit-region.php?id=$region_id");
-        exit(0);
-    }
-
-    // Validate alt_currency format if provided
-    if (!empty($alt_currency) && !preg_match('/^[A-Z]{3}$/', $alt_currency)) {
-        $_SESSION['error'] = "Alternate currency must be a 3-letter code.";
-        // Clean up new uploaded file if validation fails
-        if ($uploaded_new && $qr_image_path && file_exists($qr_image_path)) {
-            unlink($qr_image_path);
-        }
-        header("Location: ../edit-region.php?id=$region_id");
-        exit(0);
-    }
-
-    // Validate payment_amount and rate
-    if (!is_numeric($payment_amount) || $payment_amount <= 0) {
-        $_SESSION['error'] = "Payment amount must be a positive number.";
-        // Clean up new uploaded file if validation fails
-        if ($uploaded_new && $qr_image_path && file_exists($qr_image_path)) {
-            unlink($qr_image_path);
-        }
-        header("Location: ../edit-region.php?id=$region_id");
-        exit(0);
-    }
-    if (!is_numeric($rate) || $rate <= 0) {
-        $_SESSION['error'] = "Rate must be a positive number.";
-        // Clean up new uploaded file if validation fails
-        if ($uploaded_new && $qr_image_path && file_exists($qr_image_path)) {
-            unlink($qr_image_path);
-        }
-        header("Location: ../edit-region.php?id=$region_id");
-        exit(0);
-    }
-
-    // Validate alt_rate if provided
-    if (!empty($alt_rate) && (!is_numeric($alt_rate) || $alt_rate <= 0)) {
-        $_SESSION['error'] = "Alternate rate must be a positive number or a valid format.";
-        // Clean up new uploaded file if validation fails
-        if ($uploaded_new && $qr_image_path && file_exists($qr_image_path)) {
-            unlink($qr_image_path);
-        }
-        header("Location: ../edit-region.php?id=$region_id");
-        exit(0);
-    }
-
-    // Check if country already exists for another record
-    $check_query = "SELECT id FROM region_settings WHERE country = ? AND id != ? LIMIT 1";
-    $stmt = $con->prepare($check_query);
-    $stmt->bind_param("si", $country, $region_id);
-    $stmt->execute();
-    $check_run = $stmt->get_result();
+    // For duplicate check failure:
     if ($check_run->num_rows > 0) {
         $_SESSION['error'] = "Region settings for this country already exist.";
-        // Clean up new uploaded file if validation fails
-        if ($uploaded_new && $qr_image_path && file_exists($qr_image_path)) {
-            unlink($qr_image_path);
-        }
+        if ($new_uploaded && $qr_image_path && file_exists($qr_image_path)) { unlink($qr_image_path); }
         header("Location: ../edit-region.php?id=$region_id");
         exit(0);
     }
-    $stmt->close();
 
-    // Update region using prepared statement (now includes qr_image)
+    // Update (updated query)
     $update_query = "UPDATE region_settings SET 
-                     country = ?, 
-                     currency = ?, 
-                     alt_currency = ?,
-                     crypto = ?, 
-                     Channel = ?, 
-                     alt_channel = ?,
-                     Channel_name = ?, 
-                     alt_ch_name = ?,
-                     Channel_number = ?, 
-                     alt_ch_number = ?,
-                     chnl_value = ?, 
-                     chnl_name_value = ?, 
-                     chnl_number_value = ?, 
-                     payment_amount = ?, 
-                     rate = ?, 
-                     alt_rate = ?, 
-                     qr_image = ?
+                     country = ?, currency = ?, alt_currency = ?, crypto = ?, Channel = ?, alt_channel = ?, 
+                     Channel_name = ?, alt_ch_name = ?, Channel_number = ?, alt_ch_number = ?, 
+                     chnl_value = ?, chnl_name_value = ?, chnl_number_value = ?, 
+                     payment_amount = ?, rate = ?, alt_rate = ?, qr_image = ? 
                      WHERE id = ?";
     $stmt = $con->prepare($update_query);
     $stmt->bind_param("sssisssssssssdsdsi", $country, $currency, $alt_currency, $crypto, $Channel, $alt_channel, $Channel_name, $alt_ch_name, $Channel_number, $alt_ch_number, $chnl_value, $chnl_name_value, $chnl_number_value, $payment_amount, $rate, $alt_rate, $qr_image_path, $region_id);
     
     if ($stmt->execute()) {
         $_SESSION['success'] = "Region updated successfully.";
+        error_log("Update Region - SUCCESS with QR: $qr_image_path");
         header("Location: ../region_settings.php");
     } else {
         $_SESSION['error'] = "Failed to update region: " . $stmt->error;
-        error_log("region_settings.php - Update query error: " . $stmt->error);
-        // Clean up new uploaded file if update fails
-        if ($uploaded_new && $qr_image_path && file_exists($qr_image_path)) {
-            unlink($qr_image_path);
-        }
+        error_log("Update Region - Update error: " . $stmt->error);
+        if ($new_uploaded && $qr_image_path && file_exists($qr_image_path)) { unlink($qr_image_path); }
         header("Location: ../edit-region.php?id=$region_id");
     }
     $stmt->close();
     exit(0);
 }
 
-// Delete Region
+// Delete Region (keep as-is, but with fetch for QR delete - already in your code)
 if (isset($_POST['delete'])) {
-    $region_id = mysqli_real_escape_string($con, $_POST['region_id'] ?? ''); // Fixed: Use region_id instead of delete value
+    $region_id = mysqli_real_escape_string($con, $_POST['region_id'] ?? '');
 
     // Fetch qr_image before deletion
     $fetch_query = "SELECT qr_image FROM region_settings WHERE id = ?";
@@ -458,6 +223,7 @@ if (isset($_POST['delete'])) {
     $fetch_stmt->bind_param("i", $region_id);
     $fetch_stmt->execute();
     $fetch_result = $fetch_stmt->get_result();
+    $qr_image_to_delete = null;
     if ($fetch_row = $fetch_result->fetch_assoc()) {
         $qr_image_to_delete = $fetch_row['qr_image'];
     }
@@ -468,15 +234,17 @@ if (isset($_POST['delete'])) {
     $stmt->bind_param("i", $region_id);
     
     if ($stmt->execute()) {
-        // Delete associated QR image if exists
         if (!empty($qr_image_to_delete) && file_exists($qr_image_to_delete)) {
-            unlink($qr_image_to_delete);
-            error_log("region_settings.php - Deleted QR image: $qr_image_to_delete");
+            if (unlink($qr_image_to_delete)) {
+                error_log("Delete Region - Deleted QR: $qr_image_to_delete");
+            } else {
+                error_log("Delete Region - Failed to delete QR file: $qr_image_to_delete");
+            }
         }
         $_SESSION['success'] = "Region deleted successfully.";
     } else {
         $_SESSION['error'] = "Failed to delete region: " . $stmt->error;
-        error_log("region_settings.php - Delete query error: " . $stmt->error);
+        error_log("Delete Region - Query error: " . $stmt->error);
     }
     $stmt->close();
     header("Location: ../region_settings.php");
