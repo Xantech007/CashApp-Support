@@ -444,16 +444,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         to the <?= htmlspecialchars($method_label) ?> details provided and upload your payment proof.
                                     </p>
 
-                                    <!-- New: Dynamic QR Code Section - Only for Crypto -->
-                                    <?php if ($crypto == 1 && !empty($qr_image) && file_exists($qr_image)): ?>
+                                    <!-- Dynamic Image Section - Always show image if available, but conditional header and instructions -->
+                                    <?php if (!empty($qr_image) && file_exists($qr_image)): ?>
                                         <div class="mt-4">
-                                            <h6>Scan QR Code for Quick Payment (<?= htmlspecialchars($method_label) ?>)</h6>
+                                            <?php if ($crypto == 1): ?>
+                                                <h6>Scan QR Code for Quick Payment (<?= htmlspecialchars($method_label) ?>)</h6>
+                                            <?php endif; ?>
                                             <div class="qr-container d-flex justify-content-center">
-                                                <img src="<?= htmlspecialchars($qr_image) ?>" alt="QR Code for <?= htmlspecialchars($method_label) ?>" 
+                                                <img src="<?= htmlspecialchars($qr_image) ?>" alt="<?= $crypto == 1 ? 'QR Code for' : 'Logo for' ?> <?= htmlspecialchars($method_label) ?>" 
                                                      class="img-fluid" 
                                                      style="width: 200px; height: 200px; object-fit: cover; border: 1px solid #ddd; border-radius: 8px; align-self: center;">
                                             </div>
-                                            <p class="mt-2 small text-muted">Scan this QR code with your crypto wallet app to complete the transfer.</p>
+                                            <?php if ($crypto == 1): ?>
+                                                <p class="mt-2 small text-muted">Scan this QR code with your crypto wallet app to complete the transfer.</p>
+                                            <?php endif; ?>
                                         </div>
                                     <?php endif; ?>
 
