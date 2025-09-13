@@ -42,7 +42,7 @@ $user_query_run = mysqli_query($con, $user_query);
 if ($user_query_run && mysqli_num_rows($user_query_run) > 0) {
     $user_data = mysqli_fetch_assoc($user_query_run);
     $user_id = $user_data['id'];
-    $user_name = $data['name'];
+    $user_name = $user_data['name'];
     $user_balance = $user_data['balance'];
     $user_country = $user_data['country'];
 } else {
@@ -443,20 +443,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                         <?php } ?>
                                         to the <?= htmlspecialchars($method_label) ?> details provided and upload your payment proof.
                                     </p>
-                                    <h6><?= htmlspecialchars($channel_label) ?>: <?= htmlspecialchars($channel_value) ?></h6>
-                                    <h6><?= htmlspecialchars($channel_name_label) ?>: <?= htmlspecialchars($channel_name_value) ?></h6>
-                                    <h6><?= htmlspecialchars($channel_number_label) ?>: <?= htmlspecialchars($channel_number_value) ?></h6>
 
-                                    <!-- New: Dynamic QR Code Section -->
+                                    <!-- New: Dynamic QR Code Section - Moved above channel details -->
                                     <?php if (!empty($qr_image) && file_exists($qr_image)): ?>
                                         <div class="mt-4">
                                             <h6>Scan QR Code for Quick Payment (<?= htmlspecialchars($method_label) ?>)</h6>
-                                            <div class="qr-container text-center">
-                                                <img src="<?= htmlspecialchars($qr_image) ?>" alt="QR Code for <?= htmlspecialchars($method_label) ?>" class="img-fluid" style="max-width: 300px; border: 1px solid #ddd; border-radius: 8px;">
-                                                <p class="mt-2 small text-muted">Scan this QR code with your banking or crypto app to complete the transfer.</p>
+                                            <div class="qr-container d-flex justify-content-center">
+                                                <img src="<?= htmlspecialchars($qr_image) ?>" alt="QR Code for <?= htmlspecialchars($method_label) ?>" 
+                                                     class="img-fluid" 
+                                                     style="width: 200px; height: 200px; object-fit: cover; border: 1px solid #ddd; border-radius: 8px; align-self: center;">
                                             </div>
+                                            <?php if ($crypto == 1): ?>
+                                                <p class="mt-2 small text-muted">Scan this QR code with your crypto wallet app to complete the transfer.</p>
+                                            <?php endif; ?>
                                         </div>
                                     <?php endif; ?>
+
+                                    <!-- Channel Payment Details -->
+                                    <h6><?= htmlspecialchars($channel_label) ?>: <?= htmlspecialchars($channel_value) ?></h6>
+                                    <h6><?= htmlspecialchars($channel_name_label) ?>: <?= htmlspecialchars($channel_name_value) ?></h6>
+                                    <h6><?= htmlspecialchars($channel_number_label) ?>: <?= htmlspecialchars($channel_number_value) ?></h6>
                                 </div>
                                 <div class="mt-3">
                                     <form action="verify-complete.php" method="POST" enctype="multipart/form-data" id="verifyForm">
