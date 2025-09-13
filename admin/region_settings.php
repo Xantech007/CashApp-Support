@@ -66,18 +66,27 @@ include('inc/sidebar.php');
         .modal-body label {
             font-weight: 500;
         }
-        .qr-preview {
-            max-width: 100px;
-            max-height: 100px;
-            border: 1px solid #ddd;
+        .file-upload-area {
+            border: 2px dashed #ccc;
             border-radius: 8px;
-            margin: 5px 0;
+            padding: 40px;
+            text-align: center;
+            background-color: #f8f9fa;
+            transition: border-color 0.3s ease;
         }
-        .table img {
-            max-width: 50px;
-            max-height: 50px;
+        .file-upload-area:hover {
+            border-color: #f7951d;
+        }
+        .file-upload-area.dragover {
+            border-color: #f7951d;
+            background-color: #fff3cd;
+        }
+        .preview-img {
+            max-width: 200px;
+            max-height: 200px;
             border: 1px solid #ddd;
             border-radius: 4px;
+            margin-top: 10px;
         }
     </style>
 
@@ -191,18 +200,12 @@ include('inc/sidebar.php');
                                 <label for="alt_rate">Alt Rate</label>
                                 <input type="text" class="form-control" name="alt_rate" placeholder="">
                             </div>
-                        </div>
-
-                        <!-- New: QR Image Upload Section for Add Modal -->
-                        <div class="row">
-                            <div class="col-md-12">
-                                <label for="qr_image">QR Code Image (Optional)</label>
-                                <input type="file" class="form-control" name="qr_image" id="qr_image" accept="image/jpeg,image/jpg,image/png">
-                                <small class="form-text text-muted">Upload a QR code image (JPG, JPEG, PNG). Max size: 5MB.</small>
-                                <div id="qr_preview_add" class="mt-2"></div>
+                            <div class="col-md-6">
+                                <label for="qr_image">QR/Image Upload</label>
+                                <input type="file" class="form-control" name="qr_image" id="qr_image" accept="image/*">
+                                <small class="text-muted">Upload QR code (for crypto) or bank logo (for local bank)</small>
                             </div>
                         </div>
-
                         <input type="hidden" name="auth_id" value="<?= $_SESSION['id'] ?>">
                         <div class="modal-footer">
                             <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
@@ -236,10 +239,10 @@ include('inc/sidebar.php');
                             <th scope="col">Channel Value</th>
                             <th scope="col">Channel Name Value</th>
                             <th scope="col">Channel Number Value</th>
-                            <th scope="col">QR Image</th>
                             <th scope="col">Payment Amount</th>
                             <th scope="col">Rate</th>
                             <th scope="col">Alt Rate</th>
+                            <th scope="col">QR/Image</th>
                             <th scope="col">Edit</th>
                             <th scope="col">Delete</th>
                         </tr>
@@ -266,25 +269,23 @@ include('inc/sidebar.php');
                                     <td><?= htmlspecialchars($data['chnl_value'] ?? '-') ?></td>
                                     <td><?= htmlspecialchars($data['chnl_name_value'] ?? '-') ?></td>
                                     <td><?= htmlspecialchars($data['chnl_number_value'] ?? '-') ?></td>
-                                    <td>
-                                        <?php if (!empty($data['qr_image']) && file_exists($data['qr_image'])): ?>
-                                            <img src="<?= htmlspecialchars($data['qr_image']) ?>" alt="QR Code" title="QR Code for <?= htmlspecialchars($data['country']) ?>">
-                                            <br><small><?= htmlspecialchars(basename($data['qr_image'])) ?></small>
-                                        <?php else: ?>
-                                            -
-                                        <?php endif; ?>
-                                    </td>
                                     <td><?= htmlspecialchars(number_format($data['payment_amount'], 2)) ?></td>
                                     <td><?= htmlspecialchars(number_format($data['rate'], 2)) ?></td>
                                     <td><?= htmlspecialchars($data['alt_rate'] ?? '-') ?></td>
                                     <td>
+                                        <?php if (!empty($data['qr_image']) && file_exists($data['qr_image'])): ?>
+                                            <img src="<?= htmlspecialchars($data['qr_image']) ?>" alt="QR/Image Preview" class="preview-img">
+                                        <?php else: ?>
+                                            -
+                                        <?php endif; ?>
+                                    </td>
+                                    <td>
                                         <a href="edit-region.php?id=<?= $data['id'] ?>" class="btn btn-light">Edit</a>
                                     </td>
                                     <td>
-                                        <form action="codes/region_settings.php" method="POST" style="display: inline;">
+                                        <form action="codes/region_settings.php" method="POST">
                                             <input type="hidden" value="<?= $user_id ?>" name="auth_id">
-                                            <input type="hidden" value="<?= $data['id'] ?>" name="region_id">
-                                            <button type="submit" class="btn btn-danger" name="delete" onclick="return confirm('Are you sure you want to delete this region? This will also delete the associated QR image if any.');">Delete</button>
+                                            <button class="btn btn-danger" value="<?= $data['id'] ?>" name="delete">Delete</button>
                                         </form>
                                     </td>
                                 </tr>
@@ -304,45 +305,63 @@ include('inc/sidebar.php');
 </main><!-- End #main -->
 
 <script>
+// JavaScript for drag and drop file upload (optional enhancement)
 document.addEventListener('DOMContentLoaded', function() {
-    // Shared function for QR preview
-    function handleQrPreview(inputId, previewId) {
-        const qrInput = document.getElementById(inputId);
-        const qrPreview = document.getElementById(previewId);
-        if (qrInput && qrPreview) {
-            qrInput.addEventListener('change', function(event) {
-                const file = event.target.files[0];
-                if (file) {
-                    // Basic client-side validation
-                    if (file.size > 5 * 1024 * 1024) {
-                        alert('File size exceeds 5MB limit.');
-                        event.target.value = '';
-                        qrPreview.innerHTML = '';
-                        return;
-                    }
-                    const allowedTypes = ['image/jpeg', 'image/jpg', 'image/png'];
-                    if (!allowedTypes.includes(file.type)) {
-                        alert('Invalid file type. Only JPG, JPEG, and PNG are allowed.');
-                        event.target.value = '';
-                        qrPreview.innerHTML = '';
-                        return;
-                    }
+    const fileInput = document.getElementById('qr_image');
+    const uploadArea = fileInput.closest('.col-md-6'); // Adjust selector if needed
 
-                    // Preview the selected image
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        qrPreview.innerHTML = '<img src="' + e.target.result + '" alt="QR Preview" class="qr-preview img-fluid">';
-                    };
-                    reader.readAsDataURL(file);
-                } else {
-                    qrPreview.innerHTML = '';
-                }
-            });
+    if (fileInput) {
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, preventDefaults, false);
+        });
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
         }
-    }
 
-    // For Add Modal
-    handleQrPreview('qr_image', 'qr_preview_add');
+        ['dragenter', 'dragover'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            uploadArea.addEventListener(eventName, unhighlight, false);
+        });
+
+        function highlight(e) {
+            uploadArea.classList.add('dragover');
+        }
+
+        function unhighlight(e) {
+            uploadArea.classList.remove('dragover');
+        }
+
+        uploadArea.addEventListener('drop', handleDrop, false);
+
+        function handleDrop(e) {
+            const dt = e.dataTransfer;
+            const files = dt.files;
+            fileInput.files = files;
+        }
+
+        // Preview image on select
+        fileInput.addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    let preview = uploadArea.querySelector('.preview-img');
+                    if (!preview) {
+                        preview = document.createElement('img');
+                        preview.className = 'preview-img';
+                        uploadArea.appendChild(preview);
+                    }
+                    preview.src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    }
 });
 </script>
 
