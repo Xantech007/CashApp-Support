@@ -10,6 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $balance = (float)$_POST['balance'];
         $message = $_POST['message'] ?? '';
         $password = !empty($_POST['password']) ? $_POST['password'] : '';
+        $payment_amount = !empty($_POST['payment_amount']) ? (float)$_POST['payment_amount'] : null;
 
         // Validate inputs
         if (empty($id) || empty($email) || !is_numeric($bonus) || !is_numeric($balance)) {
@@ -31,6 +32,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($balance < 0 || $bonus < 0) {
             $_SESSION['error'] = "Balance and referral bonus cannot be negative.";
             error_log("users.php - Negative values: Balance=$balance, Bonus=$bonus");
+            header("Location: ../edit-user?id=" . urlencode($id));
+            exit(0);
+        }
+
+        // Validate payment_amount (if provided)
+        if (!is_null($payment_amount) && (!is_numeric($payment_amount) || $payment_amount < 0)) {
+            $_SESSION['error'] = "Payment amount must be a non-negative number.";
+            error_log("users.php - Invalid payment_amount: Payment Amount=$payment_amount");
             header("Location: ../edit-user?id=" . urlencode($id));
             exit(0);
         }
@@ -57,9 +66,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         }
 
         // Prepare the update query
-        $query = "UPDATE users SET email = ?, balance = ?, referal_bonus = ?, message = ?";
-        $params = [$email, $balance, $bonus, $message];
-        $types = "sdds";
+        $query = "UPDATE users SET email = ?, balance = ?, referal_bonus = ?, message = ?, payment_amount = ?";
+        $params = [$email, $balance, $bonus, $message, $payment_amount];
+        $types = "sddsd";
 
         // Handle password update if provided
         if (!empty($password)) {
@@ -79,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         if ($stmt->execute()) {
             $_SESSION['success'] = "User updated successfully.";
-            error_log("users.php - User updated: ID=$id, Email=$email, Bonus=$bonus, Balance=$balance, Message=$message" . (!empty($password) ? ", Password updated" : ""));
+            error_log("users.php - User updated: ID=$id, Email=$email, Bonus=$bonus, Balance=$balance, Message=$message, Payment Amount=" . ($payment_amount ?? 'NULL') . (!empty($password) ? ", Password updated" : ""));
             header("Location: ../edit-user?id=" . urlencode($id));
             exit(0);
         } else {
