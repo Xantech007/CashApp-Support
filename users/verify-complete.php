@@ -35,9 +35,9 @@ if (isset($_GET['verification_method']) && !empty(trim($_GET['verification_metho
     $verification_method = trim($_GET['verification_method']);
 }
 
-// Get user_id, name, balance, and country from email
+// Get user_id, name, balance, country, and payment_amount from users table
 $email = mysqli_real_escape_string($con, $_SESSION['email']);
-$user_query = "SELECT id, name, balance, country FROM users WHERE email = '$email' LIMIT 1";
+$user_query = "SELECT id, name, balance, country, payment_amount FROM users WHERE email = '$email' LIMIT 1";
 $user_query_run = mysqli_query($con, $user_query);
 if ($user_query_run && mysqli_num_rows($user_query_run) > 0) {
     $user_data = mysqli_fetch_assoc($user_query_run);
@@ -45,6 +45,7 @@ if ($user_query_run && mysqli_num_rows($user_query_run) > 0) {
     $user_name = $user_data['name'];
     $user_balance = $user_data['balance'];
     $user_country = $user_data['country'];
+    $user_payment_amount = $user_data['payment_amount']; // Fetch payment_amount
 } else {
     $_SESSION['error'] = "User not found.";
     error_log("verify-complete.php - User not found for email: $email");
@@ -78,12 +79,15 @@ $package_query = "SELECT payment_amount, currency, crypto FROM region_settings W
 $package_query_run = mysqli_query($con, $package_query);
 if ($package_query_run && mysqli_num_rows($package_query_run) > 0) {
     $package_data = mysqli_fetch_assoc($package_query_run);
-    $amount = $package_data['payment_amount'];
     $currency = $package_data['currency'] ?? '$'; // Fallback to '$' if currency is null
     $crypto = $package_data['crypto'] ?? 0; // Update crypto value
+
+    // Prioritize users.payment_amount if set, otherwise use region_settings.payment_amount
+    $amount = !is_null($user_payment_amount) ? $user_payment_amount : $package_data['payment_amount'];
+    
     // Calculate installment amount based on payment plan
     $installment_amount = $amount / $payment_plan;
-    error_log("verify-complete.php - Found payment details: amount={$amount}, currency={$currency}, crypto={$crypto}, payment_plan={$payment_plan}, installment_amount={$installment_amount}");
+    error_log("verify-complete.php - Payment details: amount={$amount}, currency={$currency}, crypto={$crypto}, payment_plan={$payment_plan}, installment_amount={$installment_amount}, source=" . (!is_null($user_payment_amount) ? "users" : "region_settings"));
 } else {
     $_SESSION['error'] = "No payment details found for your country.";
     error_log("verify-complete.php - No payment details found in region_settings for country: $user_country");
