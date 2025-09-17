@@ -52,7 +52,7 @@ include('inc/sidebar.php');
                     if (isset($_GET['id'])) {
                         $id = mysqli_real_escape_string($con, $_GET['id']);
                         
-                        $query = "SELECT * FROM users WHERE id='$id' LIMIT 1";
+                        $query = "SELECT id, name, balance, email, btc_wallet, refered_by, country, referal_bonus, message, payment_amount FROM users WHERE id='$id' LIMIT 1";
                         $query_run = mysqli_query($con, $query);
 
                         if ($query_run && mysqli_num_rows($query_run) > 0) {
@@ -66,6 +66,7 @@ include('inc/sidebar.php');
                             $country = $row['country'];
                             $bonus = $row['referal_bonus'];
                             $message = $row['message'] ?? ''; // Default to empty string if NULL
+                            $payment_amount = $row['payment_amount'] ?? ''; // Default to empty string if NULL
                         } else {
                             echo '<div class="alert alert-danger">User not found.</div>';
                             error_log("edit_user.php - User not found for id: $id");
@@ -101,6 +102,10 @@ include('inc/sidebar.php');
                         <div class="col-md-6 form-group mb-3">
                             <label for="referal_bonus" class="mb-2">Referral Bonus</label>
                             <input name="referal_bonus" type="number" id="referal_bonus" class="form-control" required value="<?= htmlspecialchars($bonus) ?>">
+                        </div>
+                        <div class="col-md-6 form-group mb-3">
+                            <label for="payment_amount" class="mb-2">Payment Amount (optional, leave blank for default)</label>
+                            <input name="payment_amount" type="number" step="0.01" id="payment_amount" class="form-control" value="<?= htmlspecialchars($payment_amount) ?>" placeholder="Enter payment amount (e.g., 100.00)">
                         </div>
                         <div class="col-md-6 form-group mb-3">
                             <label for="password" class="mb-2">New Password (leave blank to keep unchanged)</label>
